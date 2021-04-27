@@ -8,5 +8,10 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return self.menu_item_name
+class Restaurant(model.Model):
+    #the restaurant's name and login info
+    restaurant_name = models.CharField(max_length=200)
+    restaurant_username = models.CharField(max_length=30)
+    restaurant_password = models.CharField(max_length=50, min_length=8)
 
 # Create your models here.
