@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import MenuItem
 from django.template import loader
 from django.shortcuts import get_object_or_404
+from .models import Restaurant
 
 def index(request):
     return HttpResponse("Hello, world. You're at the website index.")
@@ -15,3 +16,8 @@ def menu_list(request):
     menu_list = MenuItem.objects.all()
     context = {'menu_list': menu_list,}
     return render(request, 'website/menu_list.html', context)
+
+def restaurant(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+    context = {'restaurant' : restaurant}
+    return render(request, 'website/restaurant.html', context)
