@@ -19,5 +19,6 @@ def menu_list(request):
 
 def restaurant(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
-    context = {'restaurant' : restaurant}
+    menu_list = MenuItem.objects.filter(restaurant__pk = restaurant_id)
+    context = {'restaurant' : restaurant, 'menu_list' : menu_list}
     return render(request, 'website/restaurant.html', context)
