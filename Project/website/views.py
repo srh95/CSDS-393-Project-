@@ -1,12 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from .models import MenuItem
 from django.template import loader
-from django.shortcuts import get_object_or_404
-from .models import Restaurant
+from django.shortcuts import get_object_or_404, render, redirect
 from .forms import RegisterForm
 from django.core.exceptions import ValidationError
+from .models import (
+    Order,
+    OrderItem,
+    MenuItem,
+    Restaurant
+)
+from django.views.generic import ListView, DetailView
+from django.utils import timezone
 
 
 def index(request):
@@ -49,3 +55,12 @@ def register(request):
         form = RegisterForm()
         context = {'form' : form}
     return render(request, 'website/register.html', context)
+
+
+def add(request):
+        item = get_object_or_404(MenuItem)
+        order_item = MenuItem.objects.create(item=item)
+        order_qs = Order.objects.filter(user=request.user, ordered=False)
+        order = Order.objects.create(user=request.user)
+        order.items.add(order_item)
+
