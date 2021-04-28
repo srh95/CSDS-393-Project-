@@ -22,3 +22,8 @@ def restaurant(request, restaurant_id):
     menu_list = MenuItem.objects.filter(restaurant__pk = restaurant_id)
     context = {'restaurant' : restaurant, 'menu_list' : menu_list}
     return render(request, 'website/restaurant.html', context)
+
+def restaurant_list(request):
+    restaurant_list = Restaurant.objects.all()
+    context = {'restaurant_list': restaurant_list,}
+    return render(request, 'website/restaurants.html', context)
