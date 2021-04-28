@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'website.apps.WebsiteConfig',
+    'checkout.apps.CheckoutConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,7 +56,8 @@ ROOT_URLCONF = 'Project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [str(BASE_DIR.joinpath('templates'))],
+    ##    'DIRS': [str(BASE_DIR.joinpath('templates'))],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,3 +129,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # config/settings.py
 LOGIN_REDIRECT_URL = '/'
+
+RAVE_PUBLIC_KEY = 'FLWPUBK_TEST-704e72f07d64b9c742537a39fe0ef787-X'
+RAVE_SECRET_KEY = 'FLWSECK_TEST-5f50c3bd75e2a23af544f89a5b8dd7f8-X'
