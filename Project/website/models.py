@@ -18,6 +18,9 @@ class MenuItem(models.Model):
     def __str__(self):
         return self.menu_item_name
 
+  #  def get_absolute_url(self):
+   #     return <int:menu_item_id>
+
 
 # putting items in an order
 class OrderItem(models.Model):

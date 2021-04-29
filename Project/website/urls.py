@@ -1,6 +1,7 @@
 from django.urls import path, include
 
 from . import views
+from.views import OrderSummaryView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -11,5 +12,6 @@ urlpatterns = [
     path('restaurant/<int:restaurant_id>/', views.restaurant, name='restaurant'),
     path('restaurant/edit_menu/<int:restaurant_id>/', views.edit_menu, name='editmenu'),
     path('restaurant/', views.restaurant_list, name='restaurants'),
-    path('search/', views.search, name='search')
+    path('search/', views.search, name='search'),
+    path('order-summary/', OrderSummaryView.as_view(), name='order-summary')
 ]
