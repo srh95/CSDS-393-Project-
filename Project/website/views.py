@@ -69,7 +69,7 @@ def register(request):
             restaurant_password = form.cleaned_data['password1']
             )
             database.save()
-            return HttpResponseRedirect('/website/accounts/login/')
+            return HttpResponseRedirect('/website/restaurant/')
     else:
         form = RegisterForm()
         context = {'form' : form}
@@ -82,4 +82,10 @@ def add(request):
         order_qs = Order.objects.filter(user=request.user, ordered=False)
         order = Order.objects.create(user=request.user)
         order.items.add(order_item)
+
+def search(request):
+    if request.method == 'GET':
+        search = request.GET.get('search')
+        restaurant = Restaurant.objects.all().filter(restaurant_name=search)
+        return render(request, 'website/searchbar.html', {'restaurant': restaurant})
 

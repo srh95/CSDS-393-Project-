@@ -10,5 +10,6 @@ urlpatterns = [
     path('restaurant/menu_list/', views.menu_list, name='menulist'),
     path('restaurant/<int:restaurant_id>/', views.restaurant, name='restaurant'),
     path('restaurant/edit_menu/<int:restaurant_id>/', views.edit_menu, name='editmenu'),
-    path('restaurant/', views.restaurant_list, name='restaurants')
+    path('restaurant/', views.restaurant_list, name='restaurants'),
+    path('search/', views.search, name='search')
 ]
