@@ -94,10 +94,15 @@ def login(request):
 def add(request):
         item = get_object_or_404(MenuItem)
         order_item = MenuItem.objects.create(item=item)
-        order_qs = Order.objects.filter(user=request.user, ordered=False)
+    #    order_qs = Order.objects.filter(user=request.user, ordered=False)
         order = Order.objects.create(user=request.user)
         order.items.add(order_item)
 
+def remove(request):
+        item = get_object_or_404(MenuItem)
+        order_item = MenuItem.objects.filter(item=item, user=request.user)
+        order.items.remove(order_item)
+        
 def search(request):
     if request.method == 'GET':
         search = request.GET.get('search')
