@@ -1,0 +1,23 @@
+<h1>Edit Menu</h1>
+
+<form id="form" method="post">
+    {% csrf_token %}
+    
+    {% block content %}
+    <form method="POST" class="form-group">
+    <label for="menuitemname">Menu Item Name: </label>
+    <input id="menuitemname" type="text" name="menuitemname" maxlength="100" required> <br>
+
+    <label for="menuitemdescription">Menu Item Description: </label>
+    <input id="menuitemdescription" type="text" name="menuitemdescription" maxlength="500" required> <br>
+
+    <label for="menuitemprice">Menu Item Price: </label>
+    <input id="menuitemprice" type="text" name="menuitemprice" maxlength="100" required> <br>
+
+    <button type="submit" class="btn btn-success">Add Menu Item</button>
+    </form>
+    {% endblock %}
+
+</form>
+
+<script> document.getElementById("form").elements["menuitemname"] </script>
