@@ -7,6 +7,11 @@ class RegisterForm(forms.Form):
     password1 = forms.CharField(label='password', max_length=50, required=True)
     password2 = forms.CharField(label='password*', max_length=50, required=True)
 
+class LoginForm(forms.Form):
+    restaurantname = forms.CharField(label='Restaurant Name',max_length=50, required=True)
+    username = forms.CharField(label='username', max_length=50, required=True)
+    password = forms.CharField(label='password', max_length=50, required=True)
+
 
     # def clean(self):
     #     cleaned_data = self.cleaned_data

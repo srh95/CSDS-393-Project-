@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import RegisterForm
+from .forms import LoginForm
 from django.core.exceptions import ValidationError
 from .models import (
     Order,
@@ -55,6 +56,20 @@ def register(request):
         form = RegisterForm()
         context = {'form' : form}
     return render(request, 'website/register.html', context)
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            if(username != Restaurant.objects.all().filter(restaurant_username=username)
+                or password != Restaurant.objects.all().filter(restaurant_password=password)):
+                raise ValidationError('Account not found')
+            return HttpResponseRedirect('/website/restaurant/<int:restaurant_id>/')
+    else:
+        form = LoginForm()
+    return render(request, 'website/login.html', {'form': form})
 
 
 def add(request):
