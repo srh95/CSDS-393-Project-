@@ -11,6 +11,11 @@ class EditMenuForm(forms.Form):
     menuitemname = forms.CharField(label='menuitemname',max_length=50, required=True)
     menuitemdescription = forms.CharField(label='menuitemdescription', max_length=50, required=True)
     menuitemprice = forms.IntegerField(label='menuitemprice', required=True)
+    
+class LoginForm(forms.Form):
+    restaurantname = forms.CharField(label='Restaurant Name',max_length=50, required=True)
+    username = forms.CharField(label='username', max_length=50, required=True)
+    password = forms.CharField(label='password', max_length=50, required=True)
 
 
     # def clean(self):

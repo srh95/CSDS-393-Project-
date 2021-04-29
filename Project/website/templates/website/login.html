@@ -1,0 +1,24 @@
+{% block title %}Restaurant Login{% endblock %}
+
+
+<form method="post">
+    {% csrf_token %}
+    
+    {% block content %}
+    <form method="POST" class="form-group">
+    <label for="restaurantname">Restaurant Name: </label>
+    <input id="restaurantname" type="text" name="restaurantname" maxlength="100" required>
+
+    <label for="username">username: </label>
+    <input id="username" type="text" name="username" maxlength="100" required>
+
+    <label for="password">password: </label>
+    <input id="password" type="text" name="password" maxlength="100" required>
+
+    <button type="submit" class="btn btn-success">Log</button>
+    </form>
+    {% endblock %}
+</form>
+
+
+
