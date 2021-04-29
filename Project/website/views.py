@@ -50,7 +50,7 @@ def register(request):
             restaurant_password = form.cleaned_data['password1']
             )
             database.save()
-            return HttpResponseRedirect('/website/accounts/login/')
+            return HttpResponseRedirect('/website/restaurant/')
     else:
         form = RegisterForm()
         context = {'form' : form}
