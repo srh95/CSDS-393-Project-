@@ -1,5 +1,10 @@
 <h1>Restaurants</h1>
 
+<form id="form">
+    <input type="search" id="query" name="q" placeholder="Search for restaurants...">
+    <button type="submit">Search</i></button>
+</form>
+
 {% if restaurant_list %}
     <ul>
     {% for restaurant in restaurant_list %}

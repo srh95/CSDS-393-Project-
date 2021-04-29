@@ -1,0 +1,10 @@
+{{ error }}
+
+{% if restaurant %}
+    <h1>Search Result Found</h1>
+{% for restaurant in search_restaurant %}
+    <h2><a href="/website/restaurant/menu_list/{{ menu_item.id }}/">{{restaurant.restaurant_name}}</a> </h2>
+{% endfor %}
+    {% else %}
+        <h1>No search results found</h1>
+{% endif %}

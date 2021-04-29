@@ -64,3 +64,9 @@ def add(request):
         order = Order.objects.create(user=request.user)
         order.items.add(order_item)
 
+def search(request):
+    if request.method == 'GET':
+        search = request.GET.get('search')
+        restaurant = Restaurant.objects.all().filter(restaurant_name=search)
+        return render(request, 'website/searchbar.html', {'restaurant': restaurant})
+
