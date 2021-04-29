@@ -7,6 +7,11 @@ class RegisterForm(forms.Form):
     password1 = forms.CharField(label='password', max_length=50, required=True)
     password2 = forms.CharField(label='password*', max_length=50, required=True)
 
+class EditMenuForm(forms.Form):
+    menuitemname = forms.CharField(label='menuitemname',max_length=50, required=True)
+    menuitemdescription = forms.CharField(label='menuitemdescription', max_length=50, required=True)
+    menuitemprice = forms.IntegerField(label='menuitemprice', required=True)
+
 
     # def clean(self):
     #     cleaned_data = self.cleaned_data

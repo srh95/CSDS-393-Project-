@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import RegisterForm
+from .forms import EditMenuForm
 from django.core.exceptions import ValidationError
 from .models import (
     Order,
@@ -30,13 +31,31 @@ def menu_list(request):
 def restaurant(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     menu_list = MenuItem.objects.filter(restaurant__pk = restaurant_id)
-    context = {'restaurant' : restaurant, 'menu_list' : menu_list}
+    context = {'restaurant' : restaurant, 'menu_list' : menu_list, 'restaurant_id' : restaurant_id}
     return render(request, 'website/restaurant.html', context)
 
 def restaurant_list(request):
     restaurant_list = Restaurant.objects.all()
     context = {'restaurant_list': restaurant_list,}
     return render(request, 'website/restaurants.html', context)
+
+def edit_menu(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+    if request.method == 'POST':
+        form = EditMenuForm(request.POST)
+        if form.is_valid():
+            database = MenuItem.objects.create(
+            restaurant = restaurant,
+            menu_item_name = form.cleaned_data['menuitemname'],
+            menu_item_description = form.cleaned_data['menuitemdescription'],
+            menu_item_price = form.cleaned_data['menuitemprice']
+            )
+            database.save()
+            url = '/website/restaurant/' + str(restaurant_id)
+            return HttpResponseRedirect(url)
+    else:
+        form = RegisterForm()
+    return render(request, 'website/edit_menu.html', {'form' : form, 'restaurant_id': restaurant_id})
 
 def register(request):
     if request.method == 'POST':
