@@ -2,5 +2,5 @@
 <ul>
     <li>Description: {{ menu_item.menu_item_description }}</li>
     <li>Price: $ {{ menu_item.menu_item_price }}</li>
-    <button type="button">Add to Cart</button>
+    <button onclick="add(request, menu_item.id)">Add to Cart</button>
 </ul>

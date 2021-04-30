@@ -91,7 +91,7 @@ def login(request):
     return render(request, 'website/login.html', {'form': form})
 
 
-def add(request):
+def add(request, id):
         item = get_object_or_404(MenuItem)
         order_item = MenuItem.objects.create(item=item)
     #    order_qs = Order.objects.filter(user=request.user, ordered=False)
