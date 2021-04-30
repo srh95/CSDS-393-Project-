@@ -1,9 +1,10 @@
 <h1>Edit Menu</h1>
 
+<h3>Add Menu Item</h3>
 <form id="form" method="post">
     {% csrf_token %}
     
-    {% block content %}
+    {% block content-1 %}
     <form method="POST" class="form-group">
     <label for="menuitemname">Menu Item Name: </label>
     <input id="menuitemname" type="text" name="menuitemname" maxlength="100" required> <br>
@@ -12,12 +13,25 @@
     <input id="menuitemdescription" type="text" name="menuitemdescription" maxlength="500" required> <br>
 
     <label for="menuitemprice">Menu Item Price: </label>
-    <input id="menuitemprice" type="text" name="menuitemprice" maxlength="100" required> <br>
+    <input id="menuitemprice" type="text" name="menuitemprice" maxlength="100" required> <br> <br>
 
-    <button type="submit" class="btn btn-success">Add Menu Item</button>
+    <button type="submit" name="add" class="btn btn-success">Add Menu Item</button>
     </form>
     {% endblock %}
 
 </form>
+<br>
 
-<script> document.getElementById("form").elements["menuitemname"] </script>
+<h3>Update Menu Items</h3>
+
+    {% if menu_list %}
+        <ul>
+        {% for menu_item in menu_list %}
+            <button onclick="location.href='/website/restaurant/edit_menu_item/{{ menu_item.id }}';">{{ menu_item.menu_item_name}}</button>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No menu items are available.</p>
+    {% endif %}
+
+

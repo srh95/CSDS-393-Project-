@@ -4,3 +4,5 @@
     <li>Price: $ {{ menu_item.menu_item_price }}</li>
     <button onclick="add(request, menu_item.id)">Add to Cart</button>
 </ul>
+
+<button onclick="location.href='/website/restaurant/{{ menu_item.restaurant_id  }}';">Restaurent Home</button>

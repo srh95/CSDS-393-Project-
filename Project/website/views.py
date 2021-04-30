@@ -5,8 +5,11 @@ from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import RegisterForm
-from .forms import EditMenuForm
+from .forms import AddMenuItemForm
 from .forms import LoginForm
+from .forms import UpdateMenuItemNameForm
+from .forms import UpdateMenuItemDescriptionForm
+from .forms import UpdateMenuItemPriceForm
 from django.core.exceptions import ValidationError
 from .models import (
     Order,
@@ -41,10 +44,11 @@ def restaurant_list(request):
     context = {'restaurant_list': restaurant_list,}
     return render(request, 'website/restaurants.html', context)
 
-def edit_menu(request, restaurant_id):
+def add_menu_item(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+    menu_list = MenuItem.objects.filter(restaurant__pk = restaurant_id)
     if request.method == 'POST':
-        form = EditMenuForm(request.POST)
+        form = AddMenuItemForm(request.POST)
         if form.is_valid():
             database = MenuItem.objects.create(
             restaurant = restaurant,
@@ -56,8 +60,45 @@ def edit_menu(request, restaurant_id):
             url = '/website/restaurant/' + str(restaurant_id)
             return HttpResponseRedirect(url)
     else:
-        form = RegisterForm()
-    return render(request, 'website/edit_menu.html', {'form' : form, 'restaurant_id': restaurant_id})
+        form = AddMenuItemForm()
+        context = {'form' : form, 'menu_list' : menu_list, 'restaurant_id' : restaurant_id}
+    return render(request, 'website/edit_menu.html', context)
+
+def edit_menu_item(request, menu_item_id):
+    menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
+    if request.method=='POST' and 'btnform1' in request.POST:
+        form = UpdateMenuItemNameForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['menuitemname'])
+            menu_item.menu_item_name = form.cleaned_data['menuitemname']
+            menu_item.save(update_fields=['menu_item_name'])
+            url = '/website/restaurant/menu_list/' + str(menu_item.id)
+            return HttpResponseRedirect(url)
+    
+    if request.method=='POST' and 'btnform2' in request.POST:
+        form = UpdateMenuItemDescriptionForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['menuitemdescription'])
+            menu_item.menu_item_description = form.cleaned_data['menuitemdescription']
+            menu_item.save(update_fields=['menu_item_description'])
+            url = '/website/restaurant/menu_list/' + str(menu_item.id)
+            return HttpResponseRedirect(url)
+
+    if request.method=='POST' and 'btnform3' in request.POST:
+        form = UpdateMenuItemPriceForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['menuitemprice'])
+            menu_item.menu_item_price = form.cleaned_data['menuitemprice']
+            menu_item.save(update_fields=['menu_item_price'])
+            url = '/website/restaurant/menu_list/' + str(menu_item.id)
+            return HttpResponseRedirect(url)
+
+    else:
+        form = UpdateMenuItemDescriptionForm()
+    return render(request, 'website/edit_menu_item.html', {'form': form, 'menu_item' : menu_item,})
+
+    # if request.method=='POST' and 'btnform2' in request.POST:
+    
 
 def register(request):
     if request.method == 'POST':
