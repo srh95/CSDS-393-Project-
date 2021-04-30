@@ -1,0 +1,27 @@
+<h1>Update {{ menu_item.menu_item_name }}</h1>
+
+<form method='POST'>
+    {% csrf_token %}
+
+    <label for="menuitemname">Menu Item Name: </label>
+    <input id="menuitemname" type="text" name="menuitemname" maxlength="100" required> <br>
+    <button type="submit" name="btnform1">Update Name</button>
+    </form>
+
+
+ <form method='POST'>
+    {% csrf_token %}
+
+    <label for="menuitemdescription">Menu Item Description: </label>
+    <input id="menuitemdescription" type="text" name="menuitemdescription" maxlength="100" required> <br>
+    <button type="submit" name="btnform2">Update Desciption</button>
+</form>
+
+
+<form method='POST'>
+    {% csrf_token %}
+
+    <label for="menuitemprice">Menu Item Price: </label>
+    <input id="menuitemprice" type="text" name="menuitemprice" maxlength="100" required> <br>
+    <button type="submit" name="btnform3">Update Price</button>
+</form>

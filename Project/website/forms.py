@@ -7,10 +7,19 @@ class RegisterForm(forms.Form):
     password1 = forms.CharField(label='password', max_length=50, required=True)
     password2 = forms.CharField(label='password*', max_length=50, required=True)
 
-class EditMenuForm(forms.Form):
+class AddMenuItemForm(forms.Form):
     menuitemname = forms.CharField(label='menuitemname',max_length=50, required=True)
     menuitemdescription = forms.CharField(label='menuitemdescription', max_length=50, required=True)
-    menuitemprice = forms.IntegerField(label='menuitemprice', required=True)
+    menuitemprice = forms.FloatField(label='menuitemprice', required=True)
+
+class UpdateMenuItemNameForm(forms.Form):
+    menuitemname = forms.CharField(label='menuitemname',max_length=50, required=True)
+
+class UpdateMenuItemDescriptionForm(forms.Form):
+    menuitemdescription = forms.CharField(label='menuitemdescription', max_length=500, required=True)
+
+class UpdateMenuItemPriceForm(forms.Form):
+    menuitemprice = forms.FloatField(label='menuitemprice', required=True)
     
 class LoginForm(forms.Form):
     restaurantname = forms.CharField(label='Restaurant Name',max_length=50, required=True)
