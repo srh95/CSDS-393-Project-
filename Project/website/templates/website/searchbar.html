@@ -1,4 +1,4 @@
-{{ error }}
+<!-- {{ error }}
 
 {% if restaurant %}
     <h1>Search Result Found</h1>
@@ -7,4 +7,26 @@
 {% endfor %}
     {% else %}
         <h1>No search results found</h1>
+{% endif %} -->
+
+<!-- <body>
+    <h1>Search Results</h1>
+    <ul>
+        {% for product in products %}
+        <li>
+            {{product.restaurant_name}}
+        </li>
+        {% endfor %}
+    </ul>
+</body> -->
+
+{% if matching_restaurants %}
+    <ul>
+    {% for restaurant in matching_restaurants %}
+        {{restaurant.restaurant_name}}
+        <!-- <li><a href="/website/restaurant/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li> -->
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No restaurants are available.</p>
 {% endif %}
