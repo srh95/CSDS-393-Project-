@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import loader
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import RegisterForm
 from .forms import EditMenuForm
@@ -82,10 +83,19 @@ def login(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            if(username != Restaurant.objects.all().filter(restaurant_username=username)
-                or password != Restaurant.objects.all().filter(restaurant_password=password)):
-                raise ValidationError('Account not found')
-            return HttpResponseRedirect('/website/restaurant/<int:restaurant_id>/')
+            try:
+                if(Restaurant.objects.get(restaurant_username=username)):
+                    restaurant = Restaurant.objects.get(restaurant_username=username)
+                    if(restaurant.restaurant_password != password):
+                        raise ValidationError('Incorrect username or password')
+                    url = '/website/restaurant/' + str(restaurant.id)
+                    return HttpResponseRedirect(url)
+            except ObjectDoesNotExist:
+                raise ValidationError('Incorrect username or password')
+            # if(username != Restaurant.objects.all().filter(restaurant_username=username)
+            #     or password != Restaurant.objects.all().filter(restaurant_password=password)):
+            #     raise ValidationError('Account not found')
+            # return HttpResponseRedirect('/website/restaurant/<int:restaurant_id>/')
     else:
         form = LoginForm()
     return render(request, 'website/login.html', {'form': form})
