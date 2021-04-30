@@ -33,6 +33,9 @@ def menu_list(request):
     context = {'menu_list': menu_list,}
     return render(request, 'website/menu_list.html', context)
 
+def order_summary(request):
+    return render(request, 'website/order_summary.html')
+
 def restaurant(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     menu_list = MenuItem.objects.filter(restaurant__pk = restaurant_id)
@@ -98,7 +101,6 @@ def edit_menu_item(request, menu_item_id):
     return render(request, 'website/edit_menu_item.html', {'form': form, 'menu_item' : menu_item,})
 
     # if request.method=='POST' and 'btnform2' in request.POST:
-    
 
 def register(request):
     if request.method == 'POST':
