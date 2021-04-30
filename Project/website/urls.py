@@ -13,5 +13,7 @@ urlpatterns = [
     path('restaurant/edit_menu/<int:restaurant_id>/', views.edit_menu, name='editmenu'),
     path('restaurant/', views.restaurant_list, name='restaurants'),
     path('search/', views.search, name='search'),
-    path('order-summary/', OrderSummaryView.as_view(), name='order-summary')
+    path('order-summary/', OrderSummaryView.as_view(), name='order-summary'),
+    path('table/<int:table_id>/', views.table, name='table'),
+    path('table/table_list',views.table_list, name='tableList')
 ]

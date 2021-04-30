@@ -32,5 +32,12 @@ class Order(models.Model):
   #  start_date = models.DateTimeField(auto_now_add = True)
    # ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default = False)
+    table = models.Foreignkey(Table, on_delete=models.CASCADE)
+
+class Table(models.Model):
+    # restaurant is foreign key to connect
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    table_number = models.IntegerField(default=0)
+
     
 

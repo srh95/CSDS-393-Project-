@@ -12,7 +12,8 @@ from .models import (
     Order,
     OrderItem,
     MenuItem,
-    Restaurant
+    Restaurant,
+    Table,
 )
 from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
@@ -124,4 +125,14 @@ def search(request):
         search = request.GET.get('search')
         restaurant = Restaurant.objects.all().filter(restaurant_name=search)
         return render(request, 'website/searchbar.html', {'restaurant': restaurant})
+
+def table(request, table_id):
+    table = get_object_or_404(Table, pk=table_id)
+    context = {'table' : table, 'table_id' : table_id}
+    return render(request, 'website/table.html', context)
+
+def table_list(request):
+    table_list = Table.objects.all()
+    context = {'table_list': table_list,}
+    return render(request, 'website/table_list.html', context)
 

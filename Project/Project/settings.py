@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'currentTables.apps.CurrenttablesConfig',
     'website.apps.WebsiteConfig',
     'checkout.apps.CheckoutConfig',
     'django.contrib.admin',
