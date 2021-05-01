@@ -10,6 +10,7 @@ from .forms import LoginForm
 from .forms import UpdateMenuItemNameForm
 from .forms import UpdateMenuItemDescriptionForm
 from .forms import UpdateMenuItemPriceForm
+from .forms import AddToCartForm
 from django.core.exceptions import ValidationError
 from .models import (
     Order,
@@ -144,12 +145,22 @@ def login(request):
     return render(request, 'website/login.html', {'form': form})
 
 
-def add(request, id):
+def add_to_cart(request, id):
+ #       form = AddToCartForm(request.POST)
+  #      if form.is_valid()
+
         item = get_object_or_404(MenuItem)
-        order_item = MenuItem.objects.create(item=item)
+        order_item = OrderItem.objects.create(item=item)
+
     #    order_qs = Order.objects.filter(user=request.user, ordered=False)
-        order = Order.objects.create(user=request.user)
-        order.items.add(order_item)  
+        order_qs = Order.objects.filter(user=request.user)
+        if(order_qs.exists()):
+            order = order_qs[0]
+        else:
+            order = Order.objects.create(user=request.user)
+            order.items.add(order_item)
+        url = '/website/restaurant/menu_list/' + str(item.id)
+        return HttpResponseRedirect(url)
 
 def remove(request):
         item = get_object_or_404(MenuItem)

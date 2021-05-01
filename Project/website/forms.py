@@ -25,6 +25,11 @@ class LoginForm(forms.Form):
     restaurantname = forms.CharField(label='Restaurant Name',max_length=50, required=True)
     username = forms.CharField(label='username', max_length=50, required=True)
     password = forms.CharField(label='password', max_length=50, required=True)
+    
+class AddToCartForm(forms.Form):
+    menuItemId = id
+    addToCart = True
+
 
 
     # def clean(self):

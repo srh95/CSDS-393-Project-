@@ -3,7 +3,22 @@
     <li>Description: {{ menu_item.menu_item_description }}</li>
     <li>Price: $ {{ menu_item.menu_item_price }}</li>
     <!-- <button onclick="add(request, menu_item.id)">Add to Cart</button> -->
-    <button onclick="location.href='/website/ordersummary';">Add to Cart</button>
+    <!-- <button onclick="location.href='/website/ordersummary';">Add to Cart</button> -->
 </ul>
 
-<button onclick="location.href='/website/restaurant/{{ menu_item.restaurant_id  }}';">Restaurent Home</button>
+
+
+<button onclick="location.href='/website/restaurant/{{ menu_item.restaurant_id  }}';">Restaurant Home</button>
+
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input id = {{menu_item.id}} type="submit" name="add-to-cart" value="Add to Cart" />
+</form>
+
+
+<!-- form method="POST">
+    <button type="submit">
+        Add to Cart
+    </button>
+</form> 
