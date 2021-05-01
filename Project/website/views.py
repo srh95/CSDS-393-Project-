@@ -11,6 +11,7 @@ from .forms import UpdateMenuItemNameForm
 from .forms import UpdateMenuItemDescriptionForm
 from .forms import UpdateMenuItemPriceForm
 from .forms import AddToCartForm
+from .forms import SearchForm
 from django.core.exceptions import ValidationError
 from .models import (
     Order,
@@ -43,9 +44,10 @@ def restaurant(request, restaurant_id):
     context = {'restaurant' : restaurant, 'menu_list' : menu_list, 'restaurant_id' : restaurant_id}
     return render(request, 'website/restaurant.html', context)
 
+
 def restaurant_list(request):
     restaurant_list = Restaurant.objects.all()
-    context = {'restaurant_list': restaurant_list,}
+    context = {'restaurant_list': restaurant_list}
     return render(request, 'website/restaurants.html', context)
 
 def add_menu_item(request, restaurant_id):
@@ -173,9 +175,38 @@ class OrderSummaryView(View):
     model = Order
     template_name = 'order_summary.html'
 
-def search(request):
-    if request.method == 'GET':
-        search = request.GET.get('search')
-        restaurant = Restaurant.objects.all().filter(restaurant_name=search)
-        return render(request, 'website/searchbar.html', {'restaurant': restaurant})
 
+def search(request):
+    restaurant_list = Restaurant.objects.all()
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['restaurantsearch'])
+            user_search = form.cleaned_data['restaurantsearch']
+            matching_restaurants = Restaurant.objects.filter(restaurant_name__icontains=user_search)
+            print(matching_restaurants)
+            return render(request, 'website/searchbar.html', {'form' : form, 'matching_restaurants': matching_restaurants})
+    else:
+        form = SearchForm()
+        return render(request, 'website/restaurants.html', {'form' : form, 'restaurant_list': restaurant_list}) 
+       # if request.method == 'POST':
+    #     form = SearchForm(request.POST)
+    #     user_search = form.cleaned_data['restaurantsearch']
+    #     print(user_search)
+    #     if form.is_valid():
+    #         user_search = form.cleaned_data['restaurantsearch']
+    #         print(user_search)
+    #         matching_restaurants = Restaurant.objects.filter(restaurant_name__icontains=user_search)
+    #         print(matching_restaurants)
+    # else:
+    #     form = SearchForm()
+    #     context = {'form' : form}
+    # return render(request, 'website/restaurants.html', context)
+        
+
+    # user_search = request.GET['user_typed_this']
+    # print(user_search)
+    # matching_restaurants = Restaurant.objects.filter(restaurant_name__icontains='test')
+    # print(matching_restaurants)
+    # params = {'restaurant' : matching_restaurants, 'search': user_search}
+    # return render(request, 'website/searchbar.html', params)

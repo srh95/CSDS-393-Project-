@@ -31,6 +31,10 @@ class AddToCartForm(forms.Form):
     addToCart = True
 
 
+class SearchForm(forms.Form):
+    restaurantsearch = forms.CharField(label='Restaurant Name',max_length=50, required=True)
+
+
 
     # def clean(self):
     #     cleaned_data = self.cleaned_data

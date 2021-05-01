@@ -1,8 +1,24 @@
-<h1>Restaurants</h1>
+<!-- <h1>Restaurants</h1> -->
 
-<form id="form">
+<!-- <form id="form">
     <input type="search" id="query" name="q" placeholder="Search for restaurants...">
     <button type="submit">Search</i></button>
+</form> -->
+
+{% block title %}Create an Account{% endblock %}
+
+
+<form method="post">
+    {% csrf_token %}
+    
+    {% block content %}
+    <form method="POST" class="form-group">
+    <label for="restaurantsearch">Restaurant Name: </label>
+    <input id="restaurantsearch" type="text" name="restaurantsearch" maxlength="100" required>
+
+    <button type="submit" class="btn btn-success">Search</button>
+    </form>
+    {% endblock %}
 </form>
 
 {% if restaurant_list %}
@@ -15,7 +31,7 @@
     <p>No restaurants are available.</p>
 {% endif %}
 
-<form id="form">
+<form id="poo">
     <input type="button" value="Business Login" onclick="document.location.href = '/website/accounts/login/'">
     <input type="button" value="Business Registration" onclick="document.location.href = '/website/accounts/register/'">
 </form>
