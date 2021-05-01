@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+      <div class="main-wrap">
+        <div class="cover_1 cover_sm">
+          <div class="img_bg" style="background-image: url({% static 'site_static/img/slider-1.jpg' %})" data-stellar-background-ratio="0.5">
+            <div class="container">
+              <div class="row align-items-center justify-content-center">
+                <div class="col-md-7" data-aos="fade-up">
+                  <h2 class="heading">Reservation Schedule</h2>
+                  <p class="lead"> Below is the current schedule of reservations for the next 7 days. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- .cover_1 -->
+
+        <div class="section" data-aos="fade-up">
+          <div class="container">
+            <div class="row justify-content-center mb-5">
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-md-10 p-5 form-wrap">
+
+
+
+                <h1>Current Reservation Schedule</h1>
+Showing the current reservations for the next 7 days: <!-- Can't figure out how to display the next 7 dates -->
+
+<script> d = new Date();
+m = d.getMonth();
+day_array = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+day_of_week = day_array[d.getDay()];
+month_array = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+year = d.getFullYear();
+day = d.getDate();
+date = (day_of_week + " " + month_array[m] + " " + day + ", " + year);
+</script>
+<h2> <script> document.write(date); </script> </h2>
+
+                  <script> reservation_list.objects.filter(reservationSlot__date = date) </script>
+                  {% for reservation in reservation_list %}
+                  {% if reservation.date %}
+                  <!--Still need to figure out how to only display the reservations for today-->
+                  <li> Table: {{ reservation.table_id }}</li>
+                  Number of people: {{ reservation.num_people }}
+                  Time: {{ reservation.time }}
+                  Date: {{ reservation.date }}
+                  Reservation Number: {{reservation.id}}
+                  {% if reservation.booked == False %}
+                  Not Booked
+                  {% else %}
+                  Booked
+
+                  {% endif %}
+
+                  {% endif %}
+                  {% endfor %}
+
+<p> </p>
+<p>Type a reservation number in the box below to remove that reservation slot. </p>
+
+<form action = "" method = "GET">
+    <input id="Reservation Number" type="text" name="Reservation Number" maxlength="10" required>
+
+    <button onclick="remove(request)">Remove</button>
+</form>
+              </div>
+            </div>
+          </div>
+        </div> <!-- .section -->
+
+
+
+        </div> <!-- .section -->
+
+
+      </div> <!-- .main-wrap -->
+
+{% endblock body %}
+
+
