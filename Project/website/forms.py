@@ -40,6 +40,13 @@ class CreateReservationForm(forms.ModelForm):
         model = ReservationSlot
         fields = ['table_id', 'num_people', 'date', 'time']
 
+class ReserveTableForm(forms.ModelForm):
+    class Meta:
+        model = ReservationSlot
+        # fields = '__all__'
+        fields = ['name', 'email', 'phone']
+        # date, time, number of people coming from the previous page
+
     # def clean(self):
     #     cleaned_data = self.cleaned_data
     #     password1 = cleaned_data.get("password1")

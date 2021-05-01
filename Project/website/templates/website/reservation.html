@@ -111,7 +111,7 @@
                     <form id = "form">
                     {% for reservation in reservation_slots %}
                          {% if reservation.booked == False  %}
-                      <input type="button" value="Time: {{ reservation.time }}" onclick ="document.location.href = '/reservation/reservation_conf/'" > <!-- {{ reservation.id }}      add the reservation number to the link? then we can just update the fields of that reservation number -->
+                      <input type="button" value="Time: {{ reservation.time }}" onclick ="document.location.href = '/website/reservation_conf/'" > <!-- {{ reservation.id }}      add the reservation number to the link? then we can just update the fields of that reservation number -->
                        </form>
                     <p> Number of people: {{ reservation.num_people }}
 
