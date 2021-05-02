@@ -28,8 +28,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(label='password', max_length=50, required=True)
     
 class AddToCartForm(forms.Form):
-    menuItemId = id
-    addToCart = True
+    num_items = forms.IntegerField(label='Quantity', required=True)
 
 
 class SearchForm(forms.Form):

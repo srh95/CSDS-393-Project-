@@ -26,14 +26,14 @@ class OrderItem(models.Model):
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
 
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    items = models.ManyToManyField(MenuItem)
+    item_name = models.CharField(max_length = 200, default='00000')
+    item_price = models.IntegerField(default=0)
   #  start_date = models.DateTimeField(auto_now_add = True)
    # ordered_date = models.DateTimeField()
-    ordered = models.BooleanField(default = False)
+ #   ordered = models.BooleanField(default = False)
 
-    def __str__(self):
-        return self.user.username
+    # def __str__(self):
+    #     return self.user.username
 
 # Reservation
 class ReservationSlot(models.Model):

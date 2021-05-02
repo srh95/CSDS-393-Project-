@@ -8,12 +8,20 @@
 
 
 
-<button onclick="location.href='/website/restaurant/{{ menu_item.restaurant_id  }}';">Restaurant Home</button>
+<!-- <button onclick="location.href='/website/restaurant/{{ menu_item.restaurant_id  }}';">Restaurant Home</button> -->
 
 
-<form action="" method="POST">
+<form method="post">
     {% csrf_token %}
-    <input id = {{menu_item.id}} type="submit" name="add-to-cart" value="Add to Cart" />
+    
+    {% block content %}
+    <form method="POST" class="form-group">
+    <label for="num_items">Add to Cart: </label>
+    <input id="num_items" type="text" name="num_items" maxlength="100" required>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+    {% endblock %}
 </form>
 
 
