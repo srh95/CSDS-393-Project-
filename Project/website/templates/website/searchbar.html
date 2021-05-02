@@ -19,14 +19,12 @@
         {% endfor %}
     </ul>
 </body> -->
-
+<h1>Search Results:</h1>
 {% if matching_restaurants %}
     <ul>
     {% for restaurant in matching_restaurants %}
-        {{restaurant.restaurant_name}}
-        <!-- <li><a href="/website/restaurant/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li> -->
+        <li><a href="/website/restaurant/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li>
     {% endfor %}
-    </ul>
 {% else %}
     <p>No restaurants are available.</p>
 {% endif %}
