@@ -30,6 +30,9 @@ class LoginForm(forms.Form):
 class AddToCartForm(forms.Form):
     num_items = forms.IntegerField(label='Quantity', required=True)
 
+class RemoveFromCartForm(forms.Form):
+    item_removed = True
+
 
 class SearchForm(forms.Form):
     restaurantsearch = forms.CharField(label='Restaurant Name',max_length=50, required=True)

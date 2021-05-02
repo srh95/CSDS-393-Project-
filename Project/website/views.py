@@ -12,6 +12,7 @@ from .forms import UpdateMenuItemDescriptionForm
 from .forms import UpdateMenuItemPriceForm
 from .forms import AddToCartForm
 from .forms import SearchForm
+from .forms import RemoveFromCartForm
 from django.core.exceptions import ValidationError
 from .models import (
     Order,
@@ -47,8 +48,6 @@ def menu_item(request, menu_item_id):
             url = '/website/restaurant/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
 
-            + str(restaurant_id)
-
     else:
         form = AddToCartForm()
     return render(request, 'website/menu_item.html', {'menu_item': menu_item})
@@ -65,6 +64,11 @@ def order_list(request):
     order_list = Order.objects.all()
     order_list_price = 0
     for x in order_list:
+        if request.method == 'POST':
+            form = RemoveFromCartForm(request.POST)
+            if form.is_valid() & x.item_removed == True:
+                x.delete()
+    for x in order_list:
         price = x.__repr__()
         price = int(price)
         order_list_price = order_list_price + price
@@ -72,6 +76,17 @@ def order_list(request):
     order_list_price = str(order_list_price)
     context = {'order_list': order_list, 'order_list_price': order_list_price}
     return render(request, 'website/order_summary.html', context)
+
+def remove_item(request, menu_item_id):
+    menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
+    order_list = Order.objects.all()
+    if request.method == 'POST':
+        form = RemoveFromCartForm(request.POST)
+        if form.is_valid:
+            for x in order_list:
+                if x == menu_item:
+                    x.delete()
+                    break
 
 def restaurant(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)

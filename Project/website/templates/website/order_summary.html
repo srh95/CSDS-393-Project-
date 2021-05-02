@@ -2,6 +2,17 @@
     {% for menu_item in order_list %}
     <li>Item: {{ menu_item.item_name }}</li>
     Price: {{ menu_item.item_price }}
+
+<form method="POST">
+    {% csrf_token %}
+
+    {% block content %}
+    <form method="POST" >
+        <input type="submit" name="item_removed" onClick="history.go(0)">Remove Item</input>
+    <!--input type="submit" name="item_removed" onClick="history.go(0)">Remove Item</input!-->
+    </form>
+    {% endblock %}
+</form>
     {% endfor %}
 
     <li>Total Price: {{ order_list_price }}</li>

@@ -28,6 +28,7 @@ class OrderItem(models.Model):
 class Order(models.Model):
     item_name = models.CharField(max_length = 200, default='00000')
     item_price = models.IntegerField(default=0)
+    item_removed = models.BooleanField(default=False)
 
     def __repr__(self):
         return self.item_price
