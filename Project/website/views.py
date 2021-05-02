@@ -31,26 +31,6 @@ def index(request):
 
 def menu_item(request, menu_item_id):
     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
-    if request.method == 'POST':
-        form = AddToCartForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data['num_items'])
-            print(menu_item.menu_item_name)
-            print(menu_item.menu_item_price)
-            for x in range(form.cleaned_data['num_items']):
-                print('create thingy here')
-                database = Order.objects.create(
-                    item_name = menu_item.menu_item_name,
-                    item_price = menu_item.menu_item_price
-                )
-                database.save()
-            url = '/website/restaurant/' + str(menu_item.restaurant_id)
-            return HttpResponseRedirect(url)
-
-            + str(restaurant_id)
-
-    else:
-        form = AddToCartForm()
     return render(request, 'website/menu_item.html', {'menu_item': menu_item})
 
 def menu_list(request):
