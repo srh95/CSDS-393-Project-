@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+      <div class="main-wrap">
+        <div class="cover_1 cover_sm">
+          <div class="img_bg" style="background-image: url({% static 'site_static/img/slider-1.jpg' %})" data-stellar-background-ratio="0.5">
+            <div class="container">
+              <div class="row align-items-center justify-content-center">
+                <div class="col-md-7" data-aos="fade-up">
+                  <h2 class="heading">Reservation</h2>
+                  <p class="lead"> To make a reservation, please enter your information below.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- .cover_1 -->
+        
+        <div class="section" data-aos="fade-up">
+          <div class="container">
+            <div class="row justify-content-center mb-5">
+              <div class="col-md-8  text-center">
+                <h2 class="mb-3">Reservation</h2>
+                <p class="lead">To make a reservation, please enter the date you would like your reservation for and select your desired reservation time. The date must be entered in the format YYYY-MM-DD.</p>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-md-10 p-5 form-wrap">
+
+                {% comment %}
+
+
+                <reserve_form action="#">
+                  <div class="row mb-4">
+                    <div class="form-group col-md-4">
+                      <label for="name" class="label">Name</label>
+                      <div class="form-field-icon-wrap">
+                        <span class="icon ion-android-person"></span>
+                        <input type="text" class="form-control" id="name">
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="email" class="label">Email</label>
+                      <div class="form-field-icon-wrap">
+                        <span class="icon ion-email"></span>
+                        <input type="email" class="form-control" id="email">
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="phone" class="label">Phone</label>
+                      <div class="form-field-icon-wrap">
+                        <span class="icon ion-android-call"></span>
+                        <input type="text" class="form-control" id="phone">
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="persons" class="label">Number of Persons</label>
+                      <div class="form-field-icon-wrap">
+                        <span class="icon ion-android-arrow-dropdown"></span>
+                        <select name="persons" id="persons" class="form-control">
+                          <option value="">1 person</option>
+                          <option value="">2 persons</option>
+                          <option value="">3 persons</option>
+                          <option value="">4 persons</option>
+                          <option value="">5 persons</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="date" class="label">Date</label>
+                      <div class="form-field-icon-wrap">
+                        <span class="icon ion-calendar"></span>
+                        <input type="text" class="form-control" id="date">
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="time" class="label">Time</label>
+                      <div class="form-field-icon-wrap">
+                        <span class="icon ion-android-time"></span>
+                        <input type="text" class="form-control" id="time">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-md-4">
+                      <input type="submit" class="btn btn-primary btn-outline-primary btn-block" value="Submit">
+                      <!-- <p><a href="#" class="btn btn-primary btn-outline-primary btn-sm">Read More</a></p> -->
+                    </div>
+                  </div>
+                </reserve_form>
+                {% endcomment %}
+
+
+<!--                <form action = "" method = "POST">-->
+<!--                  {% csrf_token %}-->
+<!--                  {{reserve_form}}-->
+
+
+
+                  <form action = "" method = "GET">
+                  {% csrf_token %}
+                    <form method="GET" class="form-group">
+
+                      <label for="text">Date: </label>
+                      <input id="text" type="text" name="date" maxlength="10" required>
+
+                      <button onclick="reserve_table(request)">Search</button>
+                </form>
+                    <!-- Now based on the date entered, display all reservations on that date where booked = false  -->
+                    <!--<form id = "form", action = "reservationConf.html">-->
+                    <form id = "form">
+                    {% for reservation in reservation_slots %}
+                         {% if reservation.booked == False  %}
+                      <input type="button" value="Time: {{ reservation.time }}" onclick ="document.location.href = '/website/reservation_conf/'" > <!-- {{ reservation.id }}      add the reservation number to the link? then we can just update the fields of that reservation number -->
+                       </form>
+                    <p> Number of people: {{ reservation.num_people }}
+
+                    Date: {{ reservation.date }} <!-- remove this, only here for testing -->
+                    Reservation Number: {{reservation.id}} <!-- remove this, only here for testing -->
+                    </p>
+
+
+                    {% endif  %}
+                    {% endfor %}
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div> <!-- .section -->
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div> <!-- .section -->
+
+
+
+
+        </div> <!-- .section -->
+
+  
+
+      </div> <!-- .main-wrap -->
+
+{% endblock body %}
+

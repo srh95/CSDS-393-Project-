@@ -34,5 +34,19 @@ class Order(models.Model):
 
     def __str__(self):
         return self.user.username
+
+# Reservation
+class ReservationSlot(models.Model):
+    table_id = models.CharField(max_length=2)
+    num_people = models.IntegerField()
+    date = models.DateField()
+    time = models.TimeField()
+    booked = models.BooleanField(default=False)
+    name = models.CharField(max_length=50, default="")
+    email = models.EmailField(default="")
+    phone = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.table_id
     
 

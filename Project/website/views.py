@@ -17,10 +17,13 @@ from .models import (
     Order,
     OrderItem,
     MenuItem,
-    Restaurant
+    Restaurant,
+    ReservationSlot,
 )
 from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
+from .forms import ReserveTableForm
+from .forms import CreateReservationForm
 
 
 def index(request):
@@ -210,3 +213,58 @@ def search(request):
     # print(matching_restaurants)
     # params = {'restaurant' : matching_restaurants, 'search': user_search}
     # return render(request, 'website/searchbar.html', params)
+
+# Searches for reservations by date
+def reserve_table(request):
+    if request.method == 'GET':
+            date = request.GET.get('date')
+            reservation_slots = ReservationSlot.objects.filter(date=date)
+    return render(request, 'website/reservation.html', {'reservation_slots': reservation_slots})
+
+# for creating a reservation slot
+def create_reservation(request):
+    create_form = CreateReservationForm()
+    if request.method == 'POST':
+        create_form = CreateReservationForm(request.POST)
+
+        if create_form.is_valid():
+            create_form.save()
+
+    context = {'create_form' : create_form}
+    return render(request, 'website/reservationSlot.html',context) # our front end html
+
+# Add something to add those fields to the reservation
+def confirm_reservation(request):
+    # if request.method == 'GET':
+    #     name = request.GET.get('name')
+    #     email = request.GET.get('email')
+    #     phone = request.GET.get('phone')
+    #     reservation_slot = ReservationSlot.objects.filter(id=id)
+    #     reservation_slot.name = name
+    #     reservation_slot.email() = email
+    #     reservation_slot.phone() = phone
+    # return render(request, 'reservation/reservationConf.html', {'reservation_slots': reservation_slot})
+    reserve_form = ReserveTableForm()
+    if request.method == 'POST':
+        reserve_form = ReserveTableForm(request.POST)
+
+        if reserve_form.is_valid():
+            reserve_form.save()
+
+    context = {'reserve_form' : reserve_form}
+    return render(request, 'website/reservationConf.html', context)  # our front end html
+
+
+# Displaying the list of reservations
+def reservation_list(request):
+    reservation_list = ReservationSlot.objects.all()
+
+    context = {'reservation_list' : reservation_list}
+    return render(request, 'website/reservationList.html',context)
+
+
+# not working for some reason
+def remove(request):
+    if request.method == 'GET':
+        id = request.GET.get('id')
+        ReservationSlot.objects.filter(id=id).delete()

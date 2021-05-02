@@ -2,6 +2,7 @@ from django.urls import path, include
 
 from . import views
 
+app_name = 'website'
 urlpatterns = [
     path('', views.index, name='index'),
     path('accounts/register/', views.register, name='register'),
@@ -15,5 +16,9 @@ urlpatterns = [
     # path('search/', views.search, name='search'),
     path('ordersummary/', views.order_summary, name='ordersummary'),
     path('add_to_cart', views.add_to_cart, name = 'add-to-cart'),
+    path('reserve_table/', views.reserve_table, name='reserve_table'),
+    path('create_reservation/', views.create_reservation, name='create_reservation'),
+    path('reservation_list/', views.reservation_list, name='reservation_list'),
+    path('reservation_conf/',views.confirm_reservation, name = 'confirm_reservation'),
     
 ]

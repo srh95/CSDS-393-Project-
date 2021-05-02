@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from .models import ReservationSlot
 
 class RegisterForm(forms.Form):
     restaurantname = forms.CharField(label='Restaurant Name',max_length=50, required=True)
@@ -34,7 +35,17 @@ class AddToCartForm(forms.Form):
 class SearchForm(forms.Form):
     restaurantsearch = forms.CharField(label='Restaurant Name',max_length=50, required=True)
 
+class CreateReservationForm(forms.ModelForm):
+    class Meta:
+        model = ReservationSlot
+        fields = ['table_id', 'num_people', 'date', 'time']
 
+class ReserveTableForm(forms.ModelForm):
+    class Meta:
+        model = ReservationSlot
+        # fields = '__all__'
+        fields = ['name', 'email', 'phone']
+        # date, time, number of people coming from the previous page
 
     # def clean(self):
     #     cleaned_data = self.cleaned_data
