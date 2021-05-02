@@ -1,1 +1,44 @@
-Hello world
+<ul>
+    {% for menu_item in order_list %}
+    <li>Item: {{ menu_item.item_name }}</li>
+    Price: {{ menu_item.item_price }}
+    {% endfor %}
+
+    <li>Total Price: {{ order_list_price }}</li>
+
+    <form>
+        <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
+          <h3>CHECKOUT</h3>
+          <button type="button" onClick="payWithRave()">Pay Here</button>
+      </form>
+      <script>
+          const publicKey = "FLWPUBK_TEST-704e72f07d64b9c742537a39fe0ef787-X";
+    
+          function payWithRave() {
+              var x = getpaidSetup({
+                  PBFPubKey: publicKey,
+                  customer_email: "user@example.com",
+                  amount: {{ order_list_price }},
+                  customer_phone: "234099940409",
+                  currency: "USD",
+                  txref: "rave-123456",
+                  custom_title: "CSDS 390 Final",
+                  onclose: function() {},
+                  callback: function(response) {
+                      var txref = response.tx.txRef;
+                      console.log("this is response returned after a charge", response);
+                      if(
+                          response.tx.chargeResponseCode == "00" ||
+                          response.tx.chargeResponseCode == "0"
+                      ) {
+                          document.location.href = "success.html"
+                            //redirect to success page
+                      } else {
+                          //redirect to failure page
+                          document.location.href = "failure.html"
+                      }
+                      x.close();
+                    }
+                }); }
+        </script>
+</ul>

@@ -31,6 +31,26 @@ def index(request):
 
 def menu_item(request, menu_item_id):
     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
+    if request.method == 'POST':
+        form = AddToCartForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['num_items'])
+            print(menu_item.menu_item_name)
+            print(menu_item.menu_item_price)
+            for x in range(form.cleaned_data['num_items']):
+                print('create thingy here')
+                database = Order.objects.create(
+                    item_name = menu_item.menu_item_name,
+                    item_price = menu_item.menu_item_price
+                )
+                database.save()
+            url = '/website/restaurant/' + str(menu_item.restaurant_id)
+            return HttpResponseRedirect(url)
+
+            + str(restaurant_id)
+
+    else:
+        form = AddToCartForm()
     return render(request, 'website/menu_item.html', {'menu_item': menu_item})
 
 def menu_list(request):
@@ -40,6 +60,18 @@ def menu_list(request):
 
 def order_summary(request):
     return render(request, 'website/order_summary.html')
+
+def order_list(request):
+    order_list = Order.objects.all()
+    order_list_price = 0
+    for x in order_list:
+        price = x.__repr__()
+        price = int(price)
+        order_list_price = order_list_price + price
+    print(order_list_price)
+    order_list_price = str(order_list_price)
+    context = {'order_list': order_list, 'order_list_price': order_list_price}
+    return render(request, 'website/order_summary.html', context)
 
 def restaurant(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)

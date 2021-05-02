@@ -28,6 +28,9 @@ class OrderItem(models.Model):
 class Order(models.Model):
     item_name = models.CharField(max_length = 200, default='00000')
     item_price = models.IntegerField(default=0)
+
+    def __repr__(self):
+        return self.item_price
   #  start_date = models.DateTimeField(auto_now_add = True)
    # ordered_date = models.DateTimeField()
  #   ordered = models.BooleanField(default = False)
