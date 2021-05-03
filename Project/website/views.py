@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import loader
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import RegisterForm
@@ -92,8 +93,13 @@ def restaurant(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     menu_list = MenuItem.objects.filter(restaurant__pk = restaurant_id)
     context = {'restaurant' : restaurant, 'menu_list' : menu_list, 'restaurant_id' : restaurant_id}
-    return render(request, 'website/restaurant.html', context)
+    return render(request, 'website/restaurant-business-side.html', context)
 
+def restaurant_user_side(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+    menu_list = MenuItem.objects.filter(restaurant__pk = restaurant_id)
+    context = {'restaurant' : restaurant, 'menu_list' : menu_list, 'restaurant_id' : restaurant_id}
+    return render(request, 'website/restaurant-user-side.html', context)
 
 def restaurant_list(request):
     restaurant_list = Restaurant.objects.all()
@@ -168,14 +174,16 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             if(form.cleaned_data['password1'] != form.cleaned_data['password2']):
-                raise ValidationError('Passwords do not match')
+                messages.error(request, 'Passwords do not match')
+                return HttpResponseRedirect('/website/accounts/register/')
+                #raise ValidationError('Passwords do not match')
             database = Restaurant.objects.create(
             restaurant_name = form.cleaned_data['restaurantname'],
             restaurant_username = form.cleaned_data['username'],
             restaurant_password = form.cleaned_data['password1']
             )
             database.save()
-            return HttpResponseRedirect('/website/restaurant/')
+            return HttpResponseRedirect('/website/accounts/login/')
     else:
         form = RegisterForm()
         context = {'form' : form}
@@ -191,15 +199,14 @@ def login(request):
                 if(Restaurant.objects.get(restaurant_username=username)):
                     restaurant = Restaurant.objects.get(restaurant_username=username)
                     if(restaurant.restaurant_password != password):
-                        raise ValidationError('Incorrect username or password')
+                        messages.error(request, 'Incorrect username or password')
+                        return HttpResponseRedirect('/accounts/login/')
+                       # raise ValidationError('Incorrect username or password')
                     url = '/website/restaurant/' + str(restaurant.id)
                     return HttpResponseRedirect(url)
             except ObjectDoesNotExist:
-                raise ValidationError('Incorrect username or password')
-            # if(username != Restaurant.objects.all().filter(restaurant_username=username)
-            #     or password != Restaurant.objects.all().filter(restaurant_password=password)):
-            #     raise ValidationError('Account not found')
-            # return HttpResponseRedirect('/website/restaurant/<int:restaurant_id>/')
+                    messages.error(request, 'Incorrect username or password')
+                    return HttpResponseRedirect('/accounts/login/')
     else:
         form = LoginForm()
     return render(request, 'website/login.html', {'form': form})
@@ -247,27 +254,6 @@ def search(request):
     else:
         form = SearchForm()
         return render(request, 'website/restaurants.html', {'form' : form, 'restaurant_list': restaurant_list}) 
-       # if request.method == 'POST':
-    #     form = SearchForm(request.POST)
-    #     user_search = form.cleaned_data['restaurantsearch']
-    #     print(user_search)
-    #     if form.is_valid():
-    #         user_search = form.cleaned_data['restaurantsearch']
-    #         print(user_search)
-    #         matching_restaurants = Restaurant.objects.filter(restaurant_name__icontains=user_search)
-    #         print(matching_restaurants)
-    # else:
-    #     form = SearchForm()
-    #     context = {'form' : form}
-    # return render(request, 'website/restaurants.html', context)
-        
-
-    # user_search = request.GET['user_typed_this']
-    # print(user_search)
-    # matching_restaurants = Restaurant.objects.filter(restaurant_name__icontains='test')
-    # print(matching_restaurants)
-    # params = {'restaurant' : matching_restaurants, 'search': user_search}
-    # return render(request, 'website/searchbar.html', params)
 
 # Searches for reservations by date
 def reserve_table(request):

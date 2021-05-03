@@ -19,6 +19,7 @@
         {% endfor %}
     </ul>
 </body> -->
+
 <h1>Search Results:</h1>
 {% if matching_restaurants %}
     <ul>
@@ -29,5 +30,5 @@
     <p>No restaurants are available.</p>
 {% endif %}
 
-
+<br><br><input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
 <button onclick="location.href = '/website/order_summary/';">View Cart</button>

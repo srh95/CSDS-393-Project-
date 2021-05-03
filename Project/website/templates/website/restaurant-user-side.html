@@ -1,0 +1,17 @@
+<h1> {{restaurant.restaurant_name}}  </h1>
+
+<h2>Menu List</h2>
+
+{% if menu_list %}
+    <ul>
+    {% for menu_item in menu_list %}
+        <li><a href="/website/restaurant/menu_list/{{ menu_item.id }}/">{{ menu_item.menu_item_name}}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No menu items are available.</p>
+{% endif %}
+
+<button onclick="location.href = '/website/order_summary/';">View Cart</button>
+<input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
+
