@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% load static %}
 {% block body %}
       <div class="main-wrap">
@@ -29,37 +30,49 @@
                                   Maybe i shouldnt have a reserve form just write everything out and then onClick call a view -->
 
 
-                  <form action = #>
+                  <form action = #, method = "POST">
                   {% csrf_token %}
                     <div class="row mb-4">
                     <div class="form-group col-md-4">
                       <label for="name" class="label">Name</label>
                       <div class="form-field-icon-wrap">
                         <span class="icon ion-android-person"></span>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" id="name" name="name">
                       </div>
                     </div>
-                    <form method="GET" class="form-group">
                       <div class="form-group col-md-4">
                       <label for="email" class="label">Email</label>
                       <div class="form-field-icon-wrap">
                         <span class="icon ion-email"></span>
-                        <input type="email" class="form-control" id="email">
+                        <input type="email" class="form-control" id="email" name="email">
                       </div>
                     </div>
                     <div class="form-group col-md-4">
                       <label for="phone" class="label">Phone</label>
                       <div class="form-field-icon-wrap">
                         <span class="icon ion-android-call"></span>
-                        <input type="text" class="form-control" id="phone">
+                        <input type="text" class="form-control" id="phone" name="phone">
                       </div>
                     </div>
 
 
 
-                      <button onclick="reserve_table(request)">Submit</button>
-                </form>
+                      <button onclick="confirm_reservation(request)">Submit</button>
+                </form>-->
 
+<!--                <script> document.getElementById("write").innerHTML = window.location.search;-->
+
+<!--window.onload = function () {-->
+<!--    var url = document.location.href,-->
+<!--        params = url.split('/')[1].split('/'),-->
+<!--        data = {}, tmp;-->
+<!--    for (var i = 0, l = params.length; i < l; i++) {-->
+<!--         tmp = params[i].split('=');-->
+<!--         data[tmp[0]] = tmp[1];-->
+<!--    }-->
+<!--    document.getElementById('here').innerHTML = data.name;-->
+<!--    -->
+<!--}</script>-->
 
               </div>
             </div>
