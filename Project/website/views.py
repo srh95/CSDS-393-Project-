@@ -234,31 +234,31 @@ def create_reservation(request):
     return render(request, 'website/reservationSlot.html',context) # our front end html
 
 # Add something to add those fields to the reservation
-def confirm_reservation(request):
-    # if request.method == 'GET':
-    #     name = request.GET.get('name')
-    #     email = request.GET.get('email')
-    #     phone = request.GET.get('phone')
-    #     reservation_slot = ReservationSlot.objects.filter(id=id)
-    #     reservation_slot.name = name
-    #     reservation_slot.email() = email
-    #     reservation_slot.phone() = phone
-    # return render(request, 'reservation/reservationConf.html', {'reservation_slots': reservation_slot})
-    reserve_form = ReserveTableForm()
+def confirm_reservation(request,reservation_id):
     if request.method == 'POST':
-        reserve_form = ReserveTableForm(request.POST)
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        ReservationSlot.objects.filter(id=reservation_id).update(name=name)
+        ReservationSlot.objects.filter(id=reservation_id).update(email=email)
+        ReservationSlot.objects.filter(id=reservation_id).update(phone=phone)
+        ReservationSlot.objects.filter(id=reservation_id).update(booked=True)
+        reservation_slot = ReservationSlot.objects.all()
 
-        if reserve_form.is_valid():
-            reserve_form.save()
+    else :
+        reservation_slot = ReservationSlot.objects.all()
 
-    context = {'reserve_form' : reserve_form}
-    return render(request, 'website/reservationConf.html', context)  # our front end html
+    context = {'reservation_slot' : reservation_slot}
+    return render(request, 'website/reservationConf.html', context)
 
 
 # Displaying the list of reservations
 def reservation_list(request):
-    reservation_list = ReservationSlot.objects.all()
+    if request.method == 'GET':
+        id = request.GET.get('id')
+        ReservationSlot.objects.filter(id=id).delete()
 
+    reservation_list = ReservationSlot.objects.all()
     context = {'reservation_list' : reservation_list}
     return render(request, 'website/reservationList.html',context)
 

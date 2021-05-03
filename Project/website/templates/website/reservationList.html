@@ -38,7 +38,7 @@ date = (day_of_week + " " + month_array[m] + " " + day + ", " + year);
 </script>
 <h2> <script> document.write(date); </script> </h2>
 
-                  <script> reservation_list.objects.filter(reservationSlot__date = date) </script>
+ <script> reservation_list.objects.filter(reservationSlot__date = date) </script>
                   {% for reservation in reservation_list %}
                   {% if reservation.date %}
                   <!--Still need to figure out how to only display the reservations for today-->
@@ -51,6 +51,10 @@ date = (day_of_week + " " + month_array[m] + " " + day + ", " + year);
                   Not Booked
                   {% else %}
                   Booked
+                  Name: {{reservation.name}}
+                  Email: {{reservation.email}}
+                  Phone: {{reservation.phone}}
+
 
                   {% endif %}
 
@@ -63,7 +67,7 @@ date = (day_of_week + " " + month_array[m] + " " + day + ", " + year);
 <form action = "" method = "GET">
     <input id="Reservation Number" type="text" name="Reservation Number" maxlength="10" required>
 
-    <button onclick="remove(request)">Remove</button>
+    <button onclick="reservation_list(request)">Remove</button>
 </form>
               </div>
             </div>

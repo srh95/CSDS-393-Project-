@@ -26,75 +26,8 @@
             <div class="row justify-content-center">
               <div class="col-md-10 p-5 form-wrap">
 
-                {% comment %}
 
-
-                <reserve_form action="#">
-                  <div class="row mb-4">
-                    <div class="form-group col-md-4">
-                      <label for="name" class="label">Name</label>
-                      <div class="form-field-icon-wrap">
-                        <span class="icon ion-android-person"></span>
-                        <input type="text" class="form-control" id="name">
-                      </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label for="email" class="label">Email</label>
-                      <div class="form-field-icon-wrap">
-                        <span class="icon ion-email"></span>
-                        <input type="email" class="form-control" id="email">
-                      </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label for="phone" class="label">Phone</label>
-                      <div class="form-field-icon-wrap">
-                        <span class="icon ion-android-call"></span>
-                        <input type="text" class="form-control" id="phone">
-                      </div>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                      <label for="persons" class="label">Number of Persons</label>
-                      <div class="form-field-icon-wrap">
-                        <span class="icon ion-android-arrow-dropdown"></span>
-                        <select name="persons" id="persons" class="form-control">
-                          <option value="">1 person</option>
-                          <option value="">2 persons</option>
-                          <option value="">3 persons</option>
-                          <option value="">4 persons</option>
-                          <option value="">5 persons</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label for="date" class="label">Date</label>
-                      <div class="form-field-icon-wrap">
-                        <span class="icon ion-calendar"></span>
-                        <input type="text" class="form-control" id="date">
-                      </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label for="time" class="label">Time</label>
-                      <div class="form-field-icon-wrap">
-                        <span class="icon ion-android-time"></span>
-                        <input type="text" class="form-control" id="time">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row justify-content-center">
-                    <div class="col-md-4">
-                      <input type="submit" class="btn btn-primary btn-outline-primary btn-block" value="Submit">
-                      <!-- <p><a href="#" class="btn btn-primary btn-outline-primary btn-sm">Read More</a></p> -->
-                    </div>
-                  </div>
-                </reserve_form>
-                {% endcomment %}
-
-
-<!--                <form action = "" method = "POST">-->
-<!--                  {% csrf_token %}-->
-<!--                  {{reserve_form}}-->
-
+<
 
 
                   <form action = "" method = "GET">
@@ -111,7 +44,8 @@
                     <form id = "form">
                     {% for reservation in reservation_slots %}
                          {% if reservation.booked == False  %}
-                      <input type="button" value="Time: {{ reservation.time }}" onclick ="document.location.href = '/website/reservation_conf/'" > <!-- {{ reservation.id }}      add the reservation number to the link? then we can just update the fields of that reservation number -->
+                      <input type="button" value="{{reservation.time}}" onclick ="document.location.href = '/website/reservation_conf/{{reservation.id}}'" >
+
                        </form>
                     <p> Number of people: {{ reservation.num_people }}
 

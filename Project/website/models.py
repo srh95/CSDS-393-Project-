@@ -42,7 +42,7 @@ class ReservationSlot(models.Model):
     date = models.DateField()
     time = models.TimeField()
     booked = models.BooleanField(default=False)
-    name = models.CharField(max_length=50, default="")
+    name = models.CharField(max_length=50, default="N/A")
     email = models.EmailField(default="")
     phone = models.IntegerField(default=0)
 
