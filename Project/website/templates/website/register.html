@@ -9,18 +9,26 @@
     <label for="restaurantname">Restaurant Name: </label>
     <input id="restaurantname" type="text" name="restaurantname" maxlength="100" required><br><br>
 
-    <label for="username">username: </label>
+    <label for="username">Username: </label>
     <input id="username" type="text" name="username" maxlength="100" required><br><br>
 
-    <label for="password1">password: </label>
+    <label for="password1">Password: </label>
     <input id="password1" type="text" name="password1" maxlength="100" required><br><br>
 
-    <label for="password2">verify password: </label>
-    <input id="password2" type="text" name="password2" maxlength="100" required><br><br>
+    <label for="password2">Verify Password: </label>
+    <input id="password2" type="text" name="password2" maxlength="100" required><br>
 
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+    {% endfor %}
+{% endif %}
+
+
+    <br><button type="submit" class="btn btn-success">Register</button><br><br>
     <input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
-    <button type="submit" class="btn btn-success">Register</button>
     </form>
+
     {% endblock %}
 </form>
 
