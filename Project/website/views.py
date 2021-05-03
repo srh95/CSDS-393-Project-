@@ -1,20 +1,23 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.shortcuts import get_object_or_404, render, redirect
-from .forms import RegisterForm
-from .forms import AddMenuItemForm
-from .forms import LoginForm
-from .forms import UpdateMenuItemNameForm
-from .forms import UpdateMenuItemDescriptionForm
-from .forms import UpdateMenuItemPriceForm
-from .forms import AddToCartForm
-from .forms import SearchForm
-from .forms import RemoveFromCartForm
-from django.core.exceptions import ValidationError
+from django.views.generic import ListView, DetailView, View
+from django.utils import timezone
+from .forms import (
+    RegisterForm,
+    AddMenuItemForm,
+    LoginForm,
+    UpdateMenuItemNameForm,
+    UpdateMenuItemDescriptionForm,
+    UpdateMenuItemPriceForm,
+    AddToCartForm,
+    SearchForm,
+    RemoveFromCartForm,
+    ReserveTableForm,
+    CreateReservationForm,
+)
 from .models import (
     Order,
     OrderItem,
@@ -22,10 +25,6 @@ from .models import (
     Restaurant,
     ReservationSlot,
 )
-from django.views.generic import ListView, DetailView, View
-from django.utils import timezone
-from .forms import ReserveTableForm
-from .forms import CreateReservationForm
 
 
 def index(request):
