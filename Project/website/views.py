@@ -153,7 +153,15 @@ def edit_menu_item(request, menu_item_id):
         form = UpdateMenuItemDescriptionForm()
     return render(request, 'website/edit_menu_item.html', {'form': form, 'menu_item' : menu_item,})
 
-    # if request.method=='POST' and 'btnform2' in request.POST:
+def delete_menu_item(request, menu_item_id):
+    menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
+    if request.method == "POST":
+        menu_item.delete()
+        url = '/website/restaurant/' + str(menu_item.restaurant_id)
+        return redirect(url)
+
+    context={'menu_item' : menu_item}
+    return render(request, 'website/delete_menu_item.html', context)
 
 def register(request):
     if request.method == 'POST':
