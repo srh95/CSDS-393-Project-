@@ -40,6 +40,10 @@ class SearchForm(forms.Form):
     restaurantsearch = forms.CharField(label='Restaurant Name',max_length=50, required=True)
 
 class CreateReservationForm(forms.ModelForm):
+    # table_id= forms.CharField(label='Table ID', max_length=2, required=True)
+    # num_people = forms.CharField(label='Number of people', max_length=2, required=True)
+    # date = forms.CharField(label='Date', max_length=2, required=True)
+    # time = forms.CharField(label='Time', max_length=2, required=True)
     class Meta:
         model = ReservationSlot
         fields = ['table_id', 'num_people', 'date', 'time']

@@ -44,6 +44,7 @@ class Order(models.Model):
 
 # Reservation
 class ReservationSlot(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=True, blank=True)
     table_id = models.CharField(max_length=2)
     num_people = models.IntegerField()
     date = models.DateField()
