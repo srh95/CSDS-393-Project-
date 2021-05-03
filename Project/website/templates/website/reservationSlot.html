@@ -76,9 +76,21 @@
                 </form>
                 {% endcomment %}
 
-                <form action = "" method = "POST">
+<!--                <form action = "" method = "POST">-->
+<!--                  {% csrf_token %}-->
+<!--                  {{create_form}}-->
+
+                <form action = #, method = "POST">
                   {% csrf_token %}
-                  {{create_form}}
+
+                  <label for="text">Table ID: </label>
+                  <input id="text" type="text" name="table_id" maxlength="10" required>
+                  <label for="text">Number of People: </label>
+                  <input id="text" type="text" name="num_people" maxlength="10" required>
+                  <label for="text">Date: </label>
+                  <input id="text" type="text" name="date" maxlength="10" required>
+                  <label for="text">Time: </label>
+                  <input id="text" type="text" name="time" maxlength="10" required>
 
                   <button type = "Submit" class="btn btn-primary">Add</button>
                 </form>

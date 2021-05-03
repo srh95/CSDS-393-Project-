@@ -267,22 +267,32 @@ def search(request):
         return render(request, 'website/restaurants.html', {'form' : form, 'restaurant_list': restaurant_list}) 
 
 # Searches for reservations by date
-def reserve_table(request):
+def reserve_table(request,restaurant_id):
+    # reservation_slots = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
     if request.method == 'GET':
             date = request.GET.get('date')
-            reservation_slots = ReservationSlot.objects.filter(date=date)
+            reservation_slots = ReservationSlot.objects.filter(date=date,restaurant__pk=restaurant_id)
     return render(request, 'website/reservation.html', {'reservation_slots': reservation_slots})
 
 # for creating a reservation slot
-def create_reservation(request):
+def create_reservation(request,restaurant_id):
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+    reservation_slots = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
     create_form = CreateReservationForm()
     if request.method == 'POST':
         create_form = CreateReservationForm(request.POST)
-
         if create_form.is_valid():
-            create_form.save()
+            database = ReservationSlot.objects.create(
+            restaurant = restaurant,
+            table_id = create_form.cleaned_data['table_id'],
+            num_people = create_form.cleaned_data['num_people'],
+            time = create_form.cleaned_data['time'],
+            date=create_form.cleaned_data['date'],
+            )
+            database.save()
 
-    context = {'create_form' : create_form}
+
+    context = {'create_form' : create_form, 'reservation_slots' : reservation_slots}
     return render(request, 'website/reservationSlot.html',context) # our front end html
 
 # Add something to add those fields to the reservation
@@ -305,18 +315,14 @@ def confirm_reservation(request,reservation_id):
 
 
 # Displaying the list of reservations
-def reservation_list(request):
+def reservation_list(request,restaurant_id):
+    #restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     if request.method == 'GET':
         id = request.GET.get('id')
         ReservationSlot.objects.filter(id=id).delete()
 
-    reservation_list = ReservationSlot.objects.all()
+    reservation_list = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
     context = {'reservation_list' : reservation_list}
     return render(request, 'website/reservationList.html',context)
 
 
-# not working for some reason
-def remove(request):
-    if request.method == 'GET':
-        id = request.GET.get('id')
-        ReservationSlot.objects.filter(id=id).delete()
