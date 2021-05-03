@@ -92,8 +92,13 @@ def restaurant(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     menu_list = MenuItem.objects.filter(restaurant__pk = restaurant_id)
     context = {'restaurant' : restaurant, 'menu_list' : menu_list, 'restaurant_id' : restaurant_id}
-    return render(request, 'website/restaurant.html', context)
+    return render(request, 'website/restaurant-business-side.html', context)
 
+def restaurant_user_side(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+    menu_list = MenuItem.objects.filter(restaurant__pk = restaurant_id)
+    context = {'restaurant' : restaurant, 'menu_list' : menu_list, 'restaurant_id' : restaurant_id}
+    return render(request, 'website/restaurant-user-side.html', context)
 
 def restaurant_list(request):
     restaurant_list = Restaurant.objects.all()
