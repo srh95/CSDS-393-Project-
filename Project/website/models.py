@@ -15,7 +15,6 @@ class MenuItem(models.Model):
     menu_item_name = models.CharField(max_length=200)
     menu_item_description = models.CharField(max_length=200)
     menu_item_price = models.FloatField(default=0)
- #   inOrder = models.BooleanField(default=false)
 
     def __str__(self):
         return self.menu_item_name
@@ -26,14 +25,22 @@ class OrderItem(models.Model):
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
 
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    items = models.ManyToManyField(MenuItem)
-  #  start_date = models.DateTimeField(auto_now_add = True)
-   # ordered_date = models.DateTimeField()
-    ordered = models.BooleanField(default = False)
+    item_name = models.CharField(max_length = 200, default='00000')
+    item_price = models.DecimalField(default=0, decimal_places=2, max_digits=100)
+    item_removed = models.BooleanField(default=False)
+    item_number = models.IntegerField(default=1)
+
+    def __repr__(self):
+        return self.item_price
 
     def __str__(self):
-        return self.user.username
+        return self.item_name
+  #  start_date = models.DateTimeField(auto_now_add = True)
+   # ordered_date = models.DateTimeField()
+ #   ordered = models.BooleanField(default = False)
+
+    # def __str__(self):
+    #     return self.user.username
 
 # Reservation
 class ReservationSlot(models.Model):

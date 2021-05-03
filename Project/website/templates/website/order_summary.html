@@ -1,1 +1,57 @@
-Hello world
+<ul>
+    {% for menu_item in order_list %}
+    <li>Item: {{ menu_item.item_name }}</li>
+    Price: {{ menu_item.item_price }}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="form-check">
+        <input type="checkbox" id={{menu_item.item_name}} value="{{menu_item.item_name}}" name="items_removed">
+        <label for="items_removed">Remove Item</label>
+    </div>
+        <!--input type="submit" name="item_removed" onClick="history.go(0)">Remove Item</input!-->
+    <!--input type="submit" name="item_removed" onClick="history.go(0)">Remove Item</input!-->
+    <button type="submit" class="btn btn-success">Remove Selected Item</button>
+</form>
+
+    {% endfor %}
+
+    <li>Total Price: {{ order_list_price }}</li>
+
+    <form>
+        <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
+          <h3>CHECKOUT</h3>
+          <button type="button" onClick="payWithRave()">Pay Here</button>
+      </form>
+      <script>
+          const publicKey = "FLWPUBK_TEST-704e72f07d64b9c742537a39fe0ef787-X";
+    
+          function payWithRave() {
+              var x = getpaidSetup({
+                  PBFPubKey: publicKey,
+                  customer_email: "user@example.com",
+                  amount: {{ order_list_price }},
+                  customer_phone: "234099940409",
+                  currency: "USD",
+                  txref: "rave-123456",
+                  custom_title: "CSDS 390 Final",
+                  onclose: function() {},
+                  callback: function(response) {
+                      var txref = response.tx.txRef;
+                      console.log("this is response returned after a charge", response);
+                      if(
+                          response.tx.chargeResponseCode == "00" ||
+                          response.tx.chargeResponseCode == "0"
+                      ) {
+                          document.location.href = "successPage.html"
+                            //redirect to success page
+                      } else {
+                          //redirect to failure page
+                          document.location.href = "failure.html"
+                      }
+                      x.close();
+                    }
+                }); }
+        </script>
+</ul>

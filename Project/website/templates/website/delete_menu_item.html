@@ -1,0 +1,9 @@
+<p>Are you sure you want to delete {{menu_item.menu_item_name}}</p>
+
+
+<form action="/website/restaurant/delete_menu_item/{{ menu_item.id }}" method="POST">
+
+    {% csrf_token %}
+    <a href="/website"><button type="button">Cancel</button></a>
+    <input type="submit" name="Delete" id="">
+</form>

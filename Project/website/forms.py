@@ -28,9 +28,13 @@ class LoginForm(forms.Form):
     password = forms.CharField(label='password', max_length=50, required=True)
     
 class AddToCartForm(forms.Form):
-    menuItemId = id
-    addToCart = True
+    num_items = forms.IntegerField(label='Quantity', required=True)
 
+class RemoveFromCartForm(forms.Form):
+    items_removed = forms.BooleanField(label='items_removed', required=False)
+
+class PaymentSuccess(forms.Form):
+    success = True
 
 class SearchForm(forms.Form):
     restaurantsearch = forms.CharField(label='Restaurant Name',max_length=50, required=True)
