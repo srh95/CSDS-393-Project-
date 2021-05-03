@@ -1,4 +1,4 @@
-{% block title %}Restaurant Login{% endblock %}
+<b>{% block title %}Restaurant Login{% endblock %}<br><br></b>
 
 
 <form method="post">
@@ -7,16 +7,16 @@
     {% block content %}
     <form method="POST" class="form-group">
     <label for="restaurantname">Restaurant Name: </label>
-    <input id="restaurantname" type="text" name="restaurantname" maxlength="100" required>
+    <input id="restaurantname" type="text" name="restaurantname" maxlength="100" required><br><br>
 
     <label for="username">username: </label>
-    <input id="username" type="text" name="username" maxlength="100" required>
+    <input id="username" type="text" name="username" maxlength="100" required><br><br>
 
     <label for="password">password: </label>
-    <input id="password" type="text" name="password" maxlength="100" required>
+    <input id="password" type="text" name="password" maxlength="100" required><br><br>
 
-    <input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
     <button type="submit" class="btn btn-success">Log in</button>
+    <input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
     </form>
     {% endblock %}
 </form>

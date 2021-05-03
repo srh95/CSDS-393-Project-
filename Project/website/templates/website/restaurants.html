@@ -5,7 +5,7 @@
     <button type="submit">Search</i></button>
 </form> -->
 
-{% block title %}Create an Account{% endblock %}
+<b>{% block title %}eats{% endblock %}<br><br></b>
 
 
 <form method="post">
@@ -13,7 +13,7 @@
     
     {% block content %}
     <form method="POST" class="form-group">
-    <label for="restaurantsearch">Restaurant Name: </label>
+    <!-- <label for="restaurantsearch">Restaurant Name: </label> -->
     <input id="restaurantsearch" type="text" placeholder="Search for restaurants..."name="restaurantsearch" maxlength="100" required >
 
     <button type="submit" class="btn btn-success">Search</button>
@@ -31,11 +31,11 @@
     <p>No restaurants are available.</p>
 {% endif %}
 
-<button onclick="location.href = '/website/order_summary/';">View Cart</button>
 
 <form id="poo">
     <input type="button" value="Business Login" onclick="document.location.href = '/website/accounts/login/'">
-    <input type="button" value="Business Registration" onclick="document.location.href = '/website/accounts/register/'">
+    <input type="button" value="Business Registration" onclick="document.location.href = '/website/accounts/register/'"><br><br>
+    <button onclick="location.href = '/website/order_summary/';">View Cart</button>
 </form>
 
 
