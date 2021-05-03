@@ -4,6 +4,6 @@
 <form action="/website/restaurant/delete_menu_item/{{ menu_item.id }}" method="POST">
 
     {% csrf_token %}
-    <a href="/website">Cancel</a>
-    <input type="submit" name="Confirm" id="">
+    <a href="/website"><button type="button">Cancel</button></a>
+    <input type="submit" name="Delete" id="">
 </form>
