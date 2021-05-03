@@ -20,5 +20,6 @@ urlpatterns = [
     path('create_reservation/', views.create_reservation, name='create_reservation'),
     path('reservation_list/', views.reservation_list, name='reservation_list'),
     path('reservation_conf/',views.confirm_reservation, name = 'confirm_reservation'),
+    path('successPage/', views.paymentSuccess, name = 'successPage'),
     
 ]

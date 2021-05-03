@@ -6,13 +6,15 @@
 <form method="POST">
     {% csrf_token %}
 
-    {% block content %}
-    <form method="POST" >
-        <input type="submit" name="item_removed" onClick="history.go(0)">Remove Item</input>
+    <div class="form-check">
+        <input type="checkbox" id={{menu_item.item_name}} value="{{menu_item.item_name}}" name="items_removed">
+        <label for="items_removed">Remove Item</label>
+    </div>
+        <!--input type="submit" name="item_removed" onClick="history.go(0)">Remove Item</input!-->
     <!--input type="submit" name="item_removed" onClick="history.go(0)">Remove Item</input!-->
-    </form>
-    {% endblock %}
+    <button type="submit" class="btn btn-success">Remove Selected Item</button>
 </form>
+
     {% endfor %}
 
     <li>Total Price: {{ order_list_price }}</li>
@@ -42,7 +44,7 @@
                           response.tx.chargeResponseCode == "00" ||
                           response.tx.chargeResponseCode == "0"
                       ) {
-                          document.location.href = "success.html"
+                          document.location.href = "successPage.html"
                             //redirect to success page
                       } else {
                           //redirect to failure page

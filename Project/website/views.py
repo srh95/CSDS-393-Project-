@@ -13,6 +13,7 @@ from .forms import UpdateMenuItemPriceForm
 from .forms import AddToCartForm
 from .forms import SearchForm
 from .forms import RemoveFromCartForm
+from .forms import PaymentSuccess
 from django.core.exceptions import ValidationError
 from .models import (
     Order,
@@ -38,13 +39,16 @@ def menu_item(request, menu_item_id):
             print(form.cleaned_data['num_items'])
             print(menu_item.menu_item_name)
             print(menu_item.menu_item_price)
+            tmpNum = 0
             for x in range(form.cleaned_data['num_items']):
                 print('create thingy here')
                 database = Order.objects.create(
                     item_name = menu_item.menu_item_name,
-                    item_price = menu_item.menu_item_price
+                    item_price = menu_item.menu_item_price,
+                    item_number = tmpNum
                 )
                 database.save()
+                tmpNum = tmpNum+1
             url = '/website/restaurant/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
 
@@ -63,19 +67,27 @@ def order_summary(request):
 def order_list(request):
     order_list = Order.objects.all()
     order_list_price = 0
-    for x in order_list:
-        if request.method == 'POST':
-            form = RemoveFromCartForm(request.POST)
-            if form.is_valid() & x.item_removed == True:
-                x.delete()
+    if request.POST:
+        items_removed = request.POST.getlist('items_removed')
+        form = RemoveFromCartForm(request.POST)
+        if form.is_valid():
+            for x in items_removed:
+                print(x)
+                instance = Order.objects.filter(item_name=x)
+                instance[0].delete()
     for x in order_list:
         price = x.__repr__()
-        price = int(price)
+        price = float(price)
         order_list_price = order_list_price + price
     print(order_list_price)
     order_list_price = str(order_list_price)
     context = {'order_list': order_list, 'order_list_price': order_list_price}
     return render(request, 'website/order_summary.html', context)
+
+def paymentSuccess(request):
+    #if request.POST:
+    Order.objects.all().delete()
+    return render(request, 'website/successPage.html')
 
 def remove_item(request, menu_item_id):
     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
