@@ -24,7 +24,7 @@
 {% if restaurant_list %}
     <ul>
     {% for restaurant in restaurant_list %}
-        <li><a href="/website/restaurant/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li>
+        <li><a href="/website/restaurant/user/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
