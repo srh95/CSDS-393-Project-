@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import ListView, DetailView, View
+import datetime
 from django.utils import timezone
 from .forms import (
     RegisterForm,
@@ -271,7 +272,8 @@ def reserve_table(request,restaurant_id):
     # reservation_slots = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
     if request.method == 'GET':
             date = request.GET.get('date')
-            reservation_slots = ReservationSlot.objects.filter(date=date,restaurant__pk=restaurant_id)
+            reservation_slots = ReservationSlot.objects.filter(date=date, restaurant__pk=restaurant_id)
+
     return render(request, 'website/reservation.html', {'reservation_slots': reservation_slots})
 
 # for creating a reservation slot
@@ -301,6 +303,12 @@ def confirm_reservation(request,reservation_id):
         name = request.POST.get('name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
+        phone_str = str(phone)
+        # prints error message if phone number is in the wrong format 
+        if (len(phone_str) != 10):
+            messages.error(request, 'Invalid phone number')
+            return render(request, 'website/reservationConf.html')
+
         ReservationSlot.objects.filter(id=reservation_id).update(name=name)
         ReservationSlot.objects.filter(id=reservation_id).update(email=email)
         ReservationSlot.objects.filter(id=reservation_id).update(phone=phone)
@@ -314,7 +322,7 @@ def confirm_reservation(request,reservation_id):
     return render(request, 'website/reservationConf.html', context)
 
 
-# Displaying the list of reservations
+# Displaying the list of reservations and removing reservations
 def reservation_list(request,restaurant_id):
     if request.method == 'GET':
         id = request.GET.get('id')
