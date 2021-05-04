@@ -20,7 +20,7 @@
             <div class="row justify-content-center mb-5">
               <div class="col-md-8  text-center">
                 <h2 class="mb-3">Reservations </h2>
-                <p class="lead">To create an open reservation slot, please enter the required information below and press the "add" button. To remove a reservation slot, enter the reservation number and press the "remove" button.</p>
+                <p class="lead">To create an open reservation slot, please enter the required information below and press the "add" button. </p>
               </div>
             </div>
             <div class="row justify-content-center">
@@ -83,14 +83,14 @@
                 <form action = #, method = "POST">
                   {% csrf_token %}
 
-                  <label for="text">Table ID: </label>
-                  <input id="text" type="text" name="table_id" maxlength="10" required>
-                  <label for="text">Number of People: </label>
-                  <input id="text" type="text" name="num_people" maxlength="10" required>
-                  <label for="text">Date: </label>
-                  <input id="text" type="text" name="date" maxlength="10" required>
-                  <label for="text">Time: </label>
-                  <input id="text" type="text" name="time" maxlength="10" required>
+                  <p><label for="text">Table ID: </label>
+                  <input id="text" type="text" name="table_id" maxlength="10" required></p>
+                  <p><label for="text">Party Size: </label>
+                  <input id="text" type="text" name="num_people" maxlength="10" required></p>
+                  <p><label for="text">Date: </label>
+                  <input id="text" type="text" name="date" maxlength="10" required> </p>
+                  <p><label for="text">Time: </label>
+                  <input id="text" type="text" name="time" maxlength="10" required></p>
 
                   <button type = "Submit" class="btn btn-primary">Add</button>
                 </form>
