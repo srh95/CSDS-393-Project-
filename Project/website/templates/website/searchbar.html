@@ -53,7 +53,7 @@
                   {% if matching_restaurants %}
                   <ul>
                       {% for restaurant in matching_restaurants %}
-                      <li><a href="/website/restaurant/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li>
+                      <li><a href="/website/restaurant/user/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li>
                       {% endfor %}
                       {% else %}
                       <p>No restaurants are available.</p>
