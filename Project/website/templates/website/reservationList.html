@@ -35,8 +35,21 @@ month_array = ["January", "February", "March", "April", "May", "June", "July", "
 year = d.getFullYear();
 day = d.getDate();
 date = (day_of_week + " " + month_array[m] + " " + day + ", " + year);
+new_m = m+1
+string_m = ''+new_m
+{% if m < 10  %}
+stringm = '0' + string_m
+{% endif %}
+string_d = ''+day
+{% if day < 10 %}
+string_d = '0' + string_d
+{% endif %}
+string_y = ''+year
+formatted_date = string_y + '-' + string_m + '-' + string_d
+hum = 2
 </script>
-<h2> <script> document.write(date); </script> </h2>
+  <h2><script>document.write(stringm)</script></h2>
+<h3> <script> document.write(date); </script> </h3>
 
  <script> reservation_list.objects.filter(reservationSlot__date = date) </script>
                   {% for reservation in reservation_list %}
@@ -65,7 +78,8 @@ date = (day_of_week + " " + month_array[m] + " " + day + ", " + year);
 <p>Type a reservation number in the box below to remove that reservation slot. </p>
 
 <form action = "" method = "GET">
-    <input id="Reservation Number" type="text" name="Reservation Number" maxlength="10" required>
+    <label for="text">Reservation Number: </label>
+    <input id="text" type="text" name="id" maxlength="10" required>
 
     <button onclick="reservation_list(request)">Remove</button>
 </form>

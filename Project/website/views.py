@@ -295,7 +295,7 @@ def create_reservation(request,restaurant_id):
     context = {'create_form' : create_form, 'reservation_slots' : reservation_slots}
     return render(request, 'website/reservationSlot.html',context) # our front end html
 
-# Add something to add those fields to the reservation
+# adds name, email, and phone to a reservation
 def confirm_reservation(request,reservation_id):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -316,10 +316,10 @@ def confirm_reservation(request,reservation_id):
 
 # Displaying the list of reservations
 def reservation_list(request,restaurant_id):
-    #restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     if request.method == 'GET':
         id = request.GET.get('id')
-        ReservationSlot.objects.filter(id=id).delete()
+        ReservationSlot.objects.filter(id=id,restaurant__pk=restaurant_id).delete()
+
 
     reservation_list = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
     context = {'reservation_list' : reservation_list}
