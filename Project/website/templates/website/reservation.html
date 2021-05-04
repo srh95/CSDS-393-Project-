@@ -35,24 +35,25 @@
                       <label for="text">Date: </label>
                       <input id="text" type="text" name="date" maxlength="10" required>
 
-                      <button onclick="reserve_table(request)">Search</button>
-                </form>
-                    <!-- Now based on the date entered, display all reservations on that date where booked = false  -->
-                    <!--<form id = "form", action = "reservationConf.html">-->
-                    <form id = "form">
-                    {% for reservation in reservation_slots %}
-                         {% if reservation.booked == False  %}
-                      <input type="button" value="{{reservation.time}}" onclick ="document.location.href = '/website/reservation_conf/{{reservation.id}}'" >
+                        <button onclick="reserve_table(request)">Search</button>
+                    </form>
+                      <!-- Now based on the date entered, display all reservations on that date where booked = false  -->
+                      <!--<form id = "form", action = "reservationConf.html">-->
+                      <form id = "form">
+                          <h5>Showing schedule for {{mydate}}</h5>
+                          {% for reservation in reservation_slots %}
+                          {% if reservation.booked == False  %}
+                          <input type="button" value="{{reservation.time}}" onclick ="document.location.href = '/website/reservation_conf/{{reservation.id}}'" >
 
-                       </form>
-                    <p> Number of people: {{ reservation.num_people }}
+                      </form>
+                      <ul class="dashed">
+                          <li>Number of people: {{ reservation.num_people }}</li>
+                          <li> Date: {{ reservation.date }} </li>
+                      </ul>
+                      </p>
 
-                    Date: {{ reservation.date }} <!-- remove this, only here for testing -->
-                    Reservation Number: {{reservation.id}} <!-- remove this, only here for testing -->
-                    </p>
-
-                    {% endif %}
-                    {% endfor %}
+                      {% endif %}
+                      {% endfor %}
 
 
 

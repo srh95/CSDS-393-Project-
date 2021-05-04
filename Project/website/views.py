@@ -274,7 +274,7 @@ def reserve_table(request,restaurant_id):
             date = request.GET.get('date')
             reservation_slots = ReservationSlot.objects.filter(date=date, restaurant__pk=restaurant_id)
 
-    return render(request, 'website/reservation.html', {'reservation_slots': reservation_slots})
+    return render(request, 'website/reservation.html', {'reservation_slots': reservation_slots,'mydate' : date})
 
 # for creating a reservation slot
 def create_reservation(request,restaurant_id):
@@ -324,13 +324,22 @@ def confirm_reservation(request,reservation_id):
 
 # Displaying the list of reservations and removing reservations
 def reservation_list(request,restaurant_id):
-    if request.method == 'GET':
+
+    if request.method == 'GET' and 'date' in request.GET:
+        date = request.GET.get('date')
+        reservation_list = ReservationSlot.objects.filter(date=date, restaurant__pk=restaurant_id)
+        return render(request, 'website/reservationList.html', {'reservation_list': reservation_list, 'mydate' : date})
+
+
+    if request.method == 'GET' and 'id' in request.GET:
         id = request.GET.get('id')
         ReservationSlot.objects.filter(id=id,restaurant__pk=restaurant_id).delete()
+        reservation_list = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
+        return render(request, 'website/reservationList.html', {'reservation_list': reservation_list})
+
+    else:
+        return render(request, 'website/reservationList.html')
 
 
-    reservation_list = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
-    context = {'reservation_list' : reservation_list}
-    return render(request, 'website/reservationList.html',context)
 
 
