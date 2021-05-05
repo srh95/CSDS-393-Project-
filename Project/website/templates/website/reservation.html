@@ -44,7 +44,7 @@
                           {% if reservation_slots %}
                           {% for reservation in reservation_slots %}
                           {% if reservation.booked == False  %}
-                          <input type="button" value="{{reservation.time}} for {{reservation.num_people}} people" onclick ="document.location.href = '/website/reservation_conf/{{reservation.id}}'" >
+                          <p><input type="button" value="{{reservation.time}} for {{reservation.num_people}} people" onclick ="document.location.href = '/website/reservation_conf/{{reservation.id}}'" > </p>
                           {% endif %}
                           {% endfor %}
                           {% else %}
