@@ -8,6 +8,7 @@ class Restaurant(models.Model):
     restaurant_username = models.CharField(max_length=30)
     restaurant_password = models.CharField(max_length=50)
 
+
 class MenuItem(models.Model):
     # the specified restaurant would be the foreign key to connect menu items with the restaurants
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
@@ -18,26 +19,54 @@ class MenuItem(models.Model):
     def __str__(self):
         return self.menu_item_name
 
-  #  def get_absolute_url(self):
-   #     return <int:menu_item_id>
-
 
 # putting items in an order
 class OrderItem(models.Model):
+    #default_restaurant_id = 0
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=True,blank=True)
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
 
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, default = 'user', on_delete=models.CASCADE)
-    items = models.ManyToManyField(MenuItem)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=True,blank=True)
+    #table = models.OneToOneField(Table, on_delete=models.CASCADE, null=True, blank=True)
+    item_name = models.CharField(max_length = 200, default='00000')
+    item_price = models.DecimalField(default=0, decimal_places=2, max_digits=100)
+    item_removed = models.BooleanField(default=False)
+    item_number = models.IntegerField(default=1)
+
+    def __repr__(self):
+        return self.item_price
+
+    def __str__(self):
+        return self.item_name
   #  start_date = models.DateTimeField(auto_now_add = True)
    # ordered_date = models.DateTimeField()
-    ordered = models.BooleanField(default = False)
-    table = models.Foreignkey(Table, on_delete=models.CASCADE)
+ #   ordered = models.BooleanField(default = False)
 
-class Table(models.Model):
-    # restaurant is foreign key to connect
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    table_number = models.IntegerField(default=0)
+    # def __str__(self):
+    #     return self.user.username
 
+# Reservation
+class ReservationSlot(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=True, blank=True)
+    table_id = models.CharField(max_length=2)
+    num_people = models.IntegerField()
+    date = models.DateField()
+    time = models.TimeField()
+    booked = models.BooleanField(default=False)
+    name = models.CharField(max_length=50, default="N/A")
+    email = models.EmailField(default="")
+    phone = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.table_id
     
+class Table(models.Model):
+    #default_restaurant_id = 0
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=True, blank=True)
+    #order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, blank=True)
+    table_number = models.IntegerField(default=0)
+    #order_list = models.ForeignKey(OrderItem, on_delete=models.CASCADE, null=True, blank=True)
 
+    def __str__(self):
+        return self.table_number

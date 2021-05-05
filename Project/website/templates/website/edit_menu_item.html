@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+      <div class="main-wrap">
+        <div class="cover_1 cover_sm">
+          <div class="img_bg" style="background-image: url({% static 'site_static/img/slider-1.jpg' %})" data-stellar-background-ratio="0.5">
+            <div class="container">
+              <div class="row align-items-center justify-content-center">
+                <div class="col-md-7" data-aos="fade-up">
+                  <h2 class="heading">Update Menu</h2>
+<!--                  <p class="lead"> To make a reservation, please enter your information below.</p>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- .cover_1 -->
+
+        <div class="section" data-aos="fade-up">
+          <div class="container">
+            <div class="row justify-content-center mb-5">
+              <div class="col-md-8  text-center">
+                <h2 class="mb-3">Update Menu</h2>
+<!--                <p class="lead">To make a reservation, please enter the date you would like your reservation for and select your desired reservation time. The date must be entered in the format YYYY-MM-DD.</p>-->
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-md-10 p-5 form-wrap">
+
+
+<h1>Update {{ menu_item.menu_item_name }}</h1>
+
+<form method='POST'>
+    {% csrf_token %}
+
+    <label for="menuitemname">Menu Item Name: </label>
+    <input id="menuitemname" type="text" name="menuitemname" maxlength="100" required> 
+    <button type="submit" name="btnform1">Update Name</button>
+    </form>
+
+
+ <form method='POST'>
+    {% csrf_token %}
+
+    <label for="menuitemdescription">Menu Item Description: </label>
+    <input id="menuitemdescription" type="text" name="menuitemdescription" maxlength="100" required>
+    <button type="submit" name="btnform2">Update Desciption</button>
+</form>
+
+
+<form method='POST'>
+    {% csrf_token %}
+
+    <label for="menuitemprice">Menu Item Price: </label>
+    <input id="menuitemprice" type="text" name="menuitemprice" maxlength="100" required> 
+    <button type="submit" name="btnform3">Update Price</button>
+</form>
+
+<a class="btn btn-danger" href="/website/restaurant/delete_menu_item/{{ menu_item.id }}"><button type="button">Delete</button></a>
+
+
+<!-- <button onclick="myFunction()">Delete Menu Item</button>
+
+<script>
+    function myFunction() {
+        window.alert({{ menu_item.menu_item_name }});
+    }
+</script> -->
+
+</div>
+            </div>
+          </div>
+        </div> <!-- .section -->
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div> <!-- .section -->
+
+
+
+
+        </div> <!-- .section -->
+
+
+
+      </div> <!-- .main-wrap -->
+
+{% endblock body %}
+

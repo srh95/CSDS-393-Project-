@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block body %}
+      <div class="main-wrap">
+        <div class="cover_1 cover_sm">
+          <div class="img_bg" style="background-image: url({% static 'site_static/img/slider-1.jpg' %})" data-stellar-background-ratio="0.5">
+            <div class="container">
+              <div class="row align-items-center justify-content-center">
+                <div class="col-md-7" data-aos="fade-up">
+                  <h2 class="heading">Reservation</h2>
+                  <p class="lead"> To make a reservation, please enter your information below.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- .cover_1 -->
+
+        <div class="section" data-aos="fade-up">
+          <div class="container">
+            <div class="row justify-content-center mb-5">
+              <div class="col-md-8  text-center">
+                <h2 class="mb-3">Reservation</h2>
+                <p class="lead">To make a reservation, please enter the following information. </p>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-md-10 p-5 form-wrap">
+                <!-- When submit button is pressed, it should add this info to the appropriate reservationSlot and set it to booked
+                                  Maybe i shouldnt have a reserve form just write everything out and then onClick call a view -->
+
+
+                  <form action = #, method = "POST">
+                  {% csrf_token %}
+                    <div class="row mb-4">
+                    <div class="form-group col-md-4">
+                      <label for="name" class="label">Name</label>
+                      <div class="form-field-icon-wrap">
+                        <span class="icon ion-android-person"></span>
+                        <input type="text" class="form-control" id="name" name="name">
+                      </div>
+                    </div>
+                      <div class="form-group col-md-4">
+                      <label for="email" class="label">Email</label>
+                      <div class="form-field-icon-wrap">
+                        <span class="icon ion-email"></span>
+                        <input type="email" class="form-control" id="email" name="email">
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="phone" class="label">Phone</label>
+                      <div class="form-field-icon-wrap">
+                        <span class="icon ion-android-call"></span>
+                        <input type="text" class="form-control" id="phone" name="phone">
+                      </div>
+                    </div>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+    {% endfor %}
+{% endif %}
+
+
+                    <p>  <button onclick="confirm_reservation(request)">Submit</button> </p>
+                </form>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div> <!-- .section -->
+
+
+
+
+        </div> <!-- .section -->
+
+
+
+      </div> <!-- .main-wrap -->
+
+{% endblock body %}
+

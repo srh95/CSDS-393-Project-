@@ -1,4 +1,30 @@
-{% block title %}Create an Account{% endblock %}
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+      <div class="main-wrap">
+        <div class="cover_1 cover_sm">
+          <div class="img_bg" style="background-image: url({% static 'site_static/img/slider-1.jpg' %})" data-stellar-background-ratio="0.5">
+            <div class="container">
+              <div class="row align-items-center justify-content-center">
+                <div class="col-md-7" data-aos="fade-up">
+                  <h2 class="heading">Restaurant Registration Page</h2>
+<!--                  <p class="lead"> To make a reservation, please enter your information below.</p>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- .cover_1 -->
+
+        <div class="section" data-aos="fade-up">
+          <div class="container">
+            <div class="row justify-content-center mb-5">
+              <div class="col-md-8  text-center">
+                <h2 class="mb-3">Restaurant Registration</h2>
+<!--                <p class="lead">To make a reservation, please enter the date you would like your reservation for and select your desired reservation time. The date must be entered in the format YYYY-MM-DD.</p>-->
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-md-10 p-5 form-wrap">
 
 
 <form method="post">
@@ -7,21 +33,53 @@
     {% block content %}
     <form method="POST" class="form-group">
     <label for="restaurantname">Restaurant Name: </label>
-    <input id="restaurantname" type="text" name="restaurantname" maxlength="100" required>
+    <input id="restaurantname" type="text" name="restaurantname" maxlength="100" required><br><br>
 
-    <label for="username">username: </label>
-    <input id="username" type="text" name="username" maxlength="100" required>
+    <label for="username">Username: </label>
+    <input id="username" type="text" name="username" maxlength="100" required><br><br>
 
-    <label for="password1">password: </label>
-    <input id="password1" type="text" name="password1" maxlength="100" required>
+    <label for="password1">Password: </label>
+    <input id="password1" type="text" name="password1" maxlength="100" required><br><br>
 
-    <label for="password2">verify password: </label>
-    <input id="password2" type="text" name="password2" maxlength="100" required>
+    <label for="password2">Verify Password: </label>
+    <input id="password2" type="text" name="password2" maxlength="100" required><br>
 
-    <button type="submit" class="btn btn-success">Register</button>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+    {% endfor %}
+{% endif %}
+
+
+    <br><button type="submit" class="btn btn-success">Register</button><br><br>
+    <input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
     </form>
+
     {% endblock %}
 </form>
 
+</div>
+            </div>
+          </div>
+        </div> <!-- .section -->
 
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div> <!-- .section -->
+
+
+
+
+        </div> <!-- .section -->
+
+
+
+      </div> <!-- .main-wrap -->
+
+{% endblock body %}
 

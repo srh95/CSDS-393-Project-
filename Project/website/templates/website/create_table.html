@@ -1,0 +1,22 @@
+<b>{% block title %}Input Table Number to Create Order{% endblock %}<br><br></b>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% block content %}
+    <form method="POST" class="form-group">
+    <label for="tablenumber">Table Number: </label>
+    <input id="tablenumber" type="text" name="tablenumber" maxlength="100" required><br><br>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+    {% endfor %}
+{% endif %}
+
+
+    <br><button type="submit" class="btn btn-success">Back to Order Page</button><br><br>
+     </form>
+
+    {% endblock %}
+</form>

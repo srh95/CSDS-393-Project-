@@ -1,0 +1,9 @@
+<p>Are you sure you want to close table {{table.table_number}} ?</p>
+
+
+<form action="/website/close_table/{{ table.id }}" method="POST">
+
+   {% csrf_token %}
+   <a href="/website"><button type="button">Cancel</button></a>
+   <input type="submit" name="Close Table" id="">
+</form>

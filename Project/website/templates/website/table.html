@@ -1,0 +1,18 @@
+<h1>Table: {{table.table_number}}</h1>
+
+<h2>Order:</h2>
+{% for order_list in table %}
+    {% for order_item in order_list %}
+       <li>Item: {{ order.item_name }}</li>
+
+
+<a class="btn btn-danger" href="/website/close_table/{{ table.id }}"><button type="button">Close Table</button></a>
+
+
+<!-- <button onclick="myFunction()">Close Table</button>
+
+<script>
+    function myFunction() {
+        window.alert({{ table.table_number }});
+    }
+</script> -->

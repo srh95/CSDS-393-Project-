@@ -1,0 +1,11 @@
+<h1>Current Tables</h1>
+
+{% if table_list %}
+    <ul>
+    {% for table in table_list %}
+        <li><a href="/website/table/{{ table.id }}/">{{ table.table_number }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No tables are currently occupied.</p>
+{% endif %}

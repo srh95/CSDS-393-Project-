@@ -1,16 +1,97 @@
-<h1>Restaurants</h1>
+<!-- <h1>Restaurants</h1> -->
 
-<form id="form">
+<!-- <form id="form">
     <input type="search" id="query" name="q" placeholder="Search for restaurants...">
     <button type="submit">Search</i></button>
+</form> -->
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+      <div class="main-wrap">
+        <div class="cover_1 cover_sm">
+          <div class="img_bg" style="background-image: url({% static 'site_static/img/slider-1.jpg' %})" data-stellar-background-ratio="0.5">
+            <div class="container">
+              <div class="row align-items-center justify-content-center">
+                <div class="col-md-7" data-aos="fade-up">
+                  <h2 class="heading">Restaurant Search</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- .cover_1 -->
+
+        <div class="section" data-aos="fade-up">
+          <div class="container">
+            <div class="row justify-content-center mb-5">
+              <div class="col-md-8  text-center">
+                <h2 class="mb-3">Restaurant Search</h2>
+                <p class="lead">Search for restaurants below.</p>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-md-10 p-5 form-wrap">
+
+
+
+
+
+<b>{% block title %}eats{% endblock %}<br><br></b>
+
+
+<form method="post">
+    {% csrf_token %}
+    
+    {% block content %}
+    <form method="POST" class="form-group">
+    <!-- <label for="restaurantsearch">Restaurant Name: </label> -->
+    <input id="restaurantsearch" type="text" placeholder="Search for restaurants..."name="restaurantsearch" maxlength="100" required >
+
+    <button type="submit" class="btn btn-success">Search</button>
+    </form>
+    {% endblock %}
 </form>
 
 {% if restaurant_list %}
     <ul>
     {% for restaurant in restaurant_list %}
-        <li><a href="/website/restaurant/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li>
+        <li><a href="/website/restaurant/user/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No restaurants are available.</p>
 {% endif %}
+
+
+<form id="poo">
+    <input type="button" value="Business Login" onclick="document.location.href = '/website/accounts/login/'">
+    <input type="button" value="Business Registration" onclick="document.location.href = '/website/accounts/register/'"><br><br>
+    <button onclick="location.href = '/website/restaurant/order_summary/{{restaurant_id}}';">View Cart</button>
+</form>
+
+</div>
+            </div>
+          </div>
+        </div> <!-- .section -->
+
+
+
+      </div>
+            </div>
+          </div>
+        </div> <!-- .section -->
+
+
+
+
+        </div> <!-- .section -->
+
+
+
+      </div> <!-- .main-wrap -->
+
+{% endblock body %}
+
+
+
+
+
