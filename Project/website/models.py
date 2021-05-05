@@ -25,6 +25,7 @@ class OrderItem(models.Model):
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
 
 class Order(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=True, blank=True)
     item_name = models.CharField(max_length = 200, default='00000')
     item_price = models.DecimalField(default=0, decimal_places=2, max_digits=100)
     item_removed = models.BooleanField(default=False)
@@ -56,5 +57,15 @@ class ReservationSlot(models.Model):
 
     def __str__(self):
         return self.table_id
+
+class Table(models.Model):
+    #default_restaurant_id = 0
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=True, blank=True)
+    #order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, blank=True)
+    table_number = models.IntegerField(default=0)
+    #order_list = models.ForeignKey(OrderItem, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.table_number
     
 

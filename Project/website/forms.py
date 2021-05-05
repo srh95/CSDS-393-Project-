@@ -68,3 +68,9 @@ class ReserveTableForm(forms.ModelForm):
 
     
 #	fields = form ["restaurant name", "username", "password1", "password2"]
+
+class CreateTableForm(forms.Form):
+    tablenumber = forms.IntegerField(label='Table Number', required=True)
+
+class CloseTableForm(forms.Form):
+        table_removed = forms.BooleanField(label='table_removed', required=False)
