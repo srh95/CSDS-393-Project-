@@ -151,7 +151,7 @@ def edit_menu_item(request, menu_item_id):
             print(form.cleaned_data['menuitemname'])
             menu_item.menu_item_name = form.cleaned_data['menuitemname']
             menu_item.save(update_fields=['menu_item_name'])
-            url = '/website/restaurant/menu_list/' + str(menu_item.id)
+            url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
     
     if request.method=='POST' and 'btnform2' in request.POST:
@@ -160,7 +160,7 @@ def edit_menu_item(request, menu_item_id):
             print(form.cleaned_data['menuitemdescription'])
             menu_item.menu_item_description = form.cleaned_data['menuitemdescription']
             menu_item.save(update_fields=['menu_item_description'])
-            url = '/website/restaurant/menu_list/' + str(menu_item.id)
+            url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
 
     if request.method=='POST' and 'btnform3' in request.POST:
@@ -169,7 +169,7 @@ def edit_menu_item(request, menu_item_id):
             print(form.cleaned_data['menuitemprice'])
             menu_item.menu_item_price = form.cleaned_data['menuitemprice']
             menu_item.save(update_fields=['menu_item_price'])
-            url = '/website/restaurant/menu_list/' + str(menu_item.id)
+            url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
 
     else:
