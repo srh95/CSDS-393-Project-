@@ -46,14 +46,14 @@
     {% endblock %}
 
 </form>
-<br>
+<br> <br> <br>
 
 <h3>Update Menu Items</h3>
 
     {% if menu_list %}
         <ul>
         {% for menu_item in menu_list %}
-            <button onclick="location.href='/website/restaurant/edit_menu_item/{{ menu_item.id }}';">{{ menu_item.menu_item_name}}</button>
+          <li><a href="/website/restaurant/menu_list/{{ menu_item.id }}/">{{ menu_item.menu_item_name}}</a></li>
         {% endfor %}
         </ul>
     {% else %}
