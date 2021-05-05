@@ -18,7 +18,9 @@ from .forms import (
     RemoveFromCartForm,
     ReserveTableForm,
     CreateReservationForm,
-    PaymentSuccess
+    PaymentSuccess,
+    CreateTableForm,
+    CloseTableForm
 )
 from .models import (
     Order,
@@ -26,6 +28,7 @@ from .models import (
     MenuItem,
     Restaurant,
     ReservationSlot,
+    Table
 )
 
 
@@ -62,7 +65,9 @@ def menu_list(request):
     context = {'menu_list': menu_list,}
     return render(request, 'website/menu_list.html', context)
 
-def order_summary(request):
+def order_summary(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+    context = {'restaurant': restaurant_list}
     return render(request, 'website/order_summary.html')
 
 def order_list(request):
@@ -339,6 +344,49 @@ def reservation_list(request,restaurant_id):
     else:
         return render(request, 'website/reservationList.html', {'restaurant_id':restaurant_id})
 
+# Table
+def table(request, table_id):
+    table = get_object_or_404(Table, pk=table_id)
+    context = {'table' : table,'table_id' : table_id}
+    return render(request, 'website/table.html', context)
 
+# Creates a list of all current tables
+def table_list(request, restaurant_id):
+    table_list = Table.objects.filter(restaurant__pk=restaurant_id)
+    context = {'table_list': table_list}
+    return render(request, 'website/table_list.html', context)
+
+# Creating a table for an order
+def create_table(request,restaurant_id):
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+    #order = get_object_or_404(Order, pk=order_id)
+    #order_list = OrderItem.objects.filter(restaurant__pk=restaurant_id)
+    #table_list = Table.objects.filter(order__pk=restaurant_id)
+    if request.method == 'POST':
+        form = CreateTableForm(request.POST)
+        if form.is_valid():
+            tab = Table.objects.create(
+                table_number=form.cleaned_data['tablenumber'],
+                #order_list = order_list,
+                restaurant = restaurant
+            )
+            tab.save()
+            url = '/website/order_summary/' + str(restaurant.id) + '/' # + str(restaurant.id)
+            return HttpResponseRedirect(url)
+    else:
+        form = CreateTableForm()
+        context = {'form': form, 'restaurant' : restaurant, }
+    return render(request, 'website/create_table.html', context)
+
+def close_table(request, table_id):
+    table = get_object_or_404(Table, pk=table_id)
+    restaurant = table.restaurant
+    if request.method == "POST":
+        table.delete()
+        url = '/website/table_list/' + str(restaurant.id) + '/'
+        return redirect(url)
+
+    context={'table' : table}
+    return render(request, 'website/close_table.html', context)
 
 
