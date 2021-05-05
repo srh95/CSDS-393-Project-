@@ -14,6 +14,18 @@
               <div class="row align-items-center justify-content-center">
                 <div class="col-md-7" data-aos="fade-up">
                   <h2 class="heading">Restaurant Search</h2>
+                  <form method="post">
+                    {% csrf_token %}
+                    
+                    {% block content %}
+                    <form method="POST" class="form-group">
+                    <!-- <label for="restaurantsearch">Restaurant Name: </label> -->
+                    <input id="restaurantsearch" type="text" size="50" placeholder="Search for restaurants..."name="restaurantsearch" maxlength="100" required >
+                
+                    <button type="submit" class="btn btn-success">Search</button>
+                    </form>
+                    {% endblock %}
+                </form>
                 </div>
               </div>
             </div>
@@ -24,42 +36,35 @@
           <div class="container">
             <div class="row justify-content-center mb-5">
               <div class="col-md-8  text-center">
-                <h2 class="mb-3">Restaurant Search</h2>
-                <p class="lead">Search for restaurants below.</p>
+                <h2>Restaurants</h2>
               </div>
             </div>
             <div class="row justify-content-center">
               <div class="col-md-10 p-5 form-wrap">
 
 
+<div class="section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8" data-aos="fade-up">
+        {% if restaurant_list %}
+        {% for restaurant in restaurant_list %}
+            <div class="d-block d-md-flex menu-food-item">
+              <div class="text order-1 mb-3">
+                <h3><a href="/website/restaurant/user/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></h3>
+              </div>
+            </div> <!-- .menu-food-item -->
+          {% endfor %}
+        {% else %}
+          <p>No restaurants items are available.</p>
+      {% endif %}
 
 
+      </div>
+    </div>
+  </div>
+</div> <!-- .section -->
 
-<b>{% block title %}eats{% endblock %}<br><br></b>
-
-
-<form method="post">
-    {% csrf_token %}
-    
-    {% block content %}
-    <form method="POST" class="form-group">
-    <!-- <label for="restaurantsearch">Restaurant Name: </label> -->
-    <input id="restaurantsearch" type="text" placeholder="Search for restaurants..."name="restaurantsearch" maxlength="100" required >
-
-    <button type="submit" class="btn btn-success">Search</button>
-    </form>
-    {% endblock %}
-</form>
-
-{% if restaurant_list %}
-    <ul>
-    {% for restaurant in restaurant_list %}
-        <li><a href="/website/restaurant/user/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No restaurants are available.</p>
-{% endif %}
 
 
 <form id="poo">

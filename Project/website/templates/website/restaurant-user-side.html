@@ -54,38 +54,6 @@
                     </div>
                   </div>
                 </div> <!-- .section -->
-                
-
-
-
-
-
-                <!-- <nav class="">
-                  <div class="menu_food_item">
-                    {% if menu_list %}
-                    <ul>
-                      {% for menu_item in menu_list %} 
-                          <li><a href="/website/restaurant/menu_list/{{ menu_item.id }}/">{{ menu_item.menu_item_name}}</a></li>
-                      {% endfor %}
-                    </ul>
-                    {% else %}
-                      <p>No menu items are available.</p>
-                  {% endif %}
-                  </div>
-                </nav> -->
-
-<!-- 
-<div class="site-menu">
-  {% if menu_list %}
-      <ul>
-      {% for menu_item in menu_list %} 
-          <li><a href="/website/restaurant/menu_list/{{ menu_item.id }}/">{{ menu_item.menu_item_name}}</a></li>
-      {% endfor %}
-      </ul>
-  {% else %}
-      <p>No menu items are available.</p>
-  {% endif %}
-</div> -->
 
                 <button onclick="location.href = '/website/order_summary/';">View Cart</button>
                                   <button onclick="location.href = '/website/reserve_table/{{restaurant_id}}';">Reserve a Table</button>
