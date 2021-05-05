@@ -41,29 +41,6 @@ dates = (day_of_week + " " + month_array[m] + " " + day + ", " + year);
                   <h5>Showing schedule for {{mydate}}</h5>
                   <p> Enter a date to see the reservation schedule for that day. Dates must be entered in the form YYYY-MM-DD. </p>
 
-<!-- <script> reservation_list.objects.filter(reservationSlot__date = date) </script>-->
-<!--                  {% for reservation in reservation_list %}-->
-<!--                  {% if reservation.date %}-->
-<!--                  &lt;!&ndash;Still need to figure out how to only display the reservations for today&ndash;&gt;-->
-<!--                  <li> Table: {{ reservation.table_id }}</li>-->
-<!--                  Number of people: {{ reservation.num_people }}-->
-<!--                  Time: {{ reservation.time }}-->
-<!--                  Date: {{ reservation.date }}-->
-<!--                  Reservation Number: {{reservation.id}}-->
-<!--                  {% if reservation.booked == False %}-->
-<!--                  Not Booked-->
-<!--                  {% else %}-->
-<!--                  Booked-->
-<!--                  Name: {{reservation.name}}-->
-<!--                  Email: {{reservation.email}}-->
-<!--                  Phone: {{reservation.phone}}-->
-
-
-<!--                  {% endif %}-->
-
-<!--                  {% endif %}-->
-<!--                  {% endfor %}-->
-
                   <form action = "" method = "GET">
                   {% csrf_token %}
                     <form method="GET" class="form-group">

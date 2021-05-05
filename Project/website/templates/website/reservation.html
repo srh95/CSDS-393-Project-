@@ -41,19 +41,18 @@
                       <!--<form id = "form", action = "reservationConf.html">-->
                       <form id = "form">
                           <h5>Showing schedule for {{mydate}}</h5>
+                          {% if reservation_slots %}
                           {% for reservation in reservation_slots %}
                           {% if reservation.booked == False  %}
-                          <input type="button" value="{{reservation.time}}" onclick ="document.location.href = '/website/reservation_conf/{{reservation.id}}'" >
+                          <input type="button" value="{{reservation.time}} for {{reservation.num_people}} people" onclick ="document.location.href = '/website/reservation_conf/{{reservation.id}}'" >
+                          {% endif %}
+                          {% endfor %}
+                          {% else %}
+                          <p>There are no available reservations for this date.</p>
 
-                      </form>
-                      <ul class="dashed">
-                          <li>Number of people: {{ reservation.num_people }}</li>
-                          <li> Date: {{ reservation.date }} </li>
-                      </ul>
-                      </p>
 
-                      {% endif %}
-                      {% endfor %}
+
+                          {% endif %}
 
 
 
