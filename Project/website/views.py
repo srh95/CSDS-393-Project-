@@ -50,7 +50,7 @@ def menu_item(request, menu_item_id):
                 )
                 database.save()
                 tmpNum = tmpNum+1
-            url = '/website/restaurant/' + str(menu_item.restaurant_id)
+            url = '/website/restaurant/user/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
 
     else:
@@ -294,7 +294,7 @@ def create_reservation(request,restaurant_id):
             database.save()
 
 
-    context = {'create_form' : create_form, 'reservation_slots' : reservation_slots}
+    context = {'create_form' : create_form, 'reservation_slots' : reservation_slots, 'restaurant_id':restaurant_id}
     return render(request, 'website/reservationSlot.html',context) # our front end html
 
 # adds name, email, and phone to a reservation
@@ -324,21 +324,20 @@ def confirm_reservation(request,reservation_id):
 
 # Displaying the list of reservations and removing reservations
 def reservation_list(request,restaurant_id):
-
     if request.method == 'GET' and 'date' in request.GET:
         date = request.GET.get('date')
         reservation_list = ReservationSlot.objects.filter(date=date, restaurant__pk=restaurant_id)
-        return render(request, 'website/reservationList.html', {'reservation_list': reservation_list, 'mydate' : date})
+        return render(request, 'website/reservationList.html', {'reservation_list': reservation_list, 'mydate' : date, 'restaurant_id':restaurant_id})
 
 
     if request.method == 'GET' and 'id' in request.GET:
         id = request.GET.get('id')
         ReservationSlot.objects.filter(id=id,restaurant__pk=restaurant_id).delete()
         reservation_list = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
-        return render(request, 'website/reservationList.html', {'reservation_list': reservation_list})
+        return render(request, 'website/reservationList.html', {'reservation_list': reservation_list, 'restaurant_id':restaurant_id})
 
     else:
-        return render(request, 'website/reservationList.html')
+        return render(request, 'website/reservationList.html', {'restaurant_id':restaurant_id})
 
 
 

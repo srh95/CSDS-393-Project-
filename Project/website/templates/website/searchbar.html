@@ -49,20 +49,27 @@
               <div class="col-md-10 p-5 form-wrap">
 
 
-                  <h1>Search Results:</h1>
-                  {% if matching_restaurants %}
-                  <ul>
-                      {% for restaurant in matching_restaurants %}
-                      <li><a href="/website/restaurant/user/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li>
-                      {% endfor %}
-                      {% else %}
-                      <p>No restaurants are available.</p>
+                <div class="section">
+                  <div class="container">
+                    <div class="row justify-content-center">
+                      <div class="col-md-8" data-aos="fade-up">
+                        {% if matching_restaurants %}
+                        {% for restaurant in matching_restaurants %}
+                            <div class="d-block d-md-flex menu-food-item">
+                              <div class="text order-1 mb-3">
+                                <h3><a href="/website/restaurant/user/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></h3>
+                              </div>
+                            </div> <!-- .menu-food-item -->
+                          {% endfor %}
+                        {% else %}
+                          <p>No restaurants items are available.</p>
                       {% endif %}
-
-                      <br><br><input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
-                      <button onclick="location.href = '/website/order_summary/';">View Cart</button>
-
-
+                
+                
+                      </div>
+                    </div>
+                  </div>
+                </div> <!-- .section -->
 
               </div>
             </div>
