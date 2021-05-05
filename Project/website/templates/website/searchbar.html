@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
+=======
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
 <!-- {{ error }}
 
 {% if restaurant %}
@@ -23,6 +26,7 @@
     </ul>
 </body> -->
 
+<<<<<<< HEAD
 
       <div class="main-wrap">
         <div class="cover_1 cover_sm">
@@ -90,3 +94,17 @@
 
 
 
+=======
+<h1>Search Results:</h1>
+{% if matching_restaurants %}
+    <ul>
+    {% for restaurant in matching_restaurants %}
+        <li><a href="/website/restaurant/{{ restaurant.id }}/">{{ restaurant.restaurant_name }}</a></li>
+    {% endfor %}
+{% else %}
+    <p>No restaurants are available.</p>
+{% endif %}
+
+<br><br><input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
+<button onclick="location.href = '/website/order_summary/';">View Cart</button>
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618

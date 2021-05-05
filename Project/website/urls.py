@@ -15,6 +15,7 @@ urlpatterns = [
     path('restaurant/edit_menu_item/<int:menu_item_id>', views.edit_menu_item, name='editmenuitem'),
     path('restaurant/delete_menu_item/<int:menu_item_id>', views.delete_menu_item, name='deletemenuitem'),
     path('restaurant/', views.search, name='restaurants'),
+<<<<<<< HEAD
     path('search/', views.search, name='search'),
     path('order_summary/<int:restaurant_id>/', views.order_list, name='order_list'),
     path('add_to_cart/<int:menu_item_id>/', views.add_to_cart, name = 'add-to-cart'),
@@ -27,5 +28,15 @@ urlpatterns = [
     path('table_list/<int:restaurant_id>/',views.table_list, name='tableList'),
     path('create_table/<int:restaurant_id>/',views.create_table, name='createTable'),
     path('close_table/<int:table_id>', views.close_table, name='closetable')
+=======
+    # path('search/', views.search, name='search'),
+    path('order_summary/', views.order_list, name='order_list'),
+    path('add_to_cart', views.add_to_cart, name = 'add-to-cart'),
+    path('reserve_table/', views.reserve_table, name='reserve_table'),
+    path('create_reservation/', views.create_reservation, name='create_reservation'),
+    path('reservation_list/', views.reservation_list, name='reservation_list'),
+    path('reservation_conf/<int:reservation_id>',views.confirm_reservation, name = 'confirm_reservation'),
+    path('successPage/', views.paymentSuccess, name = 'successPage'),
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
     
 ]

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
@@ -32,6 +33,14 @@
 <h2>Menu List</h2>
 
 
+=======
+<h1> {{restaurant.restaurant_name}}  </h1>
+
+<button onclick="location.href='/website/restaurant/edit_menu/{{ restaurant_id  }}';">Edit Menu</button>
+
+<h2>Menu List</h2>
+
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
 {% if menu_list %}
     <ul>
     {% for menu_item in menu_list %}
@@ -42,6 +51,7 @@
     <p>No menu items are available.</p>
 {% endif %}
 
+<<<<<<< HEAD
 <button onclick="location.href='/website/restaurant/edit_menu/{{ restaurant_id  }}';">Edit Menu</button>
 
 <input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
@@ -71,3 +81,8 @@
 
 {% endblock body %}
 
+=======
+<button onclick="location.href = '/website/order_summary/';">View Cart</button>
+<input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
+
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618

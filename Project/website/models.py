@@ -27,8 +27,11 @@ class OrderItem(models.Model):
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
 
 class Order(models.Model):
+<<<<<<< HEAD
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=True,blank=True)
     #table = models.OneToOneField(Table, on_delete=models.CASCADE, null=True, blank=True)
+=======
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
     item_name = models.CharField(max_length = 200, default='00000')
     item_price = models.DecimalField(default=0, decimal_places=2, max_digits=100)
     item_removed = models.BooleanField(default=False)
@@ -48,7 +51,10 @@ class Order(models.Model):
 
 # Reservation
 class ReservationSlot(models.Model):
+<<<<<<< HEAD
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=True, blank=True)
+=======
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
     table_id = models.CharField(max_length=2)
     num_people = models.IntegerField()
     date = models.DateField()

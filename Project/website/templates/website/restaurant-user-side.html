@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
@@ -26,6 +27,8 @@
             <div class="row justify-content-center">
               <div class="col-md-10 p-5 form-wrap">
 
+=======
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
 <h1> {{restaurant.restaurant_name}}  </h1>
 
 <h2>Menu List</h2>
@@ -40,6 +43,7 @@
     <p>No menu items are available.</p>
 {% endif %}
 
+<<<<<<< HEAD
 <button onclick="location.href = '/website/order_summary/{{restaurant_id}}';">View Cart</button>
                   <button onclick="location.href = '/website/reserve_table/{{restaurant_id}}';">Reserve a Table</button>
                   <input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
@@ -69,3 +73,8 @@
 
 
 {% endblock body %}
+=======
+<button onclick="location.href = '/website/order_summary/';">View Cart</button>
+<input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
+
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618

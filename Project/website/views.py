@@ -4,7 +4,10 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import ListView, DetailView, View
+<<<<<<< HEAD
 import datetime
+=======
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
 from django.utils import timezone
 from .forms import (
     RegisterForm,
@@ -18,9 +21,13 @@ from .forms import (
     RemoveFromCartForm,
     ReserveTableForm,
     CreateReservationForm,
+<<<<<<< HEAD
     PaymentSuccess,
     CreateTableForm,
     CloseTableForm
+=======
+    PaymentSuccess
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
 )
 from .models import (
     Order,
@@ -28,7 +35,10 @@ from .models import (
     MenuItem,
     Restaurant,
     ReservationSlot,
+<<<<<<< HEAD
     Table
+=======
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
 )
 
 
@@ -66,6 +76,7 @@ def menu_list(request, restaurant_id):
     context = {'menu_list': menu_list}
     return render(request, 'website/menu_list.html', context)
 
+<<<<<<< HEAD
 def order_summary(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     context = {'restaurant' : restaurant_list}
@@ -73,6 +84,12 @@ def order_summary(request, restaurant_id):
 
 def order_list(request, restaurant_id):
     #restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+=======
+def order_summary(request):
+    return render(request, 'website/order_summary.html')
+
+def order_list(request):
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
     order_list = Order.objects.all()
     order_list_price = 0
     if request.POST:
@@ -120,6 +137,15 @@ def restaurant_user_side(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     menu_list = MenuItem.objects.filter(restaurant__pk = restaurant_id)
     context = {'restaurant' : restaurant, 'menu_list' : menu_list, 'restaurant_id' : restaurant_id}
+<<<<<<< HEAD
+=======
+    return render(request, 'website/restaurant-business-side.html', context)
+
+def restaurant_user_side(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+    menu_list = MenuItem.objects.filter(restaurant__pk = restaurant_id)
+    context = {'restaurant' : restaurant, 'menu_list' : menu_list, 'restaurant_id' : restaurant_id}
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
     return render(request, 'website/restaurant-user-side.html', context)
 
 def restaurant_list(request):
@@ -233,6 +259,7 @@ def login(request):
     return render(request, 'website/login.html', {'form': form})
 
 
+<<<<<<< HEAD
 def add_to_cart(request, menu_item_id):
  #       form = AddToCartForm(request.POST)
   #      if form.is_valid()
@@ -248,6 +275,23 @@ def add_to_cart(request, menu_item_id):
             order = Order.objects.create(user=request.user, restaurant=menu_item.restaurant)
             order.items.add(order_item)
         url = '/website/restaurant/menu_list/' + str(menu_item.id)
+=======
+def add_to_cart(request, id):
+ #       form = AddToCartForm(request.POST)
+  #      if form.is_valid()
+
+        item = get_object_or_404(MenuItem)
+        order_item = OrderItem.objects.create(item=item)
+
+    #    order_qs = Order.objects.filter(user=request.user, ordered=False)
+        order_qs = Order.objects.filter(user=request.user)
+        if(order_qs.exists()):
+            order = order_qs[0]
+        else:
+            order = Order.objects.create(user=request.user)
+            order.items.add(order_item)
+        url = '/website/restaurant/menu_list/' + str(item.id)
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
         return HttpResponseRedirect(url)
 
 def remove(request, order_item_id, order_id):
@@ -279,6 +323,7 @@ def search(request):
         return render(request, 'website/restaurants.html', {'form' : form, 'restaurant_list': restaurant_list}) 
 
 # Searches for reservations by date
+<<<<<<< HEAD
 def reserve_table(request,restaurant_id):
     # reservation_slots = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
     if request.method == 'GET':
@@ -388,4 +433,58 @@ def close_table(request, table_id):
 
     context={'table' : table}
     return render(request, 'website/close_table.html', context)
+=======
+def reserve_table(request):
+    if request.method == 'GET':
+            date = request.GET.get('date')
+            reservation_slots = ReservationSlot.objects.filter(date=date)
+    return render(request, 'website/reservation.html', {'reservation_slots': reservation_slots})
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
 
+# for creating a reservation slot
+def create_reservation(request):
+    create_form = CreateReservationForm()
+    if request.method == 'POST':
+        create_form = CreateReservationForm(request.POST)
+
+        if create_form.is_valid():
+            create_form.save()
+
+    context = {'create_form' : create_form}
+    return render(request, 'website/reservationSlot.html',context) # our front end html
+
+# Add something to add those fields to the reservation
+def confirm_reservation(request,reservation_id):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        ReservationSlot.objects.filter(id=reservation_id).update(name=name)
+        ReservationSlot.objects.filter(id=reservation_id).update(email=email)
+        ReservationSlot.objects.filter(id=reservation_id).update(phone=phone)
+        ReservationSlot.objects.filter(id=reservation_id).update(booked=True)
+        reservation_slot = ReservationSlot.objects.all()
+
+    else :
+        reservation_slot = ReservationSlot.objects.all()
+
+    context = {'reservation_slot' : reservation_slot}
+    return render(request, 'website/reservationConf.html', context)
+
+
+# Displaying the list of reservations
+def reservation_list(request):
+    if request.method == 'GET':
+        id = request.GET.get('id')
+        ReservationSlot.objects.filter(id=id).delete()
+
+    reservation_list = ReservationSlot.objects.all()
+    context = {'reservation_list' : reservation_list}
+    return render(request, 'website/reservationList.html',context)
+
+
+# not working for some reason
+def remove(request):
+    if request.method == 'GET':
+        id = request.GET.get('id')
+        ReservationSlot.objects.filter(id=id).delete()

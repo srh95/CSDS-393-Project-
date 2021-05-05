@@ -32,6 +32,7 @@ class AddToCartForm(forms.Form):
 
 class RemoveFromCartForm(forms.Form):
     items_removed = forms.BooleanField(label='items_removed', required=False)
+<<<<<<< HEAD
 
 class PaymentSuccess(forms.Form):
     success = True
@@ -48,6 +49,20 @@ class CreateReservationForm(forms.ModelForm):
         model = ReservationSlot
         fields = ['table_id', 'num_people', 'date', 'time']
 
+=======
+
+class PaymentSuccess(forms.Form):
+    success = True
+
+class SearchForm(forms.Form):
+    restaurantsearch = forms.CharField(label='Restaurant Name',max_length=50, required=True)
+
+class CreateReservationForm(forms.ModelForm):
+    class Meta:
+        model = ReservationSlot
+        fields = ['table_id', 'num_people', 'date', 'time']
+
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
 class ReserveTableForm(forms.ModelForm):
     class Meta:
         model = ReservationSlot

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
@@ -25,6 +26,9 @@
             </div>
             <div class="row justify-content-center">
               <div class="col-md-10 p-5 form-wrap">
+=======
+<b>{% block title %}Create an Account{% endblock %}<br><br></b>
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
 
 
 <form method="post">
@@ -34,6 +38,7 @@
     <form method="POST" class="form-group">
     <label for="restaurantname">Restaurant Name: </label>
     <input id="restaurantname" type="text" name="restaurantname" maxlength="100" required><br><br>
+<<<<<<< HEAD
 
     <label for="username">Username: </label>
     <input id="username" type="text" name="username" maxlength="100" required><br><br>
@@ -50,6 +55,24 @@
     {% endfor %}
 {% endif %}
 
+=======
+
+    <label for="username">Username: </label>
+    <input id="username" type="text" name="username" maxlength="100" required><br><br>
+
+    <label for="password1">Password: </label>
+    <input id="password1" type="text" name="password1" maxlength="100" required><br><br>
+
+    <label for="password2">Verify Password: </label>
+    <input id="password2" type="text" name="password2" maxlength="100" required><br>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+    {% endfor %}
+{% endif %}
+
+>>>>>>> c0a46fde552eb00e7f28cb4b03acab23a22e9618
 
     <br><button type="submit" class="btn btn-success">Register</button><br><br>
     <input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
