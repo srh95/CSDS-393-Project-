@@ -21,19 +21,19 @@
               <div class="col-md-8  text-center">
                 <h2 class="mb-3">{{restaurant.restaurant_name}}</h2>
 <!--                <p class="lead">To make a reservation, please enter the date you would like your reservation for and select your desired reservation time. The date must be entered in the format YYYY-MM-DD.</p>-->
+<button class="btn btn-info" onclick="location.href='/website/reservation_list/{{ restaurant_id }}';">View Reservation Schedule</button>
+<button class="btn btn-group" onclick="location.href='/website/create_reservation/{{ restaurant_id }}';">Create Reservation Slots</button><br><br>
               </div>
             </div>
             <div class="row justify-content-center">
               <div class="col-md-10 p-5 form-wrap">
-                  <button onclick="location.href='/website/reservation_list/{{ restaurant_id }}';">View Reservation Schedule</button>
-                  <button onclick="location.href='/website/create_reservation/{{ restaurant_id }}';">Create Reservation Slots</button><br><br>
-                  
+                  <button class="btn btn-primary" onclick="location.href='/website/restaurant/edit_menu/{{ restaurant_id  }}';">Edit Menu</button>
+
 <div class="section">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8" data-aos="fade-up">
         <h2 class="mb-5 text-center">Menu</h2>
-
         {% if menu_list %}
           {% for menu_item in menu_list %} 
             <div class="d-block d-md-flex menu-food-item">
@@ -56,9 +56,7 @@
   </div>
 </div> <!-- .section -->
 
-<button onclick="location.href='/website/restaurant/edit_menu/{{ restaurant_id  }}';">Edit Menu</button>
 
-<input type="button" value="Return to Homepage" onclick="document.location.href = '/website/restaurant/'">
 
  </div>
             </div>

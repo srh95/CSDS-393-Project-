@@ -53,7 +53,7 @@ def menu_item(request, menu_item_id):
                 )
                 database.save()
                 tmpNum = tmpNum+1
-            url = '/website/restaurant/' + str(menu_item.restaurant_id)
+            url = '/website/restaurant/user/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
 
     else:
