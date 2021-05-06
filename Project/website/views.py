@@ -275,11 +275,18 @@ def search(request):
 # Searches for reservations by date
 def reserve_table(request,restaurant_id):
     # reservation_slots = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
-    if request.method == 'GET':
-            date = request.GET.get('date')
+    if request.method == 'GET' and 'date' in request.GET:
+        date = request.GET.get('date')
+        try:
             reservation_slots = ReservationSlot.objects.filter(date=date, restaurant__pk=restaurant_id)
+            return render(request, 'website/reservation.html', {'reservation_slots': reservation_slots, 'mydate': date})
+        except ValidationError:
+            messages.error(request, 'Incorrect date format. The date must be entered in the format YYYY-MM-DD.')
 
-    return render(request, 'website/reservation.html', {'reservation_slots': reservation_slots,'mydate' : date})
+    return render(request, 'website/reservation.html')
+
+
+
 
 # for creating a reservation slot
 def create_reservation(request,restaurant_id):
@@ -297,6 +304,10 @@ def create_reservation(request,restaurant_id):
             date=create_form.cleaned_data['date'],
             )
             database.save()
+
+        else :
+            messages.error(request, 'Make sure input is valid. (Table ID should be a one or two digit number. Number of people should be an number. Date should be a valid date in the format DD/MM/YYYY. Time should be a valid time entered in the format H:MM)')
+            return render(request, 'website/reservationSlot.html')
 
 
     context = {'create_form' : create_form, 'reservation_slots' : reservation_slots, 'restaurant_id':restaurant_id}
@@ -331,18 +342,26 @@ def confirm_reservation(request,reservation_id):
 def reservation_list(request,restaurant_id):
     if request.method == 'GET' and 'date' in request.GET:
         date = request.GET.get('date')
-        reservation_list = ReservationSlot.objects.filter(date=date, restaurant__pk=restaurant_id)
-        return render(request, 'website/reservationList.html', {'reservation_list': reservation_list, 'mydate' : date, 'restaurant_id':restaurant_id})
+        try:
+            reservation_list = ReservationSlot.objects.filter(date=date, restaurant__pk=restaurant_id)
+            return render(request, 'website/reservationList.html', {'reservation_list': reservation_list, 'mydate' : date, 'restaurant_id':restaurant_id})
+        except ValidationError:
+            messages.error(request, 'Incorrect date format. The date must be entered in the format YYYY-MM-DD.')
 
 
     if request.method == 'GET' and 'id' in request.GET:
         id = request.GET.get('id')
-        ReservationSlot.objects.filter(id=id,restaurant__pk=restaurant_id).delete()
-        reservation_list = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
-        return render(request, 'website/reservationList.html', {'reservation_list': reservation_list, 'restaurant_id':restaurant_id})
+        try:
+            ReservationSlot.objects.filter(id=id, restaurant__pk=restaurant_id).delete()
+            reservation_list = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
+            return render(request, 'website/reservationList.html', {'reservation_list': reservation_list, 'restaurant_id':restaurant_id})
+        except ValueError:
+            messages.error(request, 'Invalid reservation number. The reservation number must be a number.')
+            return render(request, 'website/reservationList.html')
 
     else:
-        return render(request, 'website/reservationList.html', {'restaurant_id':restaurant_id})
+        #reservation_list = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
+        return render(request, 'website/reservationList.html')
 
 # Table
 def table(request, table_id):
