@@ -38,7 +38,7 @@
           {% for menu_item in menu_list %} 
             <div class="d-block d-md-flex menu-food-item">
               <div class="text order-1 mb-3">
-                <h3><a href="/website/restaurant/menu_list/{{ menu_item.id }}">{{ menu_item.menu_item_name}}</a></h3>
+                <h3><a href="/website/restaurant/edit_menu_item/{{ menu_item.id }}">{{ menu_item.menu_item_name}}</a></h3>
                 <p>{{ menu_item.menu_item_description}}</p>
               </div>
               <div class="price order-2">
