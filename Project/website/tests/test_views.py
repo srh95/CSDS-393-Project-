@@ -4,7 +4,8 @@ from django.urls import reverse, path
 
 from website.forms import (
     RegisterForm,
-    LoginForm
+    LoginForm,
+    SearchForm
 )
 from website.models import (
     Order,
@@ -16,9 +17,8 @@ from website.models import (
 )
 
 class RegisterTest(TestCase):
-
+    # simulate a user entering in a valid form and being redirected to login successfully
     def test_restaurant_created(self):
-        # simulate a user entering in a valid form and being redirected to login successfully
         response = self.client.post(reverse('website:register'), 
             {
             'restaurantname':'restaurant', 
@@ -26,8 +26,8 @@ class RegisterTest(TestCase):
             'password1': 'password',
             'password2': 'password'
             }, follow = True)
-        print('right here buttface')
-        print(response)
+        # print('right here buttface')
+        # print(response)
         self.assertRedirects(response, '/website/accounts/login/')
 
 class LoginTest(TestCase):
@@ -48,13 +48,54 @@ class LoginTest(TestCase):
             'password': 'password',
             }, follow = True)
 
-        print('HELLO there')
-        # print(MenuItem.objects.get(menu_item_name = 'test1'))
-        print(response)
+        # print('HELLO there')
+        # # print(MenuItem.objects.get(menu_item_name = 'test1'))
+        # print(response)
 
         redirect_url = "/website/restaurant/" + str(restaurant_id) + "/"
 
         self.assertRedirects(response, redirect_url)
+
+class SearchbarTest(TestCase):
+    def test_no_restaurants_exist(self):
+        # simulate a user searching for a restaurant called 'restaurant'
+        # no results found so restaurant homepage html is returned
+        response = self.client.post(reverse('website:search'),
+            {
+            'restaurantsearch':'restaurant2', 
+            }, follow = True)
+        self.assertTemplateUsed(response, 'website/searchbar.html')
+        
+    def test_no_restaurants_from_search(self):
+        # simulate a user searching for a restaurant called 'restaurant'
+        # no results found so restaurant homepage html is returned
+        database = Restaurant.objects.create(
+            restaurant_name = 'restaurant',
+            restaurant_username = 'username',
+            restaurant_password = 'password',
+        )    
+        response = self.client.post(reverse('website:search'),
+            {
+            'restaurantsearch':'restaurant2', 
+            }, follow = True)
+        self.assertTemplateUsed(response, 'website/searchbar.html')
+        # self.assertInHTML('/website/templates/website/restaurants.html', response.content.decode())
+
+
+    def test_one_restaurant_found(self):
+        # simulate a user searching for a restaurant called 'restaurant'
+        # one result found so searchbar html is returned
+        database = Restaurant.objects.create(
+            restaurant_name = 'restaurant',
+            restaurant_username = 'username',
+            restaurant_password = 'password',
+        )        
+        response = self.client.post(reverse('website:search'),
+            {
+            'restaurantsearch':'restaurant', 
+            }, follow = True)
+        self.assertTemplateUsed(response, 'website/searchbar.html')
+
 
 class MenuItemTest(TestCase):
 
@@ -74,9 +115,9 @@ class MenuItemTest(TestCase):
             'menuitemdescription':'testing 1', 
             'menuitemprice': 1,
             }, follow = True)
-        print('HELLO there')
-        # print(MenuItem.objects.get(menu_item_name = 'test1'))
-        print(response)
+        # print('HELLO there')
+        # # print(MenuItem.objects.get(menu_item_name = 'test1'))
+        # print(response)
         self.assertEqual(MenuItem.objects.count(), 1)
 
         redirect_url = "/website/restaurant/" + str(restaurant_id) + "/"
