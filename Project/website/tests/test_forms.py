@@ -34,7 +34,6 @@ class RegisterFormTest(TestCase):
         self.assertNotEqual(form.fields['password1'], form.fields['password2'])
 
         
-
 class LoginFormTest(TestCase):
 
     def test_restaurant_name_not_found(self):
@@ -77,3 +76,15 @@ class LoginFormTest(TestCase):
         self.assertNotEqual(getattr(database, 'restaurant_password'), form.fields['password'])
         
 
+class SearchFormTest(TestCase):
+    def test_restaurant_is_found(self):
+        database = Restaurant.objects.create(
+        restaurant_name = 'restaurant',
+        restaurant_username = 'username',
+        restaurant_password = 'password'
+        )
+        form = LoginForm()
+        form.fields['restaurantsearch'] = 'exist'
+        matching_restaurants = Restaurant.objects.filter(restaurant_name__icontains=form.fields['restaurantsearch'])
+        # comparing the database's restaurant name with the inputted restaurant name
+        self.assertNotEqual(matching_restaurants, form.fields['restaurantsearch'])
