@@ -193,6 +193,9 @@ def register(request):
             if(form.cleaned_data['password1'] != form.cleaned_data['password2']):
                 messages.error(request, 'Passwords do not match')
                 return HttpResponseRedirect('/website/accounts/register/')
+            elif(Restaurant.objects.get(restaurant_username=form.cleaned_data['restaurantname'])):
+                messages.error(request, 'Restaurant name already exists, please pick another')
+                return HttpResponseRedirect('/website/accounts/register/')
                 #raise ValidationError('Passwords do not match')
             database = Restaurant.objects.create(
             restaurant_name = form.cleaned_data['restaurantname'],
