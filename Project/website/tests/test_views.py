@@ -76,5 +76,5 @@ class AddMenuItemTest(TestCase):
         print(response)
         self.assertEqual(MenuItem.objects.count(), 1)
 
-        # redirect_url = "/website/edit_menu/" + str(restaurant_id)
-        # self.assertRedirects(response, redirect_url)
+        redirect_url = "/website/restaurant/" + str(restaurant_id) + "/"
+        self.assertRedirects(response, redirect_url)
