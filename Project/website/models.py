@@ -30,6 +30,7 @@ class Order(models.Model):
     item_price = models.DecimalField(default=0, decimal_places=2, max_digits=100)
     item_removed = models.BooleanField(default=False)
     item_number = models.IntegerField(default=1)
+    item_restaurant = models.IntegerField(default=0)
 
     def __repr__(self):
         return self.item_price

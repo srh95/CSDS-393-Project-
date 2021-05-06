@@ -44,15 +44,23 @@ def menu_item(request, menu_item_id):
             print(menu_item.menu_item_name)
             print(menu_item.menu_item_price)
             tmpNum = 0
-            for x in range(form.cleaned_data['num_items']):
-                print('create thingy here')
-                database = Order.objects.create(
-                    item_name = menu_item.menu_item_name,
-                    item_price = menu_item.menu_item_price,
-                    item_number = tmpNum
-                )
-                database.save()
-                tmpNum = tmpNum+1
+            currentList = Order.objects.all()
+            if(currentList.count() > 0):
+                currentItem = Order.objects.all()[:1].get()
+                restaurantID = currentItem.item_restaurant
+            else:
+                restaurantID = menu_item.restaurant_id
+            if(restaurantID == menu_item.restaurant_id):
+                for x in range(form.cleaned_data['num_items']):
+                    print('create thingy here')
+                    database = Order.objects.create(
+                        item_name = menu_item.menu_item_name,
+                        item_price = menu_item.menu_item_price,
+                        item_number = tmpNum,
+                        item_restaurant = menu_item.restaurant_id
+                    )
+                    database.save()
+                    tmpNum = tmpNum+1
             url = '/website/restaurant/user/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
 
@@ -254,11 +262,6 @@ def add_to_cart(request, id):
             order.items.add(order_item)
         url = '/website/restaurant/menu_list/' + str(item.id)
         return HttpResponseRedirect(url)
-
-def remove(request):
-        item = get_object_or_404(MenuItem)
-        order_item = MenuItem.objects.filter(item=item, user=request.user)
-        order.items.remove(order_item)
         
 class OrderSummaryView(View):
     def get(self, *args, **kwargs):
