@@ -33,6 +33,7 @@ class RegisterFormTest(TestCase):
         # comparing the form's first password entry with its second password entry
         self.assertNotEqual(form.fields['password1'], form.fields['password2'])
 
+        
 
 class LoginFormTest(TestCase):
 
