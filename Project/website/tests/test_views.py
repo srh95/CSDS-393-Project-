@@ -83,4 +83,35 @@ class MenuItemTest(TestCase):
         redirect_url = "/website/restaurant/" + str(restaurant_id) + "/"
         self.assertRedirects(response, redirect_url)
 
+    def test_update_menu_item_name(self):
+
+        database = Restaurant.objects.create(
+            restaurant_name = 'SARA2',
+            restaurant_username = 'username',
+            restaurant_password = 'password'
+        )
+
+        og_menu_item = MenuItem.objects.create(
+            restaurant_id = database.id,
+            menu_item_name = "original",
+            menu_item_description = "original description",
+            menu_item_price = 1
+        )
+
+        menu_id = og_menu_item.id
+
+        response = self.client.post(reverse('website:editmenuitem', kwargs={'menu_item_id': og_menu_item.id}), 
+            {
+            'menuitemname':'updated', 
+            }, follow = True)
+
+
+        print(response)
+
+        updated_name = MenuItem.objects.get(id = menu_id)
+
+        self.assertEqual(updated_name.menu_item_name, 'updated')
+
+
+
     
