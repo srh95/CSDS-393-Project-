@@ -46,10 +46,14 @@ dates = (day_of_week + " " + month_array[m] + " " + day + ", " + year);
                     <form method="GET" class="form-group">
 
                       <label for="text">Date: </label>
-                      <input id="text" type="text" name="date" maxlength="10" required>
+                        <input id="text" type="text" name="date" maxlength="10" required>
+                        {% for message in messages %}
+                          <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+                          {% endfor %}
 
-                      <button onclick="reservation_list(request)">Search</button>
-                </form>
+                        <button onclick="reservation_list(request)">Search</button>
+
+                    </form>
 
                       <p>  <h4>Available Reservations:</h4> </p>
                       {% for reservation in reservation_list %}
@@ -83,19 +87,21 @@ dates = (day_of_week + " " + month_array[m] + " " + day + ", " + year);
 
 
 
-<p> </p>
-<p>Type a reservation number in the box below to remove that reservation slot. </p>
+                      <p> </p>
+                      <p>Type a reservation number in the box below to remove that reservation slot. </p>
 
-<form action = "" method = "GET">
-    <label for="text">Reservation Number: </label>
-    <input id="text" type="text" name="id" maxlength="10" required>
+                      <form action = "" method = "GET">
+                          <label for="text">Reservation Number: </label>
+                          <input id="text" type="text" name="id" maxlength="10" required>
+                          {% for message in messages %}
+                          <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+                          {% endfor %}
+                          <button onclick="reservation_list(request)">Remove</button>
+                      </form>
 
-    <button onclick="reservation_list(request)">Remove</button>
-</form>
 
-
-</div>
-</div>
+              </div>
+            </div>
 </div>
 </div> <!-- .section -->
 
