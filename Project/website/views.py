@@ -369,8 +369,9 @@ def reservation_list(request,restaurant_id):
             return render(request, 'website/reservationList.html')
 
     else:
+        context = {"restaurant_id" : restaurant_id}
         #reservation_list = ReservationSlot.objects.filter(restaurant__pk=restaurant_id)
-        return render(request, 'website/reservationList.html')
+        return render(request, 'website/reservationList.html', context)
 
 # Table
 def table(request, table_id):
