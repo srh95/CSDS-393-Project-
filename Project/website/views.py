@@ -53,7 +53,7 @@ def menu_item(request, menu_item_id):
                 )
                 database.save()
                 tmpNum = tmpNum+1
-            url = '/website/restaurant/user/' + str(menu_item.restaurant_id)
+            url = '/website/restaurant/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
 
     else:
@@ -210,19 +210,23 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
+            restaurant = form.cleaned_data['restaurantname']
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             try:
+                if(Restaurant.objects.get(restaurant_name=restaurant) is None):
+                    messages.error(request, 'Incorrect username or password, or this restaurant does not exist')
+                    return HttpResponseRedirect('/accounts/login/')
                 if(Restaurant.objects.get(restaurant_username=username)):
                     restaurant = Restaurant.objects.get(restaurant_username=username)
                     if(restaurant.restaurant_password != password):
-                        messages.error(request, 'Incorrect username or password')
+                        messages.error(request, 'Incorrect username or password, or this restaurant does not exist')
                         return HttpResponseRedirect('/accounts/login/')
                        # raise ValidationError('Incorrect username or password')
                     url = '/website/restaurant/' + str(restaurant.id)
                     return HttpResponseRedirect(url)
             except ObjectDoesNotExist:
-                    messages.error(request, 'Incorrect username or password')
+                    messages.error(request, 'Incorrect username or password, or this restaurant does not exist')
                     return HttpResponseRedirect('/accounts/login/')
     else:
         form = LoginForm()
