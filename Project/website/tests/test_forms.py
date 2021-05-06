@@ -36,6 +36,17 @@ class RegisterFormTest(TestCase):
 
 class LoginFormTest(TestCase):
 
+    def test_restaurant_name_not_found(self):
+        database = Restaurant.objects.create(
+        restaurant_name = 'restaurant',
+        restaurant_username = 'username',
+        restaurant_password = 'password'
+        )
+        form = LoginForm()
+        form.fields['restaurant'] = 'restaurant_wrong'
+        form.fields['username'] = 'username'
+        form.fields['password'] = 'password'      
+    
     def test_username_doesnt_match(self):
         database = Restaurant.objects.create(
         restaurant_name = 'restaurant',
@@ -48,6 +59,8 @@ class LoginFormTest(TestCase):
         form.fields['password'] = 'password'
         # comparing the database's username with the specific restaurant's username
         self.assertNotEqual(getattr(database, 'restaurant_username'), form.fields['username'])
+
+    
 
         
 
