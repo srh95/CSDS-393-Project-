@@ -58,7 +58,6 @@ class LoginTest(TestCase):
 
 class MenuItemTest(TestCase):
 
-
     def test_add_menu_item(self):
 
         database = Restaurant.objects.create(
@@ -113,5 +112,52 @@ class MenuItemTest(TestCase):
         self.assertEqual(updated_name.menu_item_name, 'updated')
 
 
+class ReservationTest(TestCase):
+    def test_create_reservation(self):
 
-    
+        database = Restaurant.objects.create(
+            restaurant_name = 'SARA',
+            restaurant_username = 'username',
+            restaurant_password = 'password'
+        )
+
+        restaurant_id = str(database.id)
+        response = self.client.post(reverse('website:create_reservation', kwargs={'restaurant_id': restaurant_id}),
+                                    {
+                                        'table_id': '06',
+                                        'num_people': 12,
+                                        'date': '2022-04-19',
+                                        'time' : '6:00',
+                                    }, follow=True)
+        print('Hi')
+        print(response)
+        self.assertEqual(ReservationSlot.objects.count(), 1)
+
+
+    def test_reserve_table(self):
+        restaurant = Restaurant.objects.create(
+            restaurant_name='SARA',
+            restaurant_username='username',
+            restaurant_password='password'
+        )
+
+        reservation = ReservationSlot.objects.create(
+            table_id = '06',
+            num_people = 7,
+            date = '2022-04-19',
+            time = '7:00',
+        )
+
+        restaurant_id = str(restaurant.id)
+        reservation_id = str(reservation.id)
+        response = self.client.post(reverse('website:confirm_reservation', kwargs={'reservation_id': reservation_id}),
+                                    {
+                                         'name': 'sophia',
+                                         'email': 'soph@gmail.com',
+                                         'phone': 2484259066,
+                                    }, follow=True)
+        print('sophia')
+        print(response)
+        self.assertEqual(ReservationSlot.objects.filter(restaurant__pk=restaurant_id, id=reservation_id).value('name'), 'sophia')
+
+
