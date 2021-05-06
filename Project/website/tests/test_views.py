@@ -52,7 +52,7 @@ class RegisterTest(TestCase):
   #  self.assertEqual(response.get('accounts/register'), 'accounts/login')
 
 
-class AddMenuItemTest(TestCase):
+class MenuItemTest(TestCase):
 
 
     def test_add_menu_item(self):
@@ -78,3 +78,5 @@ class AddMenuItemTest(TestCase):
 
         redirect_url = "/website/restaurant/" + str(restaurant_id) + "/"
         self.assertRedirects(response, redirect_url)
+
+    
