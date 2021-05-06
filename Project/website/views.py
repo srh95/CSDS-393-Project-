@@ -174,7 +174,7 @@ def edit_menu_item(request, menu_item_id):
 
     else:
         form = UpdateMenuItemDescriptionForm()
-    return render(request, 'website/edit_menu_item.html', {'form': form, 'menu_item' : menu_item,})
+    return render(request, 'website/edit_menu_item.html', {'form': form, 'menu_item' : menu_item, 'restaurant_id' : menu_item.restaurant_id})
 
 def delete_menu_item(request, menu_item_id):
     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
