@@ -20,7 +20,7 @@
             <div class="row justify-content-center mb-5">
               <div class="col-md-8  text-center">
                 <h2 class="mb-3">Reservation</h2>
-                <p class="lead">To make a reservation, please enter the date you would like your reservation for and select your desired reservation time. The date must be entered in the format YYYY-MM-DD.</p>
+                <p class="lead">To make a reservation, please enter the date you would like your reservation for and select your desired reservation time. </p>
               </div>
             </div>
             <div class="row justify-content-center">
@@ -29,14 +29,17 @@
 
 
                   <form action = "" method = "GET">
-                  {% csrf_token %}
-                    <form method="GET" class="form-group">
+                      {% csrf_token %}
+                      <form method="GET" class="form-group">
 
-                      <label for="text">Date: </label>
-                      <input id="text" type="text" name="date" maxlength="10" required>
+                          <label for="text">Date: </label>
+                          <input id="text" type="text" name="date" maxlength="10" required>
+                          <button onclick="reserve_table(request)">Search</button>
+                          {% for message in messages %}
+                          <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+                          {% endfor %}
 
-                        <button onclick="reserve_table(request)">Search</button>
-                    </form>
+                      </form>
                       <!-- Now based on the date entered, display all reservations on that date where booked = false  -->
                       <!--<form id = "form", action = "reservationConf.html">-->
                       <form id = "form">
