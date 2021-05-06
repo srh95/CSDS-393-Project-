@@ -65,7 +65,7 @@ class AddMenuItemTest(TestCase):
 
         restaurant_id = str(database.id)
 
-        response = self.client.post(reverse('website:editmenuitem', kwargs={'menu_item_id': restaurant_id}), 
+        response = self.client.post(reverse('website:addmenuitem', kwargs={'restaurant_id': restaurant_id}), 
             {
             'menuitemname':'test1', 
             'menuitemdescription':'testing 1', 
