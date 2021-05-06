@@ -35,12 +35,13 @@ class RegisterFormTest(TestCase):
 
 
 class LoginFormTest(TestCase):
+
     def test_username_doesnt_match(self):
         database = Restaurant.objects.create(
         restaurant_name = 'restaurant',
         restaurant_username = 'username',
         restaurant_password = 'password'
-    )
+        )
         form = LoginForm()
         form.fields['restaurant'] = 'restaurant'
         form.fields['username'] = 'username_wrong'
