@@ -33,6 +33,7 @@ class RegisterFormTest(TestCase):
         # comparing the form's first password entry with its second password entry
         self.assertNotEqual(form.fields['password1'], form.fields['password2'])
 
+        
 
 class LoginFormTest(TestCase):
 
@@ -43,9 +44,11 @@ class LoginFormTest(TestCase):
         restaurant_password = 'password'
         )
         form = LoginForm()
-        form.fields['restaurant'] = 'restaurant_wrong'
+        form.fields['restaurantname'] = 'restaurant_wrong'
         form.fields['username'] = 'username'
         form.fields['password'] = 'password'      
+        # comparing the database's restaurant name with the inputted restaurant name
+        self.assertNotEqual(getattr(database, 'restaurant_name'), form.fields['restaurantname'])
     
     def test_username_doesnt_match(self):
         database = Restaurant.objects.create(
@@ -54,13 +57,23 @@ class LoginFormTest(TestCase):
         restaurant_password = 'password'
         )
         form = LoginForm()
-        form.fields['restaurant'] = 'restaurant'
+        form.fields['restaurantname'] = 'restaurant'
         form.fields['username'] = 'username_wrong'
         form.fields['password'] = 'password'
-        # comparing the database's username with the specific restaurant's username
+        # comparing the database's username with the inputted username
         self.assertNotEqual(getattr(database, 'restaurant_username'), form.fields['username'])
 
-    
-
+    def test_password_doesnt_match(self):
+        database = Restaurant.objects.create(
+        restaurant_name = 'restaurant',
+        restaurant_username = 'username',
+        restaurant_password = 'password'
+        )
+        form = LoginForm()
+        form.fields['restaurantname'] = 'restaurant'
+        form.fields['username'] = 'username'
+        form.fields['password'] = 'password_wrong'
+        # comparing the database's username with the inputted username
+        self.assertNotEqual(getattr(database, 'restaurant_password'), form.fields['password'])
         
 
