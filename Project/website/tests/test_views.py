@@ -50,3 +50,31 @@ class RegisterTest(TestCase):
   # client = Client()
    #   response = self.client.post('accounts/register/')
   #  self.assertEqual(response.get('accounts/register'), 'accounts/login')
+
+
+class AddMenuItemTest(TestCase):
+
+
+    def test_add_menu_item(self):
+
+        database = Restaurant.objects.create(
+            restaurant_name = 'SARA',
+            restaurant_username = 'username',
+            restaurant_password = 'password'
+        )
+
+        restaurant_id = str(database.id)
+
+        response = self.client.post(reverse('website:addmenuitem', kwargs={'restaurant_id': restaurant_id}), 
+            {
+            'menuitemname':'test1', 
+            'menuitemdescription':'testing 1', 
+            'menuitemprice': 1,
+            }, follow = True)
+        print('HELLO there')
+        # print(MenuItem.objects.get(menu_item_name = 'test1'))
+        print(response)
+        self.assertEqual(MenuItem.objects.count(), 1)
+
+        # redirect_url = "/website/edit_menu/" + str(restaurant_id)
+        # self.assertRedirects(response, redirect_url)
