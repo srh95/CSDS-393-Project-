@@ -190,6 +190,12 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
+            try:
+                if(Restaurant.objects.get(restaurant_name=form.cleaned_data['restaurantname'])):
+                    messages.error(request, 'Restaurant already exists')
+                    return HttpResponseRedirect('/website/accounts/register')
+            except ObjectDoesNotExist:
+                print('no restaurants yet')
             if(form.cleaned_data['password1'] != form.cleaned_data['password2']):
                 messages.error(request, 'Passwords do not match')
                 return HttpResponseRedirect('/website/accounts/register/')
@@ -203,8 +209,7 @@ def register(request):
             return HttpResponseRedirect('/website/accounts/login/')
     else:
         form = RegisterForm()
-        context = {'form' : form}
-    return render(request, 'website/register.html', context)
+    return render(request, 'website/register.html', {'form' : form})
 
 def login(request):
     if request.method == 'POST':
