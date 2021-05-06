@@ -23,6 +23,8 @@ class RegisterTest(TestCase):
         # response = self.client.get(url)
         # self.assertEqual(response.status_code, 200)
 #        login = self.client.login(username='username', password = 'password')
+
+        # simulate a user entering in a valid form and being redirected to login successfully
         response = self.client.post(reverse('website:register'), 
             {
             'restaurantname':'restaurant', 
