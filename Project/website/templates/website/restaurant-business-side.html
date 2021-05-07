@@ -22,7 +22,8 @@
                 <h2 class="mb-3">{{restaurant.restaurant_name}}</h2>
 <!--                <p class="lead">To make a reservation, please enter the date you would like your reservation for and select your desired reservation time. The date must be entered in the format YYYY-MM-DD.</p>-->
 <button class="btn btn-info" onclick="location.href='/website/reservation_list/{{ restaurant_id }}';">View Reservation Schedule</button>
-<button class="btn btn-group" onclick="location.href='/website/create_reservation/{{ restaurant_id }}';">Create Reservation Slots</button><br><br>
+<button class="btn btn-group" onclick="location.href='/website/create_reservation/{{ restaurant_id }}';">Create Reservation Slots</button>
+<button class="btn btn-group" onclick="location.href='/website/table_list/{{ restaurant_id}}';">View Current Tables</button><br><br>
               </div>
             </div>
             <div class="row justify-content-center">
