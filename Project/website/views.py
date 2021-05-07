@@ -10,9 +10,7 @@ from .forms import (
     RegisterForm,
     AddMenuItemForm,
     LoginForm,
-    UpdateMenuItemNameForm,
-    UpdateMenuItemDescriptionForm,
-    UpdateMenuItemPriceForm,
+    UpdateMenuItemForm,
     AddToCartForm,
     SearchForm,
     RemoveFromCartForm,
@@ -155,36 +153,25 @@ def add_menu_item(request, restaurant_id):
 
 def edit_menu_item(request, menu_item_id):
     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
-    if request.method=='POST' and 'btnform1' in request.POST:
-        form = UpdateMenuItemNameForm(request.POST)
+    if request.method=='POST':
+        form = UpdateMenuItemForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data['menuitemname'])
-            menu_item.menu_item_name = form.cleaned_data['menuitemname']
-            menu_item.save(update_fields=['menu_item_name'])
-            url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
-            return HttpResponseRedirect(url)
-    
-    if request.method=='POST' and 'btnform2' in request.POST:
-        form = UpdateMenuItemDescriptionForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data['menuitemdescription'])
-            menu_item.menu_item_description = form.cleaned_data['menuitemdescription']
-            menu_item.save(update_fields=['menu_item_description'])
-            url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
-            return HttpResponseRedirect(url)
+            if form.cleaned_data['menuitemname']:
+                menu_item.menu_item_name = form.cleaned_data['menuitemname']
+                menu_item.save(update_fields=['menu_item_name'])
+            if form.cleaned_data['menuitemdescription']:
+                menu_item.menu_item_description = form.cleaned_data['menuitemdescription']
+                menu_item.save(update_fields=['menu_item_description'])
+            if form.cleaned_data['menuitemprice']:
+                menu_item.menu_item_price = form.cleaned_data['menuitemprice']
+                menu_item.save(update_fields=['menu_item_price'])
 
-    if request.method=='POST' and 'btnform3' in request.POST:
-        form = UpdateMenuItemPriceForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data['menuitemprice'])
-            menu_item.menu_item_price = form.cleaned_data['menuitemprice']
-            menu_item.save(update_fields=['menu_item_price'])
             url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
 
     else:
-        form = UpdateMenuItemDescriptionForm()
-    return render(request, 'website/edit_menu_item.html', {'form': form, 'menu_item' : menu_item,})
+        form = UpdateMenuItemForm()
+    return render(request, 'website/edit_menu_item.html', {'form': form, 'menu_item' : menu_item, 'restaurant_id' : menu_item.restaurant_id})
 
 def delete_menu_item(request, menu_item_id):
     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
@@ -381,13 +368,13 @@ def reservation_list(request,restaurant_id):
 # Table
 def table(request, table_id):
     table = get_object_or_404(Table, pk=table_id)
-    context = {'table' : table,'table_id' : table_id}
+    context = {'table' : table,'table_id' : table_id, "restaurant_id" : table.restaurant_id}
     return render(request, 'website/table.html', context)
 
 # Creates a list of all current tables
 def table_list(request, restaurant_id):
     table_list = Table.objects.filter(restaurant__pk=restaurant_id)
-    context = {'table_list': table_list}
+    context = {'table_list': table_list, 'restaurant_id' : restaurant_id}
     return render(request, 'website/table_list.html', context)
 
 # Creating a table for an order
