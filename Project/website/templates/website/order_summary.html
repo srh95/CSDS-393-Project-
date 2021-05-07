@@ -63,7 +63,7 @@
           <button type="button" onClick="payWithRave()">Pay Here</button>
       </form>
       <script>
-          const publicKey = "FLWPUBK_TEST-704e72f07d64b9c742537a39fe0ef787-X";
+          const publicKey = "FLWPUBK_TEST-3ef5acc2bda697c406704fef018c166e-X";
     
           function payWithRave() {
               var x = getpaidSetup({
@@ -73,7 +73,7 @@
                   customer_phone: "234099940409",
                   currency: "USD",
                   txref: "rave-123456",
-                  custom_title: "CSDS 390 Final",
+                  custom_title: "eats.",
                   onclose: function() {},
                   callback: function(response) {
                       var txref = response.tx.txRef;
