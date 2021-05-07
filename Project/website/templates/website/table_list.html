@@ -32,14 +32,15 @@
 {% if table_list %}
    <ul>
    {% for table in table_list %}
-       <li><a href="/website/table/{{ table.id }}/">{{ table.table_number }}</a></li>
+       <p></p><input type="button" value="{{ table.table_number }}" onclick ='document.location.href ="/website/table/{{ table.id }}/"' ></p>
+<!--       <li><a href="/website/table/{{ table.id }}/">{{ table.table_number }}</a></li>-->
    {% endfor %}
    </ul>
 {% else %}
    <p>No tables are currently occupied.</p>
 {% endif %}
 
-</script> -->
+</script>
               </div>
             </div>
           </div>
