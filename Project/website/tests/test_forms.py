@@ -1,7 +1,9 @@
 from django.test import TestCase
 from website.forms import (
     RegisterForm,
-    LoginForm
+    LoginForm,
+    AddToCartForm,
+    RemoveFromCartForm
 )
 from website.models import (
     Order,
@@ -34,7 +36,6 @@ class RegisterFormTest(TestCase):
         self.assertNotEqual(form.fields['password1'], form.fields['password2'])
 
         
-
 class LoginFormTest(TestCase):
 
     def test_restaurant_name_not_found(self):
@@ -77,18 +78,31 @@ class LoginFormTest(TestCase):
         self.assertNotEqual(getattr(database, 'restaurant_password'), form.fields['password'])
         
 
-class ReservationTest(TestCase) :
-    def test_valid_reservationform(self):
-        rs = ReservationSlot.objects.create(table_id = '89',num_people = '1',date = '2022-04-19',time = '3:00')
-        data = {'table_id': rs.table_id, 'num_people' : rs.num_people, 'date' : rs.date, 'time' : rs.time}
-        form = CreateReservationForm()
-        self.assertTrue(form.isvalid())
+class SearchFormTest(TestCase):
+    def test_restaurant_is_found(self):
+        database = Restaurant.objects.create(
+        restaurant_name = 'restaurant',
+        restaurant_username = 'username',
+        restaurant_password = 'password'
+        )
+        form = LoginForm()
+        form.fields['restaurantsearch'] = 'exist'
+        matching_restaurants = Restaurant.objects.filter(restaurant_name__icontains=form.fields['restaurantsearch'])
+        # comparing the database's restaurant name with the inputted restaurant name
+        self.assertNotEqual(matching_restaurants, form.fields['restaurantsearch'])
 
-    def test_invalid_reservationform(self):
-        rs = ReservationSlot.objects.create(table_id='89', num_people='1', date='2022-04-19', time='3:00')
-        data = {'table_id': rs.table_id, 'num_people' : rs.num_people, 'date' : rs.date, 'time' : rs.time}
-        form = CreateReservationForm()
-        self.assertFalse(form.isvalid())
 
-
-
+class AddToCartFormTest(TestCase):
+    def test_add_to_cart(self):
+        database = Orders.objects.create(
+            item_name = "grace test",
+            item_price = 1.00,
+            item_removed = False,
+            item_number = 1,
+            item_restaurant = 11
+        )
+        form = AddToCartForm()
+        form.fields['num_items'] = 1
+        matching_orders = Order.objects.filter(getattr)
+        #comparing the database's order items with the inputted order item
+        self.assertEqual(getattr(database, 'grace test'), form.fields['num_items'])

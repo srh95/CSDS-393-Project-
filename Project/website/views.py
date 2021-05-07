@@ -81,6 +81,7 @@ def order_summary(request, restaurant_id):
 def order_list(request):
     order_list = Order.objects.all()
     order_list_price = 0
+    order_restaurant = 0
     if request.POST:
         items_removed = request.POST.getlist('items_removed')
         form = RemoveFromCartForm(request.POST)
@@ -93,9 +94,10 @@ def order_list(request):
         price = x.__repr__()
         price = float(price)
         order_list_price = order_list_price + price
+        order_restaurant = x.item_restaurant
     print(order_list_price)
     order_list_price = str(order_list_price)
-    context = {'order_list': order_list, 'order_list_price': order_list_price}
+    context = {'order_list': order_list, 'order_list_price': order_list_price, 'order_restaurant': order_restaurant}
     return render(request, 'website/order_summary.html', context)
 
 def paymentSuccess(request):
@@ -394,16 +396,21 @@ def create_table(request,restaurant_id):
     #order = get_object_or_404(Order, pk=order_id)
     #order_list = OrderItem.objects.filter(restaurant__pk=restaurant_id)
     #table_list = Table.objects.filter(order__pk=restaurant_id)
+    order_list = Order.objects.all()
+    order_str = ""
+    for x in order_list:
+        order_str = order_str + x.item_name + ', '
     if request.method == 'POST':
         form = CreateTableForm(request.POST)
         if form.is_valid():
             tab = Table.objects.create(
                 table_number=form.cleaned_data['tablenumber'],
                 #order_list = order_list,
-                restaurant = restaurant
+                restaurant = restaurant,
+                table_order = order_str
             )
             tab.save()
-            url = '/website/order_summary/' + str(restaurant.id) + '/' # + str(restaurant.id)
+            url = '/website/order_summary/' # + str(restaurant.id)
             return HttpResponseRedirect(url)
     else:
         form = CreateTableForm()

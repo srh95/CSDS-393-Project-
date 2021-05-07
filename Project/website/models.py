@@ -64,6 +64,7 @@ class Table(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=True, blank=True)
     #order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, blank=True)
     table_number = models.IntegerField(default=0)
+    table_order = models.CharField(max_length=1000, default="NA")
     #order_list = models.ForeignKey(OrderItem, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
