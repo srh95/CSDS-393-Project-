@@ -146,7 +146,7 @@ class MenuItemTest(TestCase):
             }, follow = True)
 
 
-        print(response)
+        # print(response)
 
         updated_name = MenuItem.objects.get(id = menu_id)
 
@@ -171,7 +171,7 @@ class ReservationTest(TestCase):
                                         'time' : '6:00',
                                     }, follow=True)
         print('Hi')
-        print(response)
+        # print(response)
         self.assertEqual(ReservationSlot.objects.count(), 1)
 
 
@@ -179,7 +179,7 @@ class ReservationTest(TestCase):
         restaurant = Restaurant.objects.create(
             restaurant_name='SARA',
             restaurant_username='username',
-            restaurant_password='password'
+            restaurant_password='password',
         )
 
         reservation = ReservationSlot.objects.create(
@@ -198,7 +198,39 @@ class ReservationTest(TestCase):
                                          'phone': 2484259066,
                                     }, follow=True)
         print('sophia')
+        self.assertEqual(reservation.name, 'sophia')
+
+    def test_search_reservation(self):
+        restaurant = Restaurant.objects.create(
+            restaurant_name='SARA',
+            restaurant_username='username',
+            restaurant_password='password',
+        )
+
+        reservation = ReservationSlot.objects.create(
+            table_id='06',
+            num_people=7,
+            date='2022-04-19',
+            time='7:00',
+        )
+        restaurant_id = str(restaurant.id)
+        reservation_id = str(reservation.id)
+        response = self.client.post(reverse('website:reserve_table', kwargs={'restaurant_id': restaurant_id}),
+                                    {
+                                        'date': '2022-04-19',
+                                    }, follow=True)
+
         print(response)
-        self.assertEqual(ReservationSlot.objects.filter(restaurant__pk=restaurant_id, id=reservation_id).value('name'), 'sophia')
+        for reservation in response :
+
+            self.assertEqual(reservation.date,'2022-04-19')
+
+
+
+
+
+
+
+
 
 
