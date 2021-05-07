@@ -146,10 +146,13 @@ def add_menu_item(request, restaurant_id):
             database.save()
             url = '/website/restaurant/' + str(restaurant_id)
             return HttpResponseRedirect(url)
+        else:
+            messages.error(request, 'Please insert a number value for price')
+            url = '/website/restaurant/edit_menu/' + str(restaurant_id)
+            return HttpResponseRedirect(url)
     else:
         form = AddMenuItemForm()
-        context = {'form' : form, 'menu_list' : menu_list, 'restaurant_id' : restaurant_id}
-    return render(request, 'website/edit_menu.html', context)
+    return render(request, 'website/edit_menu.html', {'form' : form, 'menu_list' : menu_list, 'restaurant_id' : restaurant_id})
 
 def edit_menu_item(request, menu_item_id):
     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
@@ -165,10 +168,12 @@ def edit_menu_item(request, menu_item_id):
             if form.cleaned_data['menuitemprice']:
                 menu_item.menu_item_price = form.cleaned_data['menuitemprice']
                 menu_item.save(update_fields=['menu_item_price'])
-
             url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
-
+        else:
+            messages.error(request, 'Please insert a number value for price')
+            url = '/website/restaurant/edit_menu/' + str(restaurant_id)
+            return HttpResponseRedirect(url)
     else:
         form = UpdateMenuItemForm()
     return render(request, 'website/edit_menu_item.html', {'form': form, 'menu_item' : menu_item, 'restaurant_id' : menu_item.restaurant_id})

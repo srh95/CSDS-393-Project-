@@ -46,6 +46,11 @@
     {% endblock %}
 
 </form>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+    {% endfor %}
+{% endif %}
 <br> <br> <br>
 
 <h3>Update Menu Items</h3>
