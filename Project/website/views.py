@@ -81,6 +81,7 @@ def order_summary(request, restaurant_id):
 def order_list(request):
     order_list = Order.objects.all()
     order_list_price = 0
+    order_restaurant = 0
     if request.POST:
         items_removed = request.POST.getlist('items_removed')
         form = RemoveFromCartForm(request.POST)
@@ -93,9 +94,10 @@ def order_list(request):
         price = x.__repr__()
         price = float(price)
         order_list_price = order_list_price + price
+        order_restaurant = x.item_restaurant
     print(order_list_price)
     order_list_price = str(order_list_price)
-    context = {'order_list': order_list, 'order_list_price': order_list_price}
+    context = {'order_list': order_list, 'order_list_price': order_list_price, 'order_restaurant': order_restaurant}
     return render(request, 'website/order_summary.html', context)
 
 def paymentSuccess(request):
