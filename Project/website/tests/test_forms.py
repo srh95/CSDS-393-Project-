@@ -91,18 +91,3 @@ class SearchFormTest(TestCase):
         # comparing the database's restaurant name with the inputted restaurant name
         self.assertNotEqual(matching_restaurants, form.fields['restaurantsearch'])
 
-
-class AddToCartFormTest(TestCase):
-    def test_add_to_cart(self):
-        database = Orders.objects.create(
-            item_name = "grace test",
-            item_price = 1.00,
-            item_removed = False,
-            item_number = 1,
-            item_restaurant = 11
-        )
-        form = AddToCartForm()
-        form.fields['num_items'] = 1
-        matching_orders = Order.objects.filter(getattr)
-        #comparing the database's order items with the inputted order item
-        self.assertEqual(getattr(database, 'grace test'), form.fields['num_items'])
