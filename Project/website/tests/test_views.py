@@ -155,3 +155,53 @@ class MenuItemTest(TestCase):
 
         self.assertEqual(updated_name.menu_item_name, 'updated')
 
+def test_reserve_table(self):
+    restaurant = Restaurant.objects.create(
+        restaurant_name='SARA',
+        restaurant_username='username',
+        restaurant_password='password',
+    )
+
+    reservation = ReservationSlot.objects.create(
+        table_id = '06',
+        num_people = 7,
+        date = '2022-04-19',
+        time = '7:00',
+    )
+
+    restaurant_id = str(restaurant.id)
+    reservation_id = str(reservation.id)
+    response = self.client.post(reverse('website:confirm_reservation', kwargs={'reservation_id': reservation_id}),
+                                {
+                                     'name': 'sophia',
+                                     'email': 'soph@gmail.com',
+                                     'phone': 2484259066,
+                                }, follow=True)
+    print('sophia')
+    self.assertEqual(reservation.name, 'sophia')
+
+def test_search_reservation(self):
+    restaurant = Restaurant.objects.create(
+        restaurant_name='SARA',
+        restaurant_username='username',
+        restaurant_password='password',
+    )
+
+    reservation = ReservationSlot.objects.create(
+        table_id='06',
+        num_people=7,
+        date='2022-04-19',
+        time='7:00',
+    )
+    restaurant_id = str(restaurant.id)
+    reservation_id = str(reservation.id)
+    response = self.client.post(reverse('website:reserve_table', kwargs={'restaurant_id': restaurant_id}),
+                                {
+                                    'date': '2022-04-19',
+                                }, follow=True)
+
+    print(response)
+    for reservation in response :
+
+        self.assertEqual(reservation.date,'2022-04-19')
+
