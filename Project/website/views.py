@@ -336,11 +336,13 @@ def confirm_reservation(request,reservation_id):
         ReservationSlot.objects.filter(id=reservation_id).update(phone=phone)
         ReservationSlot.objects.filter(id=reservation_id).update(booked=True)
         reservation_slot = ReservationSlot.objects.all()
-
+        messages.error(request, 'Reservation successfully made')
+        url = '/reservation_conf/' + str(reservation_id)
+        return HttpResponseRedirect(url)
     else :
         reservation_slot = ReservationSlot.objects.all()
-
-    context = {'reservation_slot' : reservation_slot}
+    reservation = ReservationSlot.objects.get(id=reservation_id)
+    context = {'reservation_slot' : reservation_slot, 'restaurant_id' : reservation.restaurant_id}
     return render(request, 'website/reservationConf.html', context)
 
 

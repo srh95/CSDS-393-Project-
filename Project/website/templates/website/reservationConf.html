@@ -54,21 +54,26 @@
                         <input type="text" class="form-control" id="phone" name="phone">
                       </div>
                     </div>
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
-    {% endfor %}
-{% endif %}
 
 
                     <p>  <button onclick="confirm_reservation(request)">Submit</button> </p>
+                    <!-- <p>  <button class="btn btn-primary" onclick="location.href='/webstie/restaurant/user/{{ restaurant_id }}/';"> Return to Menu </button> -->
                 </form>
-
+<br>
                   <script>
+                    
 
 </script>
-
-
+<br><br>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+        <!-- print({{restaurant_id}}) -->
+        <input type="button" class="btn btn-primary" value="Return to Menu" onclick="document.location.href = '/website/restaurant/user/{{ restaurant_id }}'">
+            
+        <!-- <p>  <button class="btn btn-primary" onclick="location.href='/website/restaurant/user/{{ restaurant_id }}/';"> Return to Menu </button> -->
+    {% endfor %}
+{% endif %}
 
 
               </div>
