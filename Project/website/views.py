@@ -405,14 +405,19 @@ def create_table(request,restaurant_id):
     if request.method == 'POST':
         form = CreateTableForm(request.POST)
         if form.is_valid():
-            tab = Table.objects.create(
-                table_number=form.cleaned_data['tablenumber'],
-                #order_list = order_list,
-                restaurant = restaurant,
-                table_order = order_str
-            )
-            tab.save()
-            url = '/website/order_summary/' # + str(restaurant.id)
+            #try
+                tab = Table.objects.create(
+                    table_number=form.cleaned_data['tablenumber'],
+                    #order_list = order_list,
+                    restaurant = restaurant,
+                    table_order = order_str
+                )
+                tab.save()
+                url = '/website/order_summary/' # + str(restaurant.id)
+                return HttpResponseRedirect(url)
+        else:
+            messages.error(request, 'Please insert a number value for table number')
+            url = '/website/create_table/' + str(restaurant_id) + "/"
             return HttpResponseRedirect(url)
     else:
         form = CreateTableForm()
@@ -427,7 +432,7 @@ def close_table(request, table_id):
         url = '/website/table_list/' + str(restaurant.id) + '/'
         return redirect(url)
 
-    context={'table' : table}
+    context={'table' : table, 'restaurant' : restaurant}
     return render(request, 'website/close_table.html', context)
 
 

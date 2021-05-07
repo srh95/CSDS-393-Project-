@@ -1,9 +1,60 @@
+{% extends 'base_restaurant.html' %}
+{% load static %}
+{% block body %}
+      <div class="main-wrap">
+        <div class="cover_1 cover_sm">
+          <div class="img_bg" style="background-image: url({% static 'site_static/img/slider-1.jpg' %})" data-stellar-background-ratio="0.5">
+            <div class="container">
+              <div class="row align-items-center justify-content-center">
+                <div class="col-md-7" data-aos="fade-up">
+                  <h2 class="heading">Close Out Table </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- .cover_1 -->
+
+        <div class="section" data-aos="fade-up">
+          <div class="container">
+            <div class="row justify-content-center mb-5">
+              <div class="col-md-8  text-center">
+                <h2 class="mb-3">Close Out Table</h2>
+                <p class="lead"></p>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-md-10 p-5 form-wrap">
+
 <p>Are you sure you want to close table {{table.table_number}} ?</p>
 
 
 <form action="/website/close_table/{{ table.id }}" method="POST">
 
    {% csrf_token %}
-   <a href="/website"><button type="button">Cancel</button></a>
+   <a href="/website/table/{{ table.id }}"><button type="button">Cancel</button></a>
    <input type="submit" name="Close Table" id="">
 </form>
+
+                  </script> -->
+              </div>
+            </div>
+          </div>
+        </div> <!-- .section -->
+
+
+
+      </div>
+            </div>
+          </div>
+        </div> <!-- .section -->
+
+
+
+
+        </div> <!-- .section -->
+
+
+
+      </div> <!-- .main-wrap -->
+
+{% endblock body %}
