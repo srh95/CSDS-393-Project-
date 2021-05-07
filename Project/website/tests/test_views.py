@@ -5,7 +5,8 @@ from django.urls import reverse, path
 from website.forms import (
     RegisterForm,
     LoginForm,
-    SearchForm
+    SearchForm,
+    UpdateMenuItemForm,
 )
 from website.models import (
     Order,
@@ -115,15 +116,36 @@ class MenuItemTest(TestCase):
             'menuitemdescription':'testing 1', 
             'menuitemprice': 1,
             }, follow = True)
-        # print('HELLO there')
-        # # print(MenuItem.objects.get(menu_item_name = 'test1'))
-        # print(response)
+
         self.assertEqual(MenuItem.objects.count(), 1)
 
         redirect_url = "/website/restaurant/" + str(restaurant_id) + "/"
         self.assertRedirects(response, redirect_url)
 
-    def test_update_menu_item_name(self):
+    def test_delete_menu_item(self):
+
+        database = Restaurant.objects.create(
+            restaurant_name = 'SARA',
+            restaurant_username = 'username',
+            restaurant_password = 'password'
+        )
+
+        restaurant_id = str(database.id)
+
+        og_menu_item = MenuItem.objects.create(
+            restaurant_id = database.id,
+            menu_item_name = "original",
+            menu_item_description = "original description",
+            menu_item_price = 1
+        )
+
+        response = self.client.post(reverse('website:deletemenuitem', kwargs={'menu_item_id': og_menu_item.id}), follow = True)
+        self.assertEqual(MenuItem.objects.count(), 0)
+
+        redirect_url = "/website/restaurant/" + restaurant_id + "/"
+        self.assertRedirects(response, redirect_url)
+
+    def test_update_menu_item(self):
 
         database = Restaurant.objects.create(
             restaurant_name = 'SARA2',
@@ -138,19 +160,84 @@ class MenuItemTest(TestCase):
             menu_item_price = 1
         )
 
+         # Testing no inputs
+        response = self.client.post(reverse('website:editmenuitem', kwargs={'menu_item_id': og_menu_item.id}), 
+            {
+            }, follow = True)
+
+        updated_name = MenuItem.objects.get(id = og_menu_item.id)
+        self.assertEqual(updated_name.menu_item_name, 'original')
+        self.assertEqual(updated_name.menu_item_description, 'original description')
+        self.assertEqual(updated_name.menu_item_price, 1)
+        redirect_url = "/website/restaurant/edit_menu/" + str(database.id) + "/"
+        self.assertRedirects(response, redirect_url)
+
         menu_id = og_menu_item.id
 
+        # Testing only updating name input
         response = self.client.post(reverse('website:editmenuitem', kwargs={'menu_item_id': og_menu_item.id}), 
             {
             'menuitemname':'updated', 
             }, follow = True)
 
-
-        # print(response)
-
-        updated_name = MenuItem.objects.get(id = menu_id)
-
+        updated_name = MenuItem.objects.get(id = og_menu_item.id)
         self.assertEqual(updated_name.menu_item_name, 'updated')
+        self.assertEqual(updated_name.menu_item_description, 'original description')
+        self.assertEqual(updated_name.menu_item_price, 1)
+        redirect_url = "/website/restaurant/edit_menu/" + str(database.id) + "/"
+        self.assertRedirects(response, redirect_url)
+
+        # Testing only updating description input
+        og_menu_item.menu_item_name = 'original'
+        og_menu_item.save(update_fields=["menu_item_name"]) 
+
+        response = self.client.post(reverse('website:editmenuitem', kwargs={'menu_item_id': og_menu_item.id}), 
+            {
+            'menuitemdescription':'updated description', 
+            }, follow = True)
+
+        updated_name = MenuItem.objects.get(id = og_menu_item.id)
+        self.assertEqual(updated_name.menu_item_name, 'original')
+        self.assertEqual(updated_name.menu_item_description, 'updated description')
+        self.assertEqual(updated_name.menu_item_price, 1)
+        redirect_url = "/website/restaurant/edit_menu/" + str(database.id) + "/"
+        self.assertRedirects(response, redirect_url)
+
+        # Testing only updating price input
+        og_menu_item.menu_item_description = 'original description'
+        og_menu_item.save(update_fields=["menu_item_description"]) 
+
+        response = self.client.post(reverse('website:editmenuitem', kwargs={'menu_item_id': og_menu_item.id}), 
+            {
+            'menuitemprice':2, 
+            }, follow = True)
+
+        updated_name = MenuItem.objects.get(id = og_menu_item.id)
+        self.assertEqual(updated_name.menu_item_name, 'original')
+        self.assertEqual(updated_name.menu_item_description, 'original description')
+        self.assertEqual(updated_name.menu_item_price, 2)
+        redirect_url = "/website/restaurant/edit_menu/" + str(database.id) + "/"
+        self.assertRedirects(response, redirect_url)
+
+        # Testing all 3 inputs
+        og_menu_item.menu_item_price = 1
+        og_menu_item.save(update_fields=["menu_item_price"]) 
+
+        response = self.client.post(reverse('website:editmenuitem', kwargs={'menu_item_id': og_menu_item.id}), 
+            {
+            'menuitemname':'updated', 
+            'menuitemdescription':'updated description', 
+            'menuitemprice':2, 
+            }, follow = True)
+
+        updated_name = MenuItem.objects.get(id = og_menu_item.id)
+        self.assertEqual(updated_name.menu_item_name, 'updated')
+        self.assertEqual(updated_name.menu_item_description, 'updated description')
+        self.assertEqual(updated_name.menu_item_price, 2)
+        redirect_url = "/website/restaurant/edit_menu/" + str(database.id) + "/"
+        self.assertRedirects(response, redirect_url)
+
+
 
 
 class ReservationTest(TestCase):
