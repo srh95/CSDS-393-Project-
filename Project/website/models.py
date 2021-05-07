@@ -65,8 +65,8 @@ class Table(models.Model):
     #order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, blank=True)
     table_number = models.IntegerField(default=0)
     #order_list = models.ForeignKey(OrderItem, on_delete=models.CASCADE, null=True, blank=True)
-    table_order = models.CharField(max_length=1000, default="NA")
-    #def __str__(self):
-     #   return self.table_number
+
+    def __str__(self):
+        return self.table_number
     
 
