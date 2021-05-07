@@ -10,10 +10,9 @@ from .forms import (
     RegisterForm,
     AddMenuItemForm,
     LoginForm,
-    UpdateMenuItemForm,
-    # UpdateMenuItemNameForm,
-    # UpdateMenuItemDescriptionForm,
-    # UpdateMenuItemPriceForm,
+    UpdateMenuItemNameForm,
+    UpdateMenuItemDescriptionForm,
+    UpdateMenuItemPriceForm,
     AddToCartForm,
     SearchForm,
     RemoveFromCartForm,
@@ -45,15 +44,23 @@ def menu_item(request, menu_item_id):
             print(menu_item.menu_item_name)
             print(menu_item.menu_item_price)
             tmpNum = 0
-            for x in range(form.cleaned_data['num_items']):
-                print('create thingy here')
-                database = Order.objects.create(
-                    item_name = menu_item.menu_item_name,
-                    item_price = menu_item.menu_item_price,
-                    item_number = tmpNum
-                )
-                database.save()
-                tmpNum = tmpNum+1
+            currentList = Order.objects.all()
+            if(currentList.count() > 0):
+                currentItem = Order.objects.all()[:1].get()
+                restaurantID = currentItem.item_restaurant
+            else:
+                restaurantID = menu_item.restaurant_id
+            if(restaurantID == menu_item.restaurant_id):
+                for x in range(form.cleaned_data['num_items']):
+                    print('create thingy here')
+                    database = Order.objects.create(
+                        item_name = menu_item.menu_item_name,
+                        item_price = menu_item.menu_item_price,
+                        item_number = tmpNum,
+                        item_restaurant = menu_item.restaurant_id
+                    )
+                    database.save()
+                    tmpNum = tmpNum+1
             url = '/website/restaurant/user/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
 
@@ -146,51 +153,36 @@ def add_menu_item(request, restaurant_id):
 
 def edit_menu_item(request, menu_item_id):
     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
-    if request.method=='POST':
-        form = UpdateMenuItemForm(request.POST)
+    if request.method=='POST' and 'btnform1' in request.POST:
+        form = UpdateMenuItemNameForm(request.POST)
         if form.is_valid():
-            if form.cleaned_data['menuitemname']:
-                menu_item.menu_item_name = form.cleaned_data['menuitemname']
-                menu_item.save(update_fields=['menu_item_name'])
-            if form.cleaned_data['menuitemdescription']:
-                menu_item.menu_item_description = form.cleaned_data['menuitemdescription']
-                menu_item.save(update_fields=['menu_item_description'])
-            if form.cleaned_data['menuitemprice']:
-                menu_item.menu_item_price = form.cleaned_data['menuitemprice']
-                menu_item.save(update_fields=['menu_item_price'])
-
+            print(form.cleaned_data['menuitemname'])
+            menu_item.menu_item_name = form.cleaned_data['menuitemname']
+            menu_item.save(update_fields=['menu_item_name'])
+            url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
+            return HttpResponseRedirect(url)
+    
+    if request.method=='POST' and 'btnform2' in request.POST:
+        form = UpdateMenuItemDescriptionForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['menuitemdescription'])
+            menu_item.menu_item_description = form.cleaned_data['menuitemdescription']
+            menu_item.save(update_fields=['menu_item_description'])
             url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
             return HttpResponseRedirect(url)
 
-    #     form = UpdateMenuItemNameForm(request.POST)
-    #     if form.is_valid():
-    #         print(form.cleaned_data['menuitemname'])
-    #         menu_item.menu_item_name = form.cleaned_data['menuitemname']
-    #         menu_item.save(update_fields=['menu_item_name'])
-    #         url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
-    #         return HttpResponseRedirect(url)
-    
-    # if request.method=='POST' and 'btnform2' in request.POST:
-    #     form = UpdateMenuItemDescriptionForm(request.POST)
-    #     if form.is_valid():
-    #         print(form.cleaned_data['menuitemdescription'])
-    #         menu_item.menu_item_description = form.cleaned_data['menuitemdescription']
-    #         menu_item.save(update_fields=['menu_item_description'])
-    #         url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
-    #         return HttpResponseRedirect(url)
-
-    # if request.method=='POST' and 'btnform3' in request.POST:
-    #     form = UpdateMenuItemPriceForm(request.POST)
-    #     if form.is_valid():
-    #         print(form.cleaned_data['menuitemprice'])
-    #         menu_item.menu_item_price = form.cleaned_data['menuitemprice']
-    #         menu_item.save(update_fields=['menu_item_price'])
-    #         url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
-    #         return HttpResponseRedirect(url)
+    if request.method=='POST' and 'btnform3' in request.POST:
+        form = UpdateMenuItemPriceForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['menuitemprice'])
+            menu_item.menu_item_price = form.cleaned_data['menuitemprice']
+            menu_item.save(update_fields=['menu_item_price'])
+            url = '/website/restaurant/edit_menu/' + str(menu_item.restaurant_id)
+            return HttpResponseRedirect(url)
 
     else:
-        form = UpdateMenuItemForm()
-    return render(request, 'website/edit_menu_item.html', {'form': form, 'menu_item' : menu_item, 'restaurant_id' : menu_item.restaurant_id})
+        form = UpdateMenuItemDescriptionForm()
+    return render(request, 'website/edit_menu_item.html', {'form': form, 'menu_item' : menu_item,})
 
 def delete_menu_item(request, menu_item_id):
     menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
@@ -270,11 +262,6 @@ def add_to_cart(request, id):
             order.items.add(order_item)
         url = '/website/restaurant/menu_list/' + str(item.id)
         return HttpResponseRedirect(url)
-
-def remove(request):
-        item = get_object_or_404(MenuItem)
-        order_item = MenuItem.objects.filter(item=item, user=request.user)
-        order.items.remove(order_item)
         
 class OrderSummaryView(View):
     def get(self, *args, **kwargs):
