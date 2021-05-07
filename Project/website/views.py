@@ -394,16 +394,21 @@ def create_table(request,restaurant_id):
     #order = get_object_or_404(Order, pk=order_id)
     #order_list = OrderItem.objects.filter(restaurant__pk=restaurant_id)
     #table_list = Table.objects.filter(order__pk=restaurant_id)
+    order_list = Order.objects.all()
+    order_str = ""
+    for x in order_list:
+        order_str = order_str + x.item_name + ', '
     if request.method == 'POST':
         form = CreateTableForm(request.POST)
         if form.is_valid():
             tab = Table.objects.create(
                 table_number=form.cleaned_data['tablenumber'],
                 #order_list = order_list,
-                restaurant = restaurant
+                restaurant = restaurant,
+                table_order = order_str
             )
             tab.save()
-            url = '/website/order_summary/' + str(restaurant.id) + '/' # + str(restaurant.id)
+            url = '/website/order_summary/' # + str(restaurant.id)
             return HttpResponseRedirect(url)
     else:
         form = CreateTableForm()
