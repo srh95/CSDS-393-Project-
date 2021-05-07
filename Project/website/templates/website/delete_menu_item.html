@@ -32,7 +32,7 @@
 <form action="/website/restaurant/delete_menu_item/{{ menu_item.id }}" method="POST">
 
     {% csrf_token %}
-    <a href="/website"><button type="button">Cancel</button></a>
+    <a href="/website/restaurant/edit_menu_item/{{ menu_item.id }}"><button type="button">Cancel</button></a>
     <input type="submit" name="Delete" id="">
 </form>
  </div>
