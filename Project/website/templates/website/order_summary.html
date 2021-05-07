@@ -45,22 +45,25 @@
     </div>
         <!--input type="submit" name="item_removed" onClick="history.go(0)">Remove Item</input!-->
     <!--input type="submit" name="item_removed" onClick="history.go(0)">Remove Item</input!-->
-    <button type="submit" class="btn btn-success">Remove Selected Item</button>
+    <button type="submit" class="btn btn-danger">Remove Selected Item</button>
+    <br> <br> <br> <br>
 </form>
 
     {% endfor %}
 
-    <li>Total Price: {{ order_list_price }}</li>
 
-    <li> Please input your table number before proceeding to checkout:</li>
+    <hr><br> <br> <br> <br>
 
-    <input type="button" value="Click to add table number to order" onclick="document.location.href = '/website/create_table/{{ order_restaurant }}'">
+    <p> Please input your table number before proceeding to checkout:</p>
 
+    <input class="btn btn-group=" type="button" value="Click to add table number to order" onclick="document.location.href = '/website/create_table/{{ order_restaurant }}'">
+
+    <br> <br>
 
     <form>
         <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
-          <h3>CHECKOUT</h3>
-          <button type="button" onClick="payWithRave()">Pay Here</button>
+        <h4>Total Price: {{ order_list_price }} </h4>
+          <button class="btn btn-success" type="button" onClick="payWithRave()">Pay Here</button>
       </form>
       <script>
           const publicKey = "FLWPUBK_TEST-704e72f07d64b9c742537a39fe0ef787-X";
@@ -96,6 +99,7 @@
 
 </div>
 </div>
+
 </div>
 </div> <!-- .section -->
 
