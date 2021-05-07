@@ -43,8 +43,17 @@
   <label for="menuitemprice">Menu Item Price: </label>
   <input id="menuitemprice" type="text" name="menuitemprice" maxlength="100"> <br>
 
+
+  {% if messages %}
+  {% for message in messages %}
+      <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+  {% endfor %}
+{% endif %}
+
   <button class="btn btn-primary" type="submit" name="btnform1">Update</button>
 </form>
+
+
 
 <br> <br> <br>
 <a class="btn-danger" href="/website/restaurant/delete_menu_item/{{ menu_item.id }}"><button class="btn btn-danger" type="button">Delete</button></a>

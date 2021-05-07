@@ -172,7 +172,7 @@ def edit_menu_item(request, menu_item_id):
             return HttpResponseRedirect(url)
         else:
             messages.error(request, 'Please insert a number value for price')
-            url = '/website/restaurant/edit_menu/' + str(restaurant_id)
+            url = '/website/restaurant/edit_menu_item/' + str(menu_item.id)
             return HttpResponseRedirect(url)
     else:
         form = UpdateMenuItemForm()
