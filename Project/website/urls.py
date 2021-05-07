@@ -18,15 +18,11 @@ urlpatterns = [
     path('restaurant/', views.search, name='restaurants'),
     path('search/', views.search, name='search'),
     path('order_summary/', views.order_list, name='order_list'),
-    path('add_to_cart/<int:menu_item_id>/', views.add_to_cart, name = 'add-to-cart'),
+    path('add_to_cart', views.add_to_cart, name = 'add-to-cart'),
     path('reserve_table/<int:restaurant_id>/', views.reserve_table, name='reserve_table'),
     path('create_reservation/<int:restaurant_id>/', views.create_reservation, name='create_reservation'),
     path('reservation_list/<int:restaurant_id>/', views.reservation_list, name='reservation_list'),
     path('reservation_conf/<int:reservation_id>/',views.confirm_reservation, name = 'confirm_reservation'),
     path('successPage/', views.paymentSuccess, name = 'successPage'),
-    path('table/<int:table_id>/', views.table, name='table'),
-    path('table_list/<int:restaurant_id>/',views.table_list, name='tableList'),
-    path('create_table/<int:restaurant_id>/',views.create_table, name='createTable'),
-    path('close_table/<int:table_id>', views.close_table, name='closetable')
     
 ]

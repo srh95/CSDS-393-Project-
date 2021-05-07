@@ -31,7 +31,26 @@
 
 <br>
 
+
 <form method='POST'>
+  {% csrf_token %}
+
+  <label for="menuitemname">Menu Item Name: </label>
+  <input id="menuitemname" type="text" name="menuitemname" maxlength="100"> <br>
+
+  <label for="menuitemdescription">Menu Item Description: </label>
+  <input id="menuitemdescription" type="text" name="menuitemdescription" maxlength="100"> <br>
+
+  <label for="menuitemprice">Menu Item Price: </label>
+  <input id="menuitemprice" type="text" name="menuitemprice" maxlength="100"> <br>
+
+  <button class="btn btn-primary" type="submit" name="btnform1">Update</button>
+</form>
+
+
+
+
+<!-- <form method='POST'>
     {% csrf_token %}
 
     <label for="menuitemname">Menu Item Name: </label>
@@ -57,7 +76,7 @@
     <label for="menuitemprice">Menu Item Price: </label>
     <input id="menuitemprice" type="text" name="menuitemprice" maxlength="100" required> 
     <button class="btn btn-primary" type="submit" name="btnform3">Update Price</button>
-</form>
+</form> -->
 
 <br> <br> <br>
 <a class="btn-danger" href="/website/restaurant/delete_menu_item/{{ menu_item.id }}"><button class="btn btn-smy" type="button">Delete</button></a>
