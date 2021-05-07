@@ -13,14 +13,10 @@ class AddMenuItemForm(forms.Form):
     menuitemdescription = forms.CharField(label='menuitemdescription', max_length=50, required=True)
     menuitemprice = forms.FloatField(label='menuitemprice', required=True)
 
-class UpdateMenuItemNameForm(forms.Form):
-    menuitemname = forms.CharField(label='menuitemname',max_length=50, required=True)
-
-class UpdateMenuItemDescriptionForm(forms.Form):
-    menuitemdescription = forms.CharField(label='menuitemdescription', max_length=500, required=True)
-
-class UpdateMenuItemPriceForm(forms.Form):
-    menuitemprice = forms.FloatField(label='menuitemprice', required=True)
+class UpdateMenuItemForm(forms.Form):
+    menuitemname = forms.CharField(label='menuitemname',max_length=50, required=False)
+    menuitemdescription = forms.CharField(label='menuitemdescription', max_length=500, required=False)
+    menuitemprice = forms.FloatField(label='menuitemprice', required=False)
     
 class LoginForm(forms.Form):
     restaurantname = forms.CharField(label='Restaurant Name',max_length=50, required=True)

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_restaurant.html' %}
 {% load static %}
 {% block body %}
       <div class="main-wrap">
@@ -28,8 +28,8 @@
 
 
 <h2>Order:</h2>
-<h3> {{ table.table_order }} </h3>
-<a class="btn btn-danger" href="/website/close_table/{{ table.id }}"><button type="button">Close Table</button></a>
+<h> {{ table.table_order }} </p> <br>
+<a class="btn btn-danger" href="/website/close_table/{{ table.id }}"><button class="btn btn-danger" >Close Table</button></a>
 
 
 <!-- <button onclick="myFunction()">Close Table</button>
